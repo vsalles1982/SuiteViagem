@@ -1,0 +1,6 @@
+.DS_Store
+venv/
+*.xlsx
+~
+chromedriver-mac-arm64/
+venv/

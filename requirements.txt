@@ -1,0 +1,12 @@
+beautifulsoup4
+geopy
+openpyxl
+pandas
+playwright
+requests
+rich
+selenium
+selenium-stealth
+textual
+timezonefinder
+webdriver-manager

@@ -1,0 +1,50 @@
+# Ambientes virtuais
+venv/
+.venv/
+env/
+
+# Cache e arquivos compilados do Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Variáveis, chaves e configurações locais
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Resultados gerados pelos scrapers
+*.xlsx
+*.xls
+discovercars_*.csv
+debug_page.html
+resultado_*.html
+resultado_*.png
+erro_*.png
+
+# Feeds e logs gerados localmente
+feeds/*.xml
+feeds/*.rss
+logs/
+*.log
+
+# Navegadores e drivers locais
+chromedriver
+chromedriver-*
+geckodriver
+playwright-report/
+
+# Editores e sistema
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Arquivos temporários
+*.tmp
+*.bak
+*~

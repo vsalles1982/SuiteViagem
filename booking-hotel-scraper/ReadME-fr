@@ -1,0 +1,124 @@
+# 🏨 Booking Scraper
+
+Ce projet Python utilise **Selenium** et **Tkinter** pour extraire automatiquement des données d'hôtels depuis **Booking.com**. Il propose une interface graphique permettant de définir les paramètres de recherche (destination, dates), puis enregistre les résultats dans un fichier Excel. Idéal pour comparer des hôtels autour d’un lieu d’événement comme un mariage, un festival ou une conférence.
+
+
+## ✨ Fonctionnalités
+
+- **Interface graphique conviviale** avec `Tkinter`
+- **Extraction automatique des données hôtelières** :
+  - Nom de l’hôtel
+  - Nombre d’étoiles
+  - Prix
+  - Note des avis
+  - Lien vers Booking.com
+  - Adresse et coordonnées GPS
+  - Distance à partir d’un lieu fixe
+- **Calcul de distance** avec `geopy`
+- **Export Excel** avec `pandas` et `openpyxl`
+
+
+## 🗂 Structure du projet
+
+```bash
+booking_scraper/
+├── hotels_booking.py         # Script principal
+├── chromedriver/             # Dossier contenant le ChromeDriver
+├── README.md                 # Version anglaise
+├── README_fr.md              # Version française
+├── requirements.txt          # Bibliothèques requises
+````
+
+
+## ✅ Prérequis
+
+* Python 3.12.4
+* Google Chrome installé
+* ChromeDriver ([https://chromedriver.chromium.org/](https://chromedriver.chromium.org/))
+* Bibliothèques Python :
+
+  * `selenium`
+  * `webdriver_manager`
+  * `pandas`
+  * `geopy`
+  * `openpyxl`
+
+
+## ⚙️ Installation
+
+1. Cloner le dépôt :
+
+   ```bash
+   git clone https://github.com/ALeterouin/Booking_scraper.git
+   cd Booking_scraper
+   ```
+
+2. Installer les dépendances :
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Vérifiez que `chromedriver` est bien placé et exécutable dans le dossier prévu.
+
+
+## 🚀 Utilisation
+
+1. Lancez le script :
+
+   ```bash
+   python hotels_booking.py
+   ```
+
+2. Dans la fenêtre graphique :
+
+   * Entrez votre **destination**
+   * Sélectionnez vos **dates d’arrivée et de départ** (`YYYY-MM-DD`)
+   * Cliquez sur **Lancer le scraping**
+
+3. Une fois le scraping terminé, un fichier Excel est généré avec les résultats :
+
+   ```
+   Hotels - <Destination> - <Checkin> - <Checkout>.xlsx
+   ```
+
+
+## 🧠 Aperçu technique
+
+### Fonctions principales :
+
+* `extract_hotels(driver)` : Extrait les informations principales des hôtels depuis la page de résultats.
+* `fetch_details(driver, hotel_link)` : Récupère les détails supplémentaires comme l’adresse, la latitude et la longitude.
+* `calculate_distance(hotel_coords, event_coords)` : Calcule la distance en kilomètres entre chaque hôtel et un point de référence.
+* `run_scraping(destination, checkin, checkout)` : Orchestration du scraping et export vers Excel.
+* `on_submit()` : Fonction appelée lorsque l'utilisateur clique sur le bouton de scraping.
+
+### Lieu de calcul des distances :
+
+Par défaut, la distance est calculée depuis cette localisation :
+
+```python
+event_coords = (36.74196135173365, 15.11610252956532)
+```
+Vous pouvez remplacer ces coordonnées par celles de votre propre événement.
+
+
+## 📄 Exemple de fichier Excel
+
+| Nom de l’hôtel | Étoiles | Prix | Note (/10) | Adresse           | Latitude | Longitude | Distance (km) | Lien Booking |
+| -------------- | ------- | -------- | ---------- | ----------------- | -------- | --------- | ------------- | ------------ |
+| Hôtel Exemple  | 4       | 142.00   | 8.2        | Via Roma 12, Rome | 41.9028  | 12.4964   | 2.4           | https\://... |
+
+---
+
+## ⚠️ Avertissement
+
+Ce script est destiné à un **usage éducatif uniquement**. Le scraping de Booking.com peut être contraire à leurs conditions d'utilisation. Utilisez-le de manière responsable et respectez les règles du site.
+
+---
+
+## 👤 Auteur
+
+Développé par [ALeterouin](https://github.com/ALeterouin)
+
+Libre d’utilisation et de modification.
