@@ -1,1031 +1,272 @@
-import time
+"""DiscoverCars: consulta por URL, datas conferidas e totais em BRL.
+Primeira etapa: configure local, horários, residência e idade no site e cole
+seu link /search/. Não automatiza o calendário nesta versão.
+"""
+import base64
 import csv
+import json
+import math
 import re
+import shutil
+import time
+from datetime import datetime
+from decimal import Decimal
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import urlparse, parse_qs, urljoin
 
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Input, Button, Label, Log
 from textual.containers import Container
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-
-from selenium_stealth import stealth
+from selenium.webdriver.support.ui import WebDriverWait, Select
 
 
-# ============================================================
-# CONVERTER PREÇO
-# Aceita:
-# R$1,978.60
-# R$1.978,60
-# R$ 1978,60
-# R$ 1978.60
-# ============================================================
+def ler_consulta(url):
+    u = urlparse(url)
+    if u.scheme != 'https' or u.hostname not in ('www.discovercars.com', 'discovercars.com'):
+        raise ValueError('Use um link HTTPS do DiscoverCars.')
+    if not re.search(r'/(search|offer)/', u.path):
+        raise ValueError('Link sem pesquisa ou oferta.')
+    try:
+        raw = parse_qs(u.query)['sq'][0]
+        data = json.loads(base64.b64decode(raw + '=' * (-len(raw) % 4), validate=True))
+        for key in ('PickupLocationId', 'DropOffLocationId', 'ResidenceCountry', 'DriverAge'):
+            if not data.get(key):
+                raise ValueError(key)
+        a = datetime.fromisoformat(data['PickupDateTime'])
+        b = datetime.fromisoformat(data['DropOffDateTime'])
+        if b <= a:
+            raise ValueError('período inválido')
+    except Exception as exc:
+        raise ValueError('Não foi possível confirmar os parâmetros sq do link.') from exc
+    return data
+
+
+def identidade(data):
+    return tuple(data[k] for k in ('PickupLocationId', 'DropOffLocationId',
+        'PickupDateTime', 'DropOffDateTime', 'ResidenceCountry', 'DriverAge'))
+
 
 def converter_preco(texto):
-    try:
-        texto = (
-            texto
-            .replace("R$", "")
-            .replace("€", "")
-            .replace("£", "")
-            .replace("$", "")
-            .replace("\xa0", "")
-            .replace(" ", "")
-            .strip()
-        )
-
-        if not texto:
-            return None
-
-        # Caso tenha ponto e vírgula
-        if "." in texto and "," in texto:
-
-            # Brasileiro: 1.978,60
-            if texto.rfind(",") > texto.rfind("."):
-                texto = texto.replace(".", "")
-                texto = texto.replace(",", ".")
-
-            # Americano: 1,978.60
-            else:
-                texto = texto.replace(",", "")
-
-        # Só vírgula: 1978,60
-        elif "," in texto:
-            texto = texto.replace(",", ".")
-
-        # Só ponto:
-        # 1978.60 ou 1.978
-        elif "." in texto:
-
-            partes = texto.split(".")
-
-            # Se termina com 3 casas, assumimos separador de milhar
-            if len(partes[-1]) == 3:
-                texto = texto.replace(".", "")
-
-        return float(texto)
-
-    except Exception:
-        return None
+    # BRL obrigatório; jamais relabelar euro/dólar como real.
+    s = texto.replace('\xa0', ' ').strip()
+    if not re.fullmatch(r'R\$\s*\d[\d.,]*', s):
+        raise ValueError('Preço total sem BRL explícito: ' + s)
+    s = s.replace('R$', '').strip()
+    if ',' in s and '.' in s:
+        s = s.replace('.', '').replace(',', '.') if s.rfind(',') > s.rfind('.') else s.replace(',', '')
+    elif ',' in s:
+        s = s.replace(',', '') if re.fullmatch(r'\d{1,3}(,\d{3})+', s) else s.replace(',', '.')
+    elif re.fullmatch(r'\d{1,3}(\.\d{3})+', s):
+        s = s.replace('.', '')
+    if not re.fullmatch(r'\d+(\.\d{1,2})?', s):
+        raise ValueError('Formato de preço ambíguo')
+    value = Decimal(s)
+    if value <= 0:
+        raise ValueError('Preço não positivo')
+    return value
 
 
-# ============================================================
-# FORMATAR PREÇO PT-BR
-# ============================================================
-
-def formatar_preco(valor):
-    if valor is None:
-        return "R$ N/A"
-
-    try:
-        return (
-            f"R$ {valor:,.2f}"
-            .replace(",", "X")
-            .replace(".", ",")
-            .replace("X", ".")
-        )
-
-    except Exception:
-        return "R$ N/A"
+def formatar_preco(value):
+    return ('R$ ' + f'{value:,.2f}').replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
-# ============================================================
-# EXTRAIR UM CARD
-# ============================================================
+class Node:
+    def __init__(self, tag='', attrs=()):
+        self.tag, self.attrs, self.children, self.parts = tag, dict(attrs), [], []
+    def all(self):
+        yield self
+        for c in self.children:
+            yield from c.all()
+    def select(self, cls):
+        return [n for n in self.all() if cls in n.attrs.get('class', '').split()]
+    def text(self):
+        return ' '.join(''.join(self.parts).split())
 
-def extrair_card(card):
 
-    # ========================================================
-    # MODELO
-    # ========================================================
-
-    modelo = ""
-
-    elementos_modelo = card.find_elements(
-        By.CSS_SELECTOR,
-        ".CarTitle-Name"
-    )
-
-    for elemento in elementos_modelo:
-        texto = (
-            elemento.text
-            or elemento.get_attribute("textContent")
-            or ""
-        ).strip()
-
-        if texto:
-            modelo = texto
-            break
-
-    if not modelo:
-        raise ValueError("Modelo vazio")
-
-    # ========================================================
-    # PREÇO
-    # ========================================================
-
-    preco_original = ""
-    preco_numero = None
-
-    elementos_preco = card.find_elements(
-        By.CSS_SELECTOR,
-        ".SearchCar-Price"
-    )
-
-    for elemento in elementos_preco:
-
-        texto = (
-            elemento.text
-            or elemento.get_attribute("textContent")
-            or ""
-        ).strip()
-
-        if not texto:
-            continue
-
-        valor = converter_preco(
-            texto
-        )
-
-        if valor is not None and valor > 0:
-            preco_original = texto
-            preco_numero = valor
-            break
-
-    # ========================================================
-    # FALLBACK DO PREÇO
-    # Busca R$ diretamente no texto inteiro do card
-    # ========================================================
-
-    if preco_numero is None:
-
-        texto_card_completo = (
-            card.get_attribute("textContent")
-            or ""
-        )
-
-        encontrados = re.findall(
-            r"R\$\s*[\d.,]+",
-            texto_card_completo
-        )
-
-        for encontrado in encontrados:
-
-            valor = converter_preco(
-                encontrado
-            )
-
-            if valor is not None and valor > 0:
-                preco_original = encontrado
-                preco_numero = valor
+class Document(HTMLParser):
+    def __init__(self, html):
+        super().__init__()
+        self.root = Node()
+        self.stack = [self.root]
+        self.feed(html)
+    def handle_starttag(self, tag, attrs):
+        n = Node(tag, attrs)
+        self.stack[-1].children.append(n)
+        if tag not in ('area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'):
+            self.stack.append(n)
+    def handle_endtag(self, tag):
+        for i in range(len(self.stack)-1, 0, -1):
+            if self.stack[i].tag == tag:
+                del self.stack[i:]
                 break
-
-    if preco_numero is None:
-        raise ValueError(
-            f"Preço não encontrado em {modelo}"
-        )
-
-    # ========================================================
-    # LOCADORA
-    # ========================================================
-
-    locadora = "N/A"
-
-    try:
-
-        imagens = card.find_elements(
-            By.CSS_SELECTOR,
-            "[class*='SupplierInfo'] img"
-        )
-
-        for imagem in imagens:
-
-            alt = (
-                imagem.get_attribute("alt")
-                or ""
-            ).strip()
-
-            title = (
-                imagem.get_attribute("title")
-                or ""
-            ).strip()
-
-            if alt:
-                locadora = alt
-                break
-
-            if title:
-                locadora = title
-                break
-
-    except Exception:
-        pass
-
-    # ========================================================
-    # NOTA
-    # ========================================================
-
-    nota = "N/A"
-
-    try:
-
-        texto_card = (
-            card.text
-            or card.get_attribute("textContent")
-            or ""
-        )
-
-        linhas = [
-            linha.strip()
-            for linha in texto_card.split("\n")
-            if linha.strip()
-        ]
-
-        for linha in linhas:
-            try:
-                numero = float(
-                    linha.replace(",", ".")
-                )
-
-                if 5.0 <= numero <= 10.0:
-                    nota = linha
-                    break
-
-            except Exception:
-                continue
-
-    except Exception:
-        pass
-
-    # ========================================================
-    # AVALIAÇÕES
-    # ========================================================
-
-    avaliacoes = "N/A"
-
-    try:
-
-        elemento = card.find_element(
-            By.CSS_SELECTOR,
-            ".SupplierInfo-SupplierReviews"
-        )
-
-        avaliacoes = (
-            elemento.text
-            or elemento.get_attribute("textContent")
-            or "N/A"
-        ).strip()
-
-    except Exception:
-        pass
-
-    # ========================================================
-    # CATEGORIA
-    # ========================================================
-
-    categoria = "N/A"
-
-    try:
-
-        elemento = card.find_element(
-            By.CSS_SELECTOR,
-            ".CarTitle-Similar"
-        )
-
-        categoria = (
-            elemento.text
-            or elemento.get_attribute("textContent")
-            or "N/A"
-        ).strip()
-
-    except Exception:
-        pass
-
-    # ========================================================
-    # LINK
-    # ========================================================
-
-    link = ""
-
-    try:
-
-        elemento = card.find_element(
-            By.CSS_SELECTOR,
-            "a[href*='/offer/']"
-        )
-
-        link = (
-            elemento.get_attribute("href")
-            or ""
-        )
-
-    except Exception:
-        pass
-
-    return {
-        "Modelo": modelo,
-        "Categoria": categoria,
-        "Locadora": locadora,
-        "PrecoOriginal": preco_original,
-        "PrecoNumero": preco_numero,
-        "Nota": nota,
-        "Avaliacoes": avaliacoes,
-        "Link": link
-    }
+    def handle_data(self, data):
+        for n in self.stack:
+            n.parts.append(data)
 
 
-# ============================================================
-# SCRAPER
-# ============================================================
+def extrair_card(card, consulta, url):
+    def first(cls):
+        return next((n.text() for n in card.select(cls) if n.text()), 'Não informado')
+    modelo = first('CarTitle-Name')
+    if modelo == 'Não informado':
+        raise ValueError('Modelo ausente')
+    prices = {converter_preco(n.text()) for n in card.select('SearchCar-Price')}
+    if len(prices) != 1:
+        raise ValueError('Total ausente ou divergente entre versões do cartão')
+    total = prices.pop()
+    periodo = first('SearchCar-TotalForDays')
+    m = re.fullmatch(r'Total for (\d+) days?', periodo)
+    dias = math.ceil((datetime.fromisoformat(consulta['DropOffDateTime']) - datetime.fromisoformat(consulta['PickupDateTime'])).total_seconds()/86400)
+    if not m or int(m[1]) != dias:
+        raise ValueError('Período do cartão não confirmado: ' + periodo)
+    link = next((urljoin(url,n.attrs['href']) for n in card.all()
+                 if n.tag == 'a' and '/offer/' in n.attrs.get('href','')), '')
+    if not link or identidade(ler_consulta(link)) != identidade(consulta):
+        raise ValueError('Oferta sem link com os mesmos parâmetros da consulta')
+    supplier = next((n.attrs['alt'] for p in card.select('SupplierInfo-SupplierInfoWrapper')
+                     for n in p.all() if n.tag == 'img' and n.attrs.get('alt')), 'Não informado')
+    return dict(Modelo=modelo, Categoria=first('CarTitle-Similar'), Locadora=supplier,
+        TotalBRL=total, Moeda='BRL', Periodo=periodo,
+        Nota=first('SupplierInfo-RatingScore'), Avaliacoes=first('SupplierInfo-SupplierReviews'),
+        Link=link, Retirada=consulta['PickupDateTime'], Devolucao=consulta['DropOffDateTime'],
+        LocalRetiradaId=consulta['PickupLocationId'], LocalDevolucaoId=consulta['DropOffLocationId'],
+        Residencia=consulta['ResidenceCountry'], Idade=consulta['DriverAge'])
 
-def executar_scraper(
-    destino,
-    data_retirada,
-    data_devolucao,
-    limite_resultados,
-    log_widget
-):
 
+def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, log_widget):
+    app = log_widget.app
+    def log(message):
+        app.call_from_thread(log_widget.write_line, message)
     driver = None
-
+    pasta = Path.cwd() / 'resultados_carros'
+    stamp = datetime.now().strftime('%Y%m%d-%H%M%S-%f')
     try:
-
-        # ====================================================
-        # CHROMIUM
-        # ====================================================
-
-        log_widget.write_line(
-            "[⚙️] Inicializando Chromium..."
-        )
-
+        url = destino.strip()
+        if '/search/' not in urlparse(url).path:
+            raise ValueError('Cole o link da página de resultados /search/.')
+        consulta = ler_consulta(url)
+        for field, expected in [('PickupDateTime',data_retirada),('DropOffDateTime',data_devolucao)]:
+            date = datetime.strptime(expected, '%Y-%m-%d').date()
+            if datetime.fromisoformat(consulta[field]).date() != date:
+                raise ValueError('As datas digitadas diferem das datas do link. Gere a consulta correta no site.')
+        limite = int(limite_resultados)
+        if not 1 <= limite <= 100:
+            raise ValueError('Escolha de 1 a 100 ofertas para este teste.')
+        log('Datas conferidas no link: ' + consulta['PickupDateTime'] + ' → ' + consulta['DropOffDateTime'])
+        binary = shutil.which('chromium')
+        if not binary:
+            raise ValueError('Chromium não encontrado')
         options = webdriver.ChromeOptions()
-
-        options.binary_location = (
-            "/usr/sbin/chromium"
-        )
-
-        options.add_argument(
-            "--start-maximized"
-        )
-
-        options.add_argument(
-            "--window-size=1920,1080"
-        )
-
-        options.add_argument(
-            "--lang=en-US"
-        )
-
-        options.add_argument(
-            "--disable-blink-features=AutomationControlled"
-        )
-
-        options.add_experimental_option(
-            "excludeSwitches",
-            ["enable-automation"]
-        )
-
-        options.add_experimental_option(
-            "useAutomationExtension",
-            False
-        )
-
-        driver = webdriver.Chrome(
-            options=options
-        )
-
-        stealth(
-            driver,
-            languages=[
-                "en-US",
-                "en"
-            ],
-            vendor="Google Inc.",
-            platform="Win32",
-            webgl_vendor="Intel Inc.",
-            renderer="Intel Iris OpenGL Engine",
-            fix_hairline=True
-        )
-
-        wait = WebDriverWait(
-            driver,
-            30
-        )
-
-        # ====================================================
-        # ABRIR SITE
-        # ====================================================
-
-        log_widget.write_line(
-            "[🌐] Acessando DiscoverCars..."
-        )
-
-        driver.get(
-            "https://www.discovercars.com/"
-        )
-
-        time.sleep(3)
-
-        # ====================================================
-        # COOKIES
-        # ====================================================
-
-        try:
-
-            cookie = driver.find_element(
-                By.XPATH,
-                "//button["
-                "contains(., 'Accept') "
-                "or contains(., 'Agree') "
-                "or contains(., 'Aceitar')"
-                "]"
-            )
-
-            driver.execute_script(
-                "arguments[0].click();",
-                cookie
-            )
-
-            time.sleep(1)
-
-        except Exception:
-            pass
-
-        # ====================================================
-        # DESTINO
-        # ====================================================
-
-        log_widget.write_line(
-            f"[📍] Destino: {destino}"
-        )
-
-        campo_destino = wait.until(
-            EC.element_to_be_clickable(
-                (
-                    By.CSS_SELECTOR,
-                    "input.Autocomplete-EnterLocation"
-                    "[name='PickupLocation']"
-                )
-            )
-        )
-
-        driver.execute_script(
-            "arguments[0].scrollIntoView("
-            "{block:'center'}"
-            ");",
-            campo_destino
-        )
-
-        time.sleep(0.5)
-
-        try:
-            campo_destino.click()
-
-        except Exception:
-            driver.execute_script(
-                "arguments[0].click();",
-                campo_destino
-            )
-
-        campo_destino.send_keys(
-            Keys.CONTROL + "a"
-        )
-
-        campo_destino.send_keys(
-            Keys.BACKSPACE
-        )
-
-        for letra in destino:
-            campo_destino.send_keys(
-                letra
-            )
-
-            time.sleep(0.10)
-
-        log_widget.write_line(
-            "[⏳] Aguardando sugestões..."
-        )
-
-        time.sleep(3)
-
-        # ====================================================
-        # SUGESTÃO
-        # ====================================================
-
-        sugestao_escolhida = False
-
-        try:
-
-            sugestoes = driver.find_elements(
-                By.XPATH,
-                "//li[@role='option'] "
-                "| "
-                "//div[contains(@class,'autocomplete')]//li "
-                "| "
-                "//div[contains(@class,'suggestion')]//li"
-            )
-
-            if sugestoes:
-
-                driver.execute_script(
-                    "arguments[0].click();",
-                    sugestoes[0]
-                )
-
-                sugestao_escolhida = True
-
-                log_widget.write_line(
-                    "[✅] Destino selecionado"
-                )
-
-        except Exception:
-            pass
-
-        if not sugestao_escolhida:
-
-            log_widget.write_line(
-                "[⚠️] Dropdown direto falhou, "
-                "tentando teclado..."
-            )
-
-            campo_destino.send_keys(
-                Keys.ARROW_DOWN
-            )
-
-            time.sleep(0.5)
-
-            campo_destino.send_keys(
-                Keys.ENTER
-            )
-
-        time.sleep(1.5)
-
-        # ====================================================
-        # SEARCH
-        # ====================================================
-
-        log_widget.write_line(
-            "[🔍] Clicando Search now..."
-        )
-
-        try:
-
-            botao = wait.until(
-                EC.element_to_be_clickable(
-                    (
-                        By.XPATH,
-                        "//button[contains(.,'Search now')]"
-                    )
-                )
-            )
-
-            driver.execute_script(
-                "arguments[0].click();",
-                botao
-            )
-
-        except Exception:
-            campo_destino.send_keys(
-                Keys.ENTER
-            )
-
-        log_widget.write_line(
-            "[⏳] Aguardando página de resultados..."
-        )
-
-        # ====================================================
-        # AGUARDAR /SEARCH/
-        # ====================================================
-
-        try:
-
-            wait.until(
-                lambda d:
-                "/search/" in d.current_url
-            )
-
-        except Exception:
-            pass
-
-        log_widget.write_line(
-            "[🌐] Página de resultados aberta"
-        )
-
-        # ====================================================
-        # PRIMEIRO CARD
-        # ====================================================
-
-        wait.until(
-            EC.presence_of_element_located(
-                (
-                    By.CSS_SELECTOR,
-                    ".SearchList-Card"
-                )
-            )
-        )
-
-        log_widget.write_line(
-            "[✅] Resultados carregados"
-        )
-
-        time.sleep(2)
-
-        # ====================================================
-        # ORDENAR POR PREÇO
-        # ====================================================
-
-        log_widget.write_line(
-            "[💰] Ordenando por menor preço..."
-        )
-
-        try:
-
-            select_element = wait.until(
-                EC.presence_of_element_located(
-                    (
-                        By.CSS_SELECTOR,
-                        "select[aria-label='Sort by']"
-                    )
-                )
-            )
-
-            seletor = Select(
-                select_element
-            )
-
-            seletor.select_by_value(
-                "Price"
-            )
-
-            log_widget.write_line(
-                "[✅] Ordenação Price selecionada"
-            )
-
-            time.sleep(5)
-
-            primeiro_card = wait.until(
-                EC.presence_of_element_located(
-                    (
-                        By.CSS_SELECTOR,
-                        ".SearchList-Card"
-                    )
-                )
-            )
-
-            driver.execute_script(
-                "arguments[0].scrollIntoView("
-                "{block:'start'}"
-                ");",
-                primeiro_card
-            )
-
-            time.sleep(2)
-
-        except Exception as e:
-
-            log_widget.write_line(
-                "[⚠️] Ordenação automática falhou:"
-            )
-
-            log_widget.write_line(
-                f"    {str(e)[:150]}"
-            )
-
-        # ====================================================
-        # LIMITE
-        # ====================================================
-
-        try:
-
-            limite = int(
-                limite_resultados
-            )
-
-        except Exception:
-            limite = 10
-
-        if limite < 1:
-            limite = 10
-
-        # ====================================================
-        # COLETAR CARDS
-        # ====================================================
-
-        log_widget.write_line(
-            f"[🚗] Capturando os {limite} "
-            "primeiros preços..."
-        )
-
-        carros = {}
-
-        tentativas_sem_novo = 0
-        ultimo_total = 0
-
-        for ciclo in range(40):
-
-            cards = driver.find_elements(
-                By.CSS_SELECTOR,
-                ".SearchList-Card"
-            )
-
-            log_widget.write_line(
-                f"[📦] Cards visíveis: {len(cards)}"
-            )
-
-            ultimo_card = None
-
-            for card in cards:
-
-                ultimo_card = card
-
+        options.binary_location = binary
+        options.add_argument('--window-size=1200,800')
+        options.add_argument('--lang=en-US')
+        driver = webdriver.Chrome(options=options)
+        driver.set_page_load_timeout(60)
+        log('Abrindo consulta. Se houver aviso de cookies, feche-o na janela.')
+        driver.get(url)
+        wait = WebDriverWait(driver, 60)
+        wait.until(lambda d: d.find_elements(By.CSS_SELECTOR,'.SearchList-Card'))
+        log('Ordenando por preço...')
+        def ordenar(d):
+            for el in d.find_elements(By.CSS_SELECTOR,'select[aria-label="Sort by"]'):
                 try:
-
-                    carro = extrair_card(
-                        card
-                    )
-
-                    if carro["Link"]:
-                        chave = carro["Link"]
-
-                    else:
-                        chave = (
-                            carro["Modelo"]
-                            + "|"
-                            + carro["PrecoOriginal"]
-                        )
-
-                    if chave not in carros:
-
-                        carros[chave] = carro
-
-                        log_widget.write_line(
-                            f"  [+] "
-                            f"{carro['Modelo']} | "
-                            f"{formatar_preco(carro['PrecoNumero'])}"
-                        )
-
+                    if el.is_displayed():
+                        Select(el).select_by_value('Price')
+                        return True
                 except Exception:
                     continue
-
-            if len(carros) >= limite:
-                break
-
-            if len(carros) == ultimo_total:
-                tentativas_sem_novo += 1
-
-            else:
-                tentativas_sem_novo = 0
-                ultimo_total = len(carros)
-
-            if tentativas_sem_novo >= 5:
-
-                log_widget.write_line(
-                    "[⚠️] Lista parou de fornecer novos cards."
-                )
-
-                break
-
-            if ultimo_card is not None:
-
-                try:
-
-                    driver.execute_script(
-                        """
-                        arguments[0].scrollIntoView({
-                            behavior: 'instant',
-                            block: 'end'
-                        });
-                        """,
-                        ultimo_card
-                    )
-
-                except Exception:
-
-                    driver.execute_script(
-                        "window.scrollBy(0, 500);"
-                    )
-
-            else:
-
-                driver.execute_script(
-                    "window.scrollBy(0, 400);"
-                )
-
-            time.sleep(1)
-
-        # ====================================================
-        # RESULTADOS
-        # ====================================================
-
-        resultados = list(
-            carros.values()
-        )
-
-        resultados.sort(
-            key=lambda x:
-            x["PrecoNumero"]
-        )
-
-        resultados = resultados[:limite]
-
-        log_widget.write_line("")
-
-        log_widget.write_line(
-            "================================"
-        )
-
-        if not resultados:
-
-            log_widget.write_line(
-                "[❌] Nenhuma oferta capturada"
-            )
-
-            driver.save_screenshot(
-                "erro_sem_carros.png"
-            )
-
-            return
-
-        log_widget.write_line(
-            f"[🏆] TOP {len(resultados)} "
-            "MENORES PREÇOS"
-        )
-
-        log_widget.write_line(
-            "================================"
-        )
-
-        for numero, carro in enumerate(
-            resultados,
-            1
-        ):
-
-            preco_formatado = formatar_preco(
-                carro["PrecoNumero"]
-            )
-
-            log_widget.write_line(
-                f"{numero}. "
-                f"{carro['Modelo']} | "
-                f"{preco_formatado}"
-            )
-
-            log_widget.write_line(
-                f"    Locadora: "
-                f"{carro['Locadora']}"
-            )
-
-            log_widget.write_line(
-                f"    Nota: "
-                f"{carro['Nota']}"
-            )
-
-        # ====================================================
-        # CSV
-        # ====================================================
-
-        nome_destino = (
-            destino
-            .lower()
-            .replace(" ", "_")
-            .replace("/", "_")
-        )
-
-        nome_csv = (
-            f"discovercars_{nome_destino}.csv"
-        )
-
-        with open(
-            nome_csv,
-            "w",
-            newline="",
-            encoding="utf-8"
-        ) as arquivo:
-
-            campos = [
-                "Modelo",
-                "Categoria",
-                "Locadora",
-                "Preco",
-                "Nota",
-                "Avaliacoes",
-                "Link"
-            ]
-
-            writer = csv.DictWriter(
-                arquivo,
-                fieldnames=campos
-            )
-
-            writer.writeheader()
-
-            for carro in resultados:
-
-                writer.writerow({
-                    "Modelo":
-                        carro["Modelo"],
-
-                    "Categoria":
-                        carro["Categoria"],
-
-                    "Locadora":
-                        carro["Locadora"],
-
-                    "Preco":
-                        formatar_preco(
-                            carro["PrecoNumero"]
-                        ),
-
-                    "Nota":
-                        carro["Nota"],
-
-                    "Avaliacoes":
-                        carro["Avaliacoes"],
-
-                    "Link":
-                        carro["Link"]
-                })
-
-        log_widget.write_line("")
-
-        log_widget.write_line(
-            f"[💾] CSV salvo: {nome_csv}"
-        )
-
-        log_widget.write_line(
-            "[🎉] CONCLUÍDO!"
-        )
-
+            return False
         try:
-
-            driver.save_screenshot(
-                "resultado_final.png"
-            )
-
+            WebDriverWait(driver, 10).until(ordenar)
         except Exception:
-            pass
-
-    # ========================================================
-    # ERRO
-    # ========================================================
-
-    except Exception as e:
-
-        log_widget.write_line("")
-
-        log_widget.write_line(
-            f"[❌] {type(e).__name__}"
-        )
-
-        log_widget.write_line(
-            f"[❌] {str(e)[:300]}"
-        )
-
+            log('Selecione manualmente Sort by → Price. Aguardando até 60 segundos...')
+        def ordenado(d):
+            els = d.find_elements(By.CSS_SELECTOR, 'select[aria-label="Sort by"]')
+            return bool(els) and all(e.get_attribute('value') == 'Price' for e in els)
+        wait.until(ordenado)
+        log('Ordenação Price confirmada. Coletando ofertas estáveis...')
+        ofertas, erros = {}, set()
+        assinatura, desde = None, time.monotonic()
+        inicio = time.monotonic()
+        sem_novo = 0
+        cobertura = 'Não identificado'
+        while time.monotonic() - inicio < 180:
+            if not ordenado(driver):
+                raise ValueError('Ordenação mudou durante a coleta')
+            root = Document(driver.page_source).root
+            checks = [n for n in root.all() if n.tag == 'input' and 'Full Coverage' in n.attrs.get('aria-label','')]
+            # checked é propriedade dinâmica: consultar o navegador, não o HTML.
+            ce = driver.find_elements(By.CSS_SELECTOR,'.CoverageTumbler input[type="checkbox"]')
+            atual = ('Incluída' if ce[0].is_selected() else 'Não incluída') if ce else 'Não identificado'
+            if ofertas and atual != cobertura:
+                raise ValueError('Cobertura adicional mudou durante a coleta')
+            cobertura = atual
+            lote = []
+            for card in root.select('SearchList-Card'):
+                try:
+                    lote.append(extrair_card(card, consulta, driver.current_url))
+                except ValueError as exc:
+                    erros.add(str(exc))
+            sig = tuple((r['Link'],str(r['TotalBRL'])) for r in lote)
+            if not sig or sig != assinatura:
+                assinatura, desde = sig, time.monotonic()
+            elif time.monotonic() - desde >= 3:
+                antes = len(ofertas)
+                for r in lote:
+                    r.update(CoberturaAdicional=cobertura, ColetadoEm=datetime.now().astimezone().isoformat(),
+                        Escopo='Menores totais entre ofertas coletadas; não garante todas as ofertas disponíveis')
+                    ofertas[r['Link']] = r
+                log(f'Ofertas confirmadas: {len(ofertas)}/{limite}')
+                if len(ofertas) >= limite:
+                    break
+                sem_novo = sem_novo+1 if len(ofertas)==antes else 0
+                if sem_novo >= 5:
+                    break
+                driver.execute_script('window.scrollBy(0, Math.max(300, window.innerHeight * 0.65))')
+                assinatura, desde = None, time.monotonic()
+            time.sleep(.5)
+        if not ofertas:
+            raise ValueError('Nenhum total confirmado. ' + '; '.join(sorted(erros))[:600])
+        resultados = sorted(ofertas.values(), key=lambda r:r['TotalBRL'])[:limite]
+        pasta.mkdir(exist_ok=True)
+        path = pasta / f'discovercars_{stamp}.csv'
+        with path.open('x', newline='', encoding='utf-8-sig') as f:
+            writer = csv.DictWriter(f, fieldnames=list(resultados[0]), delimiter=';')
+            writer.writeheader()
+            writer.writerows(resultados)
+        log('Menores totais COLETADOS:')
+        for r in resultados:
+            log(f"{r['Modelo']} | {r['Locadora']} | {formatar_preco(r['TotalBRL'])}")
+        log(f'Exportadas: {len(resultados)} | Limite solicitado: {limite} | Cobertura: {cobertura}')
+        if len(resultados)<limite:
+            log('Consulta parcial: não atingiu o limite solicitado.')
+        for err in sorted(erros):
+            log('Cartão não aproveitado: ' + err)
+        log('CSV salvo: ' + str(path))
+    except Exception as exc:
+        log(f'FALHA: {type(exc).__name__}: {str(exc)[:700]}')
         if driver:
-
             try:
-
-                driver.save_screenshot(
-                    "erro_discovercars.png"
-                )
-
-                with open(
-                    "erro_discovercars.html",
-                    "w",
-                    encoding="utf-8"
-                ) as arquivo:
-
-                    arquivo.write(
-                        driver.page_source
-                    )
-
-                log_widget.write_line(
-                    "[📸] Arquivos de diagnóstico salvos."
-                )
-
+                pasta.mkdir(exist_ok=True)
+                (pasta / f'diagnostico_{stamp}.html').write_text(driver.page_source, encoding='utf-8')
+                driver.save_screenshot(str(pasta / f'diagnostico_{stamp}.png'))
+                log('Diagnóstico salvo em ' + str(pasta))
             except Exception:
                 pass
-
     finally:
-
         if driver:
-
-            time.sleep(2)
-
             try:
                 driver.quit()
-
             except Exception:
                 pass
+        def liberar():
+            app.buscando = False
+            app.query_one('#btn_buscar', Button).disabled = False
+        app.call_from_thread(liberar)
 
-
-# ============================================================
-# INTERFACE
-# ============================================================
 
 class RentalCarsScraperApp(App):
 
@@ -1088,29 +329,29 @@ class RentalCarsScraperApp(App):
             )
 
             yield Label(
-                "Destino:"
+                "Link da consulta (datas e local definidos no site):"
             )
 
             yield Input(
-                placeholder="Ibiza Airport",
+                placeholder="Cole o link completo /search/ do DiscoverCars",
                 id="destino"
             )
 
             yield Label(
-                "Data Retirada (AAAA-MM-DD):"
+                "Confirme a retirada (AAAA-MM-DD):"
             )
 
             yield Input(
-                placeholder="2026-08-14",
+                placeholder="2026-09-12",
                 id="retirada"
             )
 
             yield Label(
-                "Data Devolução (AAAA-MM-DD):"
+                "Confirme a devolução (AAAA-MM-DD):"
             )
 
             yield Input(
-                placeholder="2026-08-22",
+                placeholder="2026-09-13",
                 id="devolucao"
             )
 
@@ -1163,7 +404,7 @@ class RentalCarsScraperApp(App):
         if not destino:
 
             log.write_line(
-                "[🚨] Digite o destino!"
+                "[🚨] Cole o link da consulta!"
             )
 
             return
@@ -1188,6 +429,12 @@ class RentalCarsScraperApp(App):
         log.write_line(
             f"[🔢] Top {limite}"
         )
+
+        if getattr(self, "buscando", False):
+            log.write_line("Já existe uma consulta em execução.")
+            return
+        self.buscando = True
+        self.query_one("#btn_buscar", Button).disabled = True
 
         self.run_worker(
 
