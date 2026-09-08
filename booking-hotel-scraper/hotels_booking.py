@@ -244,7 +244,7 @@ def is_petropolis(destination):
     return value == 'petropolis'
 
 
-def run_scraping(destination, checkin, checkout):
+def run_scraping(destination, checkin, checkout, *, return_records=False):
     from datetime import datetime
     from pathlib import Path
     from urllib.parse import urlencode
@@ -330,6 +330,8 @@ def run_scraping(destination, checkin, checkout):
     totals = int(df['Total Displayed (BRL)'].notna().sum())
     print(f'\nExportadas: {len(df)} | Com preço: {valid} | Totais: {totals} | Endereços: {addresses} | Estrelas: {stars}', flush=True)
     print(f'Arquivo salvo: {filename}', flush=True)
+    if return_records:
+        return {"records": hotels, "excel": str(filename), "search_url": url}
     return len(df), str(filename)
 
 
