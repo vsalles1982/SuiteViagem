@@ -293,45 +293,58 @@ def obter_periodo_local(evento):
 
 
 def obter_preco(evento):
-    ofertas = evento.get("offers", [])
+    """Menor valor anunciado entre lotes com disponibilidade explícita.
 
+    Não confirma taxas finais nem condições de ingresso individual/duplo.
+    Ofertas sem disponibilidade conhecida não são tratadas como compráveis.
+    """
+    from decimal import Decimal, InvalidOperation
+
+    ofertas = evento.get("offers", [])
     if isinstance(ofertas, dict):
         ofertas = [ofertas]
-
-    precos = []
-
-    for oferta in ofertas:
-        preco = oferta.get("price")
-        moeda = oferta.get("priceCurrency", "")
-
-        if isinstance(preco, (int, float)):
-            precos.append(
-                (float(preco), moeda)
-            )
-
-    if not precos:
+    if not isinstance(ofertas, list):
         return "Não informado"
 
-    menor_preco, moeda = min(
-        precos,
-        key=lambda item: item[0],
-    )
+    precos = []
+    agora = datetime.now(ZoneInfo("UTC"))
+    for oferta in ofertas:
+        if not isinstance(oferta, dict):
+            continue
+        status = str(oferta.get("availability", "")).rstrip("/").rsplit("/", 1)[-1]
+        if status not in {"InStock", "LimitedAvailability"}:
+            continue
+        # Não apresentar como disponível um lote ainda fora de sua janela.
+        valido = True
+        for campo, inicial in (("validFrom", True), ("validThrough", False),
+                               ("availabilityStarts", True), ("availabilityEnds", False)):
+            if oferta.get(campo):
+                try:
+                    limite = converter_data(oferta[campo])
+                    if limite.tzinfo is None:
+                        valido = False
+                    elif (inicial and agora < limite) or (not inicial and agora > limite):
+                        valido = False
+                except (ValueError, TypeError, AttributeError):
+                    valido = False
+        if not valido:
+            continue
+        moeda = str(oferta.get("priceCurrency", "")).strip().upper()
+        if not moeda:
+            continue
+        try:
+            preco = Decimal(str(oferta.get("price")))
+        except (InvalidOperation, ValueError):
+            continue
+        if preco.is_finite() and preco >= 0:
+            precos.append((preco, moeda))
 
-    simbolos = {
-        "EUR": "€",
-        "BRL": "R$",
-        "USD": "US$",
-        "GBP": "£",
-    }
-
-    simbolo = simbolos.get(moeda, moeda)
-
-    if menor_preco.is_integer():
-        valor = str(int(menor_preco))
-    else:
-        valor = f"{menor_preco:.2f}"
-
-    return f"{simbolo} {valor}".strip()
+    if not precos or len({moeda for _, moeda in precos}) != 1:
+        return "Não informado"
+    menor_preco, moeda = min(precos, key=lambda item: item[0])
+    simbolo = {"EUR": "€", "BRL": "R$", "USD": "US$", "GBP": "£"}.get(moeda, moeda)
+    valor = f"{menor_preco:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"{simbolo} {valor}"
 
 
 def obter_local(evento):
