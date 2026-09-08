@@ -1,6 +1,6 @@
 """DiscoverCars: consulta por URL, datas conferidas e totais em BRL.
-Primeira etapa: configure local, horários, residência e idade no site e cole
-seu link /search/. Não automatiza o calendário nesta versão.
+Busca por local e calendário: 11h, Brasil, idade 35 e mesmo ponto.
+Também aceita o link /search/ para consultas previamente configuradas.
 """
 import base64
 import csv
@@ -136,6 +136,201 @@ def extrair_card(card, consulta, url):
         Residencia=consulta['ResidenceCountry'], Idade=consulta['DriverAge'])
 
 
+def normalizar_local(texto):
+    import unicodedata
+    return ' '.join(unicodedata.normalize('NFKD', texto).encode('ascii', 'ignore').decode().lower().split())
+
+
+def escolher_rotulo(destino, opcoes):
+    """Exigir correspondência única; 'Ibiza' não vira aeroporto implicitamente."""
+    alvo = normalizar_local(destino)
+    exatos = [rotulo for rotulo, lugar in opcoes
+              if alvo in (normalizar_local(rotulo), normalizar_local(lugar))]
+    if not exatos:
+        exatos = [rotulo for rotulo, lugar in opcoes
+                  if normalizar_local(re.sub(r'\s*\([A-Z]{3}\)\s*$', '', lugar)) == alvo]
+    unicos = list(dict.fromkeys(exatos))
+    if len(unicos) != 1:
+        raise ValueError('Local ambíguo ou não identificado. Digite uma opção específica: ' +
+                         ' | '.join(dict.fromkeys(rotulo for rotulo, _ in opcoes))[:1000])
+    return unicos[0]
+
+
+def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
+    from selenium.webdriver.common.keys import Keys
+    wait = WebDriverWait(driver, 30)
+
+    def visiveis(css):
+        resultado = []
+        for e in driver.find_elements(By.CSS_SELECTOR, css):
+            if not e.is_displayed():
+                continue
+            ativo = driver.execute_script("""
+                let node = arguments[0];
+                while (node) {
+                    if (node.classList && node.classList.contains('Modal-Container') &&
+                        !node.classList.contains('Modal-Container_isActive')) return false;
+                    if (node.getAttribute && node.getAttribute('aria-hidden') === 'true') return false;
+                    node = node.parentElement;
+                }
+                return true;
+            """, e)
+            if ativo:
+                resultado.append(e)
+        return resultado
+
+    def clicar(css):
+        def tentar(d):
+            from selenium.common.exceptions import (
+                ElementClickInterceptedException, StaleElementReferenceException,
+                ElementNotInteractableException,
+            )
+            try:
+                elementos = visiveis(css)
+                if not elementos:
+                    return False
+                elemento = elementos[0]
+                driver.execute_script('arguments[0].scrollIntoView({block:"center"});', elemento)
+                elemento.click()
+                return True
+            except (ElementClickInterceptedException, StaleElementReferenceException,
+                    ElementNotInteractableException):
+                return False
+        wait.until(tentar)
+
+    driver.get('https://www.discovercars.com/')
+    log('Preenchendo o local. Se houver aviso de cookies, feche-o na janela.')
+    wait.until(lambda d: visiveis('form.SearchModifier-Form input[name="PickupLocation"]') or False)
+    overlays = visiveis('form.SearchModifier-Form .Autocomplete-LocationPickerOverlay')
+    if overlays:
+        log('Abrindo seletor de local no layout compacto...')
+        clicar('form.SearchModifier-Form .Autocomplete-LocationPickerOverlay')
+        seletor = '.SearchModifier-MobileLocationsModal.Modal-Container_isActive input[name="PickupLocation"]'
+        wait.until(lambda d: visiveis(seletor) or False)
+    else:
+        seletor = 'form.SearchModifier-Form input[name="PickupLocation"]'
+    clicar(seletor)
+    campo = visiveis(seletor)[0]
+    campo.send_keys(Keys.CONTROL + 'a')
+    campo.send_keys(Keys.BACKSPACE)
+    campo.send_keys(destino)
+    anterior, desde = None, time.monotonic()
+
+    def sugestoes_estaveis(d):
+        nonlocal anterior, desde
+        dados = [(e.get_attribute('data-label'), e.find_element(By.CSS_SELECTOR, '.Autocomplete-AutocompletePlace').text)
+                 for e in visiveis('.Autocomplete-AutocompleteItem[data-label]')]
+        if not dados or dados != anterior:
+            anterior, desde = dados, time.monotonic()
+            return False
+        return dados if time.monotonic() - desde >= 2 else False
+
+    opcoes = wait.until(sugestoes_estaveis)
+    rotulo = escolher_rotulo(destino, opcoes)
+    escolhido = next(e for e in visiveis('.Autocomplete-AutocompleteItem[data-label]')
+                     if e.get_attribute('data-label') == rotulo)
+    escolhido.click()
+
+    def local_confirmado(d):
+        textos = [e.get_attribute('value') or '' for e in visiveis('input[name="PickupLocation"]')]
+        textos += [e.text for e in visiveis('.Autocomplete-SelectedLocation')]
+        return normalizar_local(rotulo) in [normalizar_local(t) for t in textos]
+
+    wait.until(local_confirmado)
+    log('Local selecionado: ' + rotulo)
+    # A primeira versão por local faz devolução no mesmo ponto.
+    for checkbox in visiveis('input[name="IsSameLocation"]'):
+        if not checkbox.is_selected():
+            checkbox.click()
+    campos_data = wait.until(lambda d: visiveis('.DatePicker-CalendarField') or False)
+    campos_data[0].click()
+    wait.until(lambda d: visiveis('.rdrCalendarWrapper') or False)
+    # O cabeçalho de datas fica oculto no layout móvel, mas registra
+    # qual extremo do intervalo receberá o próximo clique no calendário.
+    def fase_data(placeholder):
+        calendarios = visiveis('.rdrCalendarWrapper')
+        return any(c.find_elements(By.CSS_SELECTOR,
+            '.rdrDateDisplayItemActive input[placeholder="' + placeholder + '"]')
+            for c in calendarios)
+
+    if not fase_data('Early'):
+        raise ValueError('Calendário não iniciou na retirada. Feche a consulta e tente novamente.')
+    log('Calendário aberto: selecionando retirada e devolução pelos dias...')
+    meses = ['January','February','March','April','May','June','July','August',
+             'September','October','November','December']
+
+    def clicar_dia(data):
+        titulo = f'{meses[data.month-1]} {data.year}'
+        candidatos = [m for m in visiveis('.rdrMonth')
+                      if m.find_element(By.CSS_SELECTOR, '.rdrMonthName').text.strip() == titulo]
+        if not candidatos:
+            # innerText pode ficar vazio em meses fora da área visível.
+            candidatos = [m for m in visiveis('.rdrMonth')
+                          if (m.find_element(By.CSS_SELECTOR, '.rdrMonthName').get_attribute('textContent') or '').strip() == titulo]
+        if not candidatos:
+            raise ValueError('Mês não encontrado no calendário carregado: ' + titulo)
+        for mes in candidatos:
+            if not mes.is_displayed():
+                continue
+            for botao in mes.find_elements(By.CSS_SELECTOR, 'button.rdrDay'):
+                classes = (botao.get_attribute('class') or '').split()
+                numero = botao.find_element(By.CSS_SELECTOR, '.rdrDayNumber').get_attribute('textContent').strip()
+                if numero == str(data.day) and 'rdrDayPassive' not in classes:
+                    if 'rdrDayDisabled' in classes or not botao.is_enabled():
+                        raise ValueError('Data indisponível no calendário: ' + data.isoformat())
+                    driver.execute_script('arguments[0].scrollIntoView({block:"center"});', botao)
+                    botao.click()
+                    return
+        raise ValueError('Dia não localizado no calendário ativo: ' + data.isoformat())
+
+    clicar_dia(retirada)
+    # O calendário deve passar da retirada para a devolução.
+    wait.until(lambda d: fase_data('Continuous'))
+    log('Retirada selecionada: ' + retirada.isoformat())
+    clicar_dia(devolucao)
+    log('Devolução selecionada: ' + devolucao.isoformat())
+    botoes = driver.find_elements(By.XPATH, '//button[normalize-space(.)="Select dates"]')
+    botao = next((b for b in botoes if b.is_displayed()), None)
+    if botao is None:
+        raise ValueError('Botão Select dates não encontrado')
+    botao.click()
+    # Fixar os horários deste teste em 11h, sem assumir defaults silenciosamente.
+    for indice in range(2):
+        campos = visiveis('.SearchModifier-TimeSelect')
+        if len(campos) != 2:
+            raise ValueError('Não foi possível identificar os dois horários')
+        if campos[indice].text.strip() != '11:00':
+            campos[indice].click()
+            def opcao_hora(d):
+                for item in visiveis('.CustomSelect-MobileOption'):
+                    if item.text.strip() == '11:00':
+                        return item
+                return False
+            wait.until(opcao_hora).click()
+    log('Datas preenchidas; enviando a pesquisa...')
+    wait.until(lambda d: next(iter(visiveis('button.SearchModifier-SubmitBtn')), False)).click()
+
+    def resultado(d):
+        if '/search/' not in urlparse(d.current_url).path:
+            return False
+        try:
+            return ler_consulta(d.current_url)
+        except ValueError:
+            return False
+
+    consulta = WebDriverWait(driver, 60).until(resultado)
+    esperado_r = retirada.isoformat() + 'T11:00:00'
+    esperado_d = devolucao.isoformat() + 'T11:00:00'
+    if consulta['PickupDateTime'] != esperado_r or consulta['DropOffDateTime'] != esperado_d:
+        raise ValueError('O site enviou datas/horários diferentes dos solicitados; coleta cancelada.')
+    if consulta['PickupLocationId'] != consulta['DropOffLocationId']:
+        raise ValueError('O site enviou locais diferentes para retirada e devolução.')
+    if consulta['ResidenceCountry'] != 'BR' or consulta['DriverAge'] != 35:
+        raise ValueError('Esta etapa usa residência Brasil e idade 35. Confira essas opções no site; coleta cancelada.')
+    log('Consulta confirmada: ' + rotulo + ' | ' + esperado_r + ' → ' + esperado_d)
+    return driver.current_url, consulta, rotulo
+
+
 def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, log_widget):
     app = log_widget.app
     def log(message):
@@ -145,17 +340,24 @@ def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, 
     stamp = datetime.now().strftime('%Y%m%d-%H%M%S-%f')
     try:
         url = destino.strip()
-        if '/search/' not in urlparse(url).path:
-            raise ValueError('Cole o link da página de resultados /search/.')
-        consulta = ler_consulta(url)
-        for field, expected in [('PickupDateTime',data_retirada),('DropOffDateTime',data_devolucao)]:
-            date = datetime.strptime(expected, '%Y-%m-%d').date()
-            if datetime.fromisoformat(consulta[field]).date() != date:
-                raise ValueError('As datas digitadas diferem das datas do link. Gere a consulta correta no site.')
+        retirada = datetime.strptime(data_retirada, '%Y-%m-%d').date()
+        devolucao = datetime.strptime(data_devolucao, '%Y-%m-%d').date()
+        if devolucao <= retirada:
+            raise ValueError('A devolução precisa ser posterior à retirada.')
+        por_link = url.startswith(('https://', 'http://'))
+        consulta = None
+        if por_link:
+            if '/search/' not in urlparse(url).path:
+                raise ValueError('Cole o link de resultados /search/ ou digite um local.')
+            consulta = ler_consulta(url)
+            if (datetime.fromisoformat(consulta['PickupDateTime']).date() != retirada or
+                    datetime.fromisoformat(consulta['DropOffDateTime']).date() != devolucao):
+                raise ValueError('As datas digitadas diferem das datas do link.')
+        elif retirada < datetime.now().date():
+            raise ValueError('A retirada não pode estar no passado.')
         limite = int(limite_resultados)
         if not 1 <= limite <= 100:
             raise ValueError('Escolha de 1 a 100 ofertas para este teste.')
-        log('Datas conferidas no link: ' + consulta['PickupDateTime'] + ' → ' + consulta['DropOffDateTime'])
         binary = shutil.which('chromium')
         if not binary:
             raise ValueError('Chromium não encontrado')
@@ -166,7 +368,13 @@ def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, 
         driver = webdriver.Chrome(options=options)
         driver.set_page_load_timeout(60)
         log('Abrindo consulta. Se houver aviso de cookies, feche-o na janela.')
-        driver.get(url)
+        local_selecionado = 'Conforme link informado'
+        if por_link:
+            driver.get(url)
+        else:
+            url, consulta, local_selecionado = abrir_busca_por_local(
+                driver, destino.strip(), retirada, devolucao, log)
+        log('Datas conferidas: ' + consulta['PickupDateTime'] + ' → ' + consulta['DropOffDateTime'])
         wait = WebDriverWait(driver, 60)
         wait.until(lambda d: d.find_elements(By.CSS_SELECTOR,'.SearchList-Card'))
         log('Ordenando por preço...')
@@ -241,7 +449,7 @@ def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, 
             elif time.monotonic() - desde >= 3:
                 antes = len(ofertas)
                 for r in lote:
-                    r.update(CoberturaAdicional=cobertura, ColetadoEm=datetime.now().astimezone().isoformat(),
+                    r.update(LocalSelecionado=local_selecionado, CoberturaAdicional=cobertura, ColetadoEm=datetime.now().astimezone().isoformat(),
                         Escopo='Menores totais entre ofertas coletadas; não garante todas as ofertas disponíveis')
                     ofertas[r['Link']] = r
                 log(f'Ofertas confirmadas: {len(ofertas)}/{limite}')
@@ -272,10 +480,12 @@ def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, 
             log('Cartão não aproveitado: ' + err)
         log('CSV salvo: ' + str(path))
     except Exception as exc:
-        log(f'FALHA: {type(exc).__name__}: {str(exc)[:700]}')
+        log(f'FALHA: {type(exc).__name__}: {str(exc).split(chr(10) + "Stacktrace:")[0][:900]}')
         if driver:
             try:
                 pasta.mkdir(exist_ok=True)
+                import traceback
+                (pasta / f'diagnostico_{stamp}.txt').write_text(traceback.format_exc(), encoding='utf-8')
                 (pasta / f'diagnostico_{stamp}.html').write_text(driver.page_source, encoding='utf-8')
                 driver.save_screenshot(str(pasta / f'diagnostico_{stamp}.png'))
                 log('Diagnóstico salvo em ' + str(pasta))
@@ -303,8 +513,11 @@ class RentalCarsScraperApp(App):
     }
 
     Container {
-        width: 64;
+        width: 76;
+        max-width: 100%;
         height: auto;
+        max-height: 100%;
+        overflow-y: auto;
         border: solid #7aa2f7;
         background: #24283b;
         padding: 1 2;
@@ -354,16 +567,18 @@ class RentalCarsScraperApp(App):
             )
 
             yield Label(
-                "Link da consulta (datas e local definidos no site):"
+                "Local específico ou link (ex.: Ibiza Airport):"
             )
 
             yield Input(
-                placeholder="Cole o link completo /search/ do DiscoverCars",
+                placeholder="Ibiza Airport",
                 id="destino"
             )
 
+            yield Label("Por local: 11h → 11h · Brasil · idade 35 · devolução no mesmo local")
+
             yield Label(
-                "Confirme a retirada (AAAA-MM-DD):"
+                "Retirada (AAAA-MM-DD):"
             )
 
             yield Input(
@@ -372,7 +587,7 @@ class RentalCarsScraperApp(App):
             )
 
             yield Label(
-                "Confirme a devolução (AAAA-MM-DD):"
+                "Devolução (AAAA-MM-DD):"
             )
 
             yield Input(
@@ -429,7 +644,7 @@ class RentalCarsScraperApp(App):
         if not destino:
 
             log.write_line(
-                "[🚨] Cole o link da consulta!"
+                "[🚨] Digite o local ou cole o link da consulta!"
             )
 
             return
