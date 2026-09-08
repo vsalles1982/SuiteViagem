@@ -20,7 +20,7 @@ from textual.widgets import Header, Input, Button, Label, Log
 from textual.containers import Container
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait, Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 def ler_consulta(url):
@@ -170,23 +170,48 @@ def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, 
         wait = WebDriverWait(driver, 60)
         wait.until(lambda d: d.find_elements(By.CSS_SELECTOR,'.SearchList-Card'))
         log('Ordenando por preço...')
-        def ordenar(d):
-            for el in d.find_elements(By.CSS_SELECTOR,'select[aria-label="Sort by"]'):
-                try:
-                    if el.is_displayed():
-                        Select(el).select_by_value('Price')
-                        return True
-                except Exception:
-                    continue
-            return False
-        try:
-            WebDriverWait(driver, 10).until(ordenar)
-        except Exception:
-            log('Selecione manualmente Sort by → Price. Aguardando até 60 segundos...')
         def ordenado(d):
-            els = d.find_elements(By.CSS_SELECTOR, 'select[aria-label="Sort by"]')
-            return bool(els) and all(e.get_attribute('value') == 'Price' for e in els)
-        wait.until(ordenado)
+            # O valor do select sozinho não prova que a aplicação atualizou.
+            # Exigir também o rótulo do botão que a interface apresenta.
+            return d.execute_script("""
+                const areas = [...document.querySelectorAll('.SearchSorting-SortingSelector')]
+                    .filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden');
+                return areas.length > 0 && areas.every(area => {
+                    const select = area.querySelector('select[aria-label="Sort by"]');
+                    const button = area.querySelector('.SearchSorting-OpenSortingPopup');
+                    return select && select.value === 'Price' && button &&
+                        button.innerText.trim() === 'Price';
+                });
+            """)
+
+        def selecionar_preco(d):
+            # Em algumas larguras o select nativo fica oculto; o botão é visível.
+            # Disparar o evento change do próprio controle permite ao site
+            # reordenar e renderizar os resultados através de seu estado normal.
+            return d.execute_script("""
+                const areas = [...document.querySelectorAll('.SearchSorting-SortingSelector')]
+                    .filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden');
+                let enviados = 0;
+                for (const area of areas) {
+                    const select = area.querySelector('select[aria-label="Sort by"]');
+                    if (!select || ![...select.options].some(o => o.value === 'Price')) continue;
+                    const setter = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set;
+                    setter.call(select, 'Price');
+                    select.dispatchEvent(new Event('input', {bubbles: true}));
+                    select.dispatchEvent(new Event('change', {bubbles: true}));
+                    enviados++;
+                }
+                return enviados > 0;
+            """)
+
+        try:
+            if not ordenado(driver):
+                WebDriverWait(driver, 15).until(selecionar_preco)
+            WebDriverWait(driver, 20).until(ordenado)
+            log('Price selecionado automaticamente e confirmado na interface.')
+        except Exception:
+            log('Não foi possível confirmar a seleção automática. Selecione Sort by → Price; aguardando 60 segundos...')
+            wait.until(ordenado)
         log('Ordenação Price confirmada. Coletando ofertas estáveis...')
         ofertas, erros = {}, set()
         assinatura, desde = None, time.monotonic()
