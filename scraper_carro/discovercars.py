@@ -331,10 +331,11 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
     return driver.current_url, consulta, rotulo
 
 
-def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, log_widget):
-    app = log_widget.app
-    def log(message):
-        app.call_from_thread(log_widget.write_line, message)
+def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, log=print):
+    """Retorna registros e cobertura; usado pela TUI e pelo adaptador."""
+    ofertas, erros, consulta = {}, set(), None
+    cobertura = 'Não identificado'
+    motivo = 'timeout'
     driver = None
     pasta = Path.cwd() / 'resultados_carros'
     stamp = datetime.now().strftime('%Y%m%d-%H%M%S-%f')
@@ -454,9 +455,11 @@ def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, 
                     ofertas[r['Link']] = r
                 log(f'Ofertas confirmadas: {len(ofertas)}/{limite}')
                 if len(ofertas) >= limite:
+                    motivo = 'result_limit'
                     break
                 sem_novo = sem_novo+1 if len(ofertas)==antes else 0
                 if sem_novo >= 5:
+                    motivo = 'no_new_offers'
                     break
                 driver.execute_script('window.scrollBy(0, Math.max(300, window.innerHeight * 0.65))')
                 assinatura, desde = None, time.monotonic()
@@ -479,6 +482,8 @@ def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, 
         for err in sorted(erros):
             log('Cartão não aproveitado: ' + err)
         log('CSV salvo: ' + str(path))
+        return dict(resultados=resultados, consulta=consulta, erros=sorted(erros),
+                    motivo=motivo, csv=str(path), ofertas_coletadas=len(ofertas))
     except Exception as exc:
         log(f'FALHA: {type(exc).__name__}: {str(exc).split(chr(10) + "Stacktrace:")[0][:900]}')
         if driver:
@@ -491,12 +496,25 @@ def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, 
                 log('Diagnóstico salvo em ' + str(pasta))
             except Exception:
                 pass
+        raise
     finally:
         if driver:
             try:
                 driver.quit()
             except Exception:
                 pass
+
+
+def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, log_widget):
+    app = log_widget.app
+    def log(message):
+        app.call_from_thread(log_widget.write_line, message)
+    try:
+        return coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, log)
+    except Exception:
+        # O serviço já registrou a falha e o diagnóstico.
+        return None
+    finally:
         def liberar():
             app.buscando = False
             app.query_one('#btn_buscar', Button).disabled = False
@@ -699,3 +717,4 @@ class RentalCarsScraperApp(App):
 if __name__ == "__main__":
 
     RentalCarsScraperApp().run()
+
