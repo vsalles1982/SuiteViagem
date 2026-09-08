@@ -483,7 +483,10 @@ def mostrar_evento(numero, evento):
     print()
 
 
-def coletar_links(url_cidade):
+def coletar_links(url_cidade, resumo=None):
+    if resumo is None:
+        resumo = {}
+    resumo.update(paginas_lidas=0, fim_agenda="limite de páginas", falhas_agenda=[])
     todos_links = []
     links_vistos = set()
 
@@ -506,7 +509,13 @@ def coletar_links(url_cidade):
             flush=True,
         )
 
-        pagina = baixar_pagina(url)
+        try:
+            pagina = baixar_pagina(url)
+        except requests.RequestException as erro:
+            resumo["falhas_agenda"].append({"url": url, "erro": str(erro)})
+            resumo["fim_agenda"] = "falha ao consultar agenda"
+            break
+        resumo["paginas_lidas"] += 1
         links = localizar_links_eventos(pagina)
 
         novos = 0
@@ -518,6 +527,7 @@ def coletar_links(url_cidade):
                 novos += 1
 
         if novos == 0:
+            resumo["fim_agenda"] = "página sem novos links"
             break
 
         time.sleep(0.5)
@@ -530,52 +540,115 @@ def coletar_links(url_cidade):
     return todos_links
 
 
-def buscar_eventos(
-    links,
-    data_inicial,
-    data_final,
-    quantidade,
-):
+def buscar_eventos(links, data_inicial, data_final, quantidade, resumo=None):
+    if resumo is None:
+        resumo = {}
+    links = list(dict.fromkeys(links))
+    resumo.update(links_localizados=len(links), links_analisados=0,
+                  sem_dados=0, fora_periodo=0, falhas_eventos=[],
+                  limite_solicitado=quantidade, limite_atingido=False,
+                  eventos_retornados=0)
     encontrados = []
-
-    for numero, link in enumerate(
-        links,
-        start=1,
-    ):
-        print(
-            f"\rAnalisando evento "
-            f"{numero}/{len(links)}...",
-            end="",
-            flush=True,
-        )
-
-        pagina = baixar_pagina(link)
-        evento = localizar_music_event(pagina)
-
-        if not evento:
-            continue
-
-        inicio_local = obter_inicio_local(evento)
-
-        if not inicio_local:
-            continue
-
-        data_evento = inicio_local.date()
-
-        if data_inicial <= data_evento <= data_final:
-            encontrados.append(evento)
-
-            if len(encontrados) >= quantidade:
-                break
-
-        time.sleep(0.6)
-
-    print(
-        "\r" + " " * 60 + "\r",
-        end="",
+    for numero, link in enumerate(links, 1):
+        print(f"Analisando evento {numero}/{len(links)}...", flush=True)
+        resumo["links_analisados"] += 1
+        try:
+            pagina = baixar_pagina(link)
+            evento = localizar_music_event(pagina)
+            inicio = obter_inicio_local(evento) if evento else None
+            if not inicio:
+                resumo["sem_dados"] += 1
+                continue
+            if data_inicial <= inicio.date() <= data_final:
+                evento = dict(evento)
+                evento["url"] = evento.get("url") or link
+                encontrados.append(evento)
+                if len(encontrados) >= quantidade:
+                    resumo["limite_atingido"] = True
+                    break
+            else:
+                resumo["fora_periodo"] += 1
+        except (requests.RequestException, ValueError, TypeError, KeyError, AttributeError) as erro:
+            resumo["falhas_eventos"].append({"url": link, "erro": str(erro)})
+        finally:
+            time.sleep(0.6)
+    resumo["eventos_retornados"] = len(encontrados)
+    resumo["links_nao_analisados"] = len(links) - resumo["links_analisados"]
+    resumo["escopo"] = (
+        "Eventos encontrados nos links analisados; ordenados por data. "
+        "Não representa todos os eventos da cidade nem um ranking dos mais baratos."
     )
-
     return encontrados
+
+
+def descrever_cobertura(resumo):
+    linhas = [
+        f"Links localizados: {resumo.get('links_localizados', 0)} | "
+        f"Analisados: {resumo.get('links_analisados', 0)} | "
+        f"Não analisados: {resumo.get('links_nao_analisados', 0)}",
+        f"Eventos retornados: {resumo.get('eventos_retornados', 0)} | "
+        f"Limite solicitado: {resumo.get('limite_solicitado', 0)}",
+        f"Falhas em eventos: {len(resumo.get('falhas_eventos', []))} | "
+        f"Sem dados suficientes: {resumo.get('sem_dados', 0)} | "
+        f"Fora do período: {resumo.get('fora_periodo', 0)}",
+        f"Agenda: {resumo.get('paginas_lidas', 0)} páginas; "
+        f"{resumo.get('fim_agenda', 'não registrado')}. "
+        f"Falhas na agenda: {len(resumo.get('falhas_agenda', []))}",
+    ]
+    if resumo.get("limite_atingido"):
+        linhas.append("Limite atingido; pode haver mais eventos no período.")
+    linhas.append(resumo.get("escopo", "Cobertura restrita aos dados consultados."))
+    return "\n".join(linhas)
+
+
+def exportar_resultados(cidade, data_inicial, data_final, eventos, resumo, pasta=None):
+    import csv
+    import tempfile
+    from pathlib import Path
+    destino = Path(pasta) if pasta else Path.cwd() / "resultados_eventos"
+    destino.mkdir(parents=True, exist_ok=True)
+    agora = datetime.now().astimezone().isoformat()
+    # Pasta exclusiva por consulta: preserva todas as buscas anteriores.
+    consulta = Path(tempfile.mkdtemp(prefix="shotgun_" + datetime.now().strftime("%Y%m%d-%H%M%S") + "_", dir=destino))
+    campos = ["Evento", "InicioLocal", "Data", "Horario", "Local", "Organizador",
+              "Lineup", "IngressoAnunciado", "Link", "CidadeConsultada",
+              "DataInicial", "DataFinal", "ColetadoEm", "ObservacaoPreco"]
+    linhas = []
+    for evento in eventos:
+        data, horario = obter_periodo_local(evento)
+        inicio = obter_inicio_local(evento)
+        linhas.append(dict(zip(campos, [
+            evento.get("name", "Não informado"), inicio.isoformat() if inicio else "",
+            data, horario, obter_local(evento), obter_organizador(evento),
+            resumir_lineup(evento), obter_preco(evento), evento.get("url", ""),
+            cidade, str(data_inicial), str(data_final), agora,
+            "Menor valor anunciado entre lotes com disponibilidade explícita; "
+            "taxas finais e condições de ingresso individual/duplo não confirmadas.",
+        ])))
+    # Neutraliza interpretação de textos externos como fórmulas ao abrir o CSV.
+    def texto_csv(valor):
+        if isinstance(valor, str) and valor.lstrip().startswith(("=", "+", "-", "@")):
+            return "'" + valor
+        return valor
+    csv_path = consulta / "eventos.csv"
+    try:
+        with csv_path.open("x", newline="", encoding="utf-8-sig") as arquivo:
+            writer = csv.DictWriter(arquivo, fieldnames=campos, delimiter=";")
+            writer.writeheader()
+            writer.writerows({k: texto_csv(v) for k,v in linha.items()} for linha in linhas)
+        json_path = consulta / "consulta.json"
+        with json_path.open("x", encoding="utf-8") as arquivo:
+            json.dump({"cidade": cidade, "data_inicial": str(data_inicial),
+                       "data_final": str(data_final), "coletado_em": agora,
+                       "cobertura": resumo, "eventos": eventos}, arquivo,
+                      ensure_ascii=False, indent=2)
+    except Exception:
+        # Não deixar um par de exportação incompleto com aparência de sucesso.
+        for path in consulta.iterdir():
+            path.unlink()
+        consulta.rmdir()
+        raise
+    return str(csv_path), str(json_path)
 
 
 def main():

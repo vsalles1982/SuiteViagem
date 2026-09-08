@@ -320,23 +320,16 @@ class ShotgunApp(App):
                 return
 
             saida_oculta = io.StringIO()
+            resumo = {}
 
             with redirect_stdout(saida_oculta):
                 links = motor.coletar_links(
-                    url_cidade
+                    url_cidade, resumo=resumo
                 )
-
-            if not links:
-                self.call_from_thread(
-                    self.mostrar_erro,
-                    "Nenhum evento foi localizado "
-                    "na agenda dessa cidade.",
-                )
-                return
 
             self.call_from_thread(
                 self.atualizar_status,
-                f"{len(links)} eventos localizados. "
+                f"{len(links)} links localizados. "
                 f"Filtrando o período...",
             )
 
@@ -346,16 +339,8 @@ class ShotgunApp(App):
                     data_inicial,
                     data_final,
                     quantidade,
+                    resumo=resumo,
                 )
-
-            if not eventos:
-                self.call_from_thread(
-                    self.mostrar_sem_resultados,
-                    cidade,
-                    data_inicial,
-                    data_final,
-                )
-                return
 
             eventos.sort(
                 key=lambda item: (
@@ -364,11 +349,20 @@ class ShotgunApp(App):
                 )
             )
 
+            try:
+                arquivos = motor.exportar_resultados(
+                    cidade, data_inicial, data_final, eventos, resumo
+                )
+                exportacao = "Arquivos salvos:\n" + "\n".join(arquivos)
+            except Exception as erro:
+                exportacao = f"FALHA AO EXPORTAR: {erro}. Os resultados continuam abaixo."
+
             self.call_from_thread(
                 self.mostrar_resultados,
                 cidade,
                 eventos,
-                len(links),
+                resumo,
+                exportacao,
             )
 
         except Exception as erro:
@@ -455,7 +449,8 @@ class ShotgunApp(App):
         self,
         cidade,
         eventos,
-        total_agenda,
+        resumo,
+        exportacao,
     ) -> None:
         resultados = self.query_one(
             "#resultados",
@@ -473,13 +468,11 @@ class ShotgunApp(App):
         resultados.write(
             f"Destino: {cidade}"
         )
-        resultados.write(
-            f"Eventos na agenda: {total_agenda}"
-        )
-        resultados.write(
-            f"Eventos no período: {len(eventos)}"
-        )
+        resultados.write(motor.descrever_cobertura(resumo))
+        resultados.write(exportacao)
         resultados.write("")
+        if not eventos:
+            resultados.write("Nenhum evento retornado nos links analisados. Confira a cobertura acima.")
 
         for numero, evento in enumerate(
             eventos,
@@ -553,8 +546,7 @@ class ShotgunApp(App):
             "#status",
             Static,
         ).update(
-            f"Busca concluída: "
-            f"{len(eventos)} eventos encontrados."
+            f"Busca encerrada: {len(eventos)} eventos retornados. Confira cobertura e exportação."
         )
 
         self.restaurar_botao()
