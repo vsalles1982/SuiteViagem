@@ -7,19 +7,60 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.os_manager import ChromeType
-import pandas as pd
 import time
 import re
-from geopy.distance import geodesic
 
-def create_driver():
+def resolve_chromedriver():
+    """Reusa somente um driver já instalado e compatível com este Chromium."""
+    import json
+    import os
+    from pathlib import Path
+    import subprocess
+    import tempfile
+    def version(path):
+        text = subprocess.check_output([str(path), '--version'], text=True, timeout=5)
+        found = re.search(r'\b(\d+\.\d+\.\d+\.\d+)\b', text)
+        if not found:raise ValueError('Versão do executável não reconhecida.')
+        return found[1]
+    cache = Path(__file__).resolve().parents[1] / 'data' / 'chromedriver-booking.json'
+    try:browser_version = version('/usr/bin/chromium')
+    except Exception:browser_version = None
+    if browser_version:
+        try:
+            saved = json.loads(cache.read_text())
+            path = Path(saved['path'])
+            allowed_root = (Path.home() / '.wdm').resolve()
+            if (saved['browser_version'] == browser_version and path.is_absolute()
+                    and path.resolve().is_relative_to(allowed_root) and path.is_file()
+                    and version(path).split('.')[:3] == browser_version.split('.')[:3]):
+                print('ChromeDriver local conferido; reutilizando instalação.', flush=True)
+                return str(path)
+        except Exception:
+            pass
+    path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+    if browser_version:
+        try:
+            if version(path).split('.')[:3] == browser_version.split('.')[:3]:
+                cache.parent.mkdir(exist_ok=True)
+                with tempfile.NamedTemporaryFile(mode='w',dir=cache.parent,delete=False) as f:
+                    tmp = Path(f.name)
+                    json.dump({'browser_version':browser_version,'path':str(Path(path).resolve())},f)
+                try:os.replace(tmp,cache)
+                finally:tmp.unlink(missing_ok=True)
+        except Exception:
+            pass
+    return path
+
+
+def create_driver(headless=False):
     options = webdriver.ChromeOptions()
 
     # Chromium no Arch
     options.binary_location = "/usr/bin/chromium"
 
-    # Descomente a linha abaixo se quiser rodar sem abrir a janela do navegador
-    # options.add_argument("--headless=new")
+    if headless:
+        options.add_argument("--headless=new")
+    options.page_load_strategy = "eager"
 
     prefs = {"profile.managed_default_content_settings.images": 2}
     options.add_experimental_option("prefs", prefs)
@@ -31,13 +72,14 @@ def create_driver():
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_argument("--window-size=1920,1080")
 
-    service = ChromeService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+    service = ChromeService(resolve_chromedriver())
     return webdriver.Chrome(service=service, options=options)
 
-def scroll_until_all_hotels_loaded(driver, max_wait_time=60):
+def scroll_until_all_hotels_loaded(driver, max_wait_time=60, total_timeout=None):
     SCROLL_PAUSE_TIME = 2.5
     last_count = 0
-    start_time = time.time()
+    start_time = time.monotonic()
+    began = start_time
 
     while True:
         driver.execute_script("window.scrollBy(0, 2000);")
@@ -49,11 +91,15 @@ def scroll_until_all_hotels_loaded(driver, max_wait_time=60):
 
         if current_count > last_count:
             last_count = current_count
-            start_time = time.time()
+            start_time = time.monotonic()
         else:
-            if time.time() - start_time > max_wait_time:
-                print("⏹️ Parou de rolar: nenhum hotel novo após 60 segundos.")
+            if time.monotonic() - start_time > max_wait_time:
+                print(f"⏹️ Parou de rolar: nenhum hotel novo após {max_wait_time} segundos.", flush=True)
                 break
+
+        if total_timeout is not None and time.monotonic() - began >= total_timeout:
+            print("Janela de coleta atingida; cobertura parcial dos cartões carregados.", flush=True)
+            break
 
     return hotels
 
@@ -107,8 +153,92 @@ def extract_stars(card):
     return NOT_INFORMED
 
 
-def extract_hotels(driver):
-    hotels = scroll_until_all_hotels_loaded(driver)
+def read_cards_batch(driver):
+    """Uma chamada ao navegador para ler o lote inteiro."""
+    raw = driver.execute_script('''
+      const rows = [...document.querySelectorAll('[data-testid="property-card"]')].map(card => {
+        const text = selector => (card.querySelector(selector)?.innerText || '').trim();
+        return {
+          'Hotel Name': text('[data-testid="title"]'),
+          'Hotel URL': card.querySelector('[data-testid="title-link"]')?.href || '',
+          'Price Text': text('[data-testid="price-and-discounted-price"]'),
+          'Taxes Text': text('[data-testid="taxes-and-charges"]'),
+          'Stay Text': text('[data-testid="price-for-x-nights"]'),
+          'Room Text': text('[data-testid="recommended-unit"]'),
+          'Review Text': text('[data-testid="review-score"]')
+        };
+      });
+      return {url: location.href, rows};
+    ''')
+    rows = []
+    for row in raw['rows']:
+        price, currency = parse_price(row.get('Price Text', ''))
+        row.update({'Price': price, 'Currency': currency, 'Stars': NOT_INFORMED,
+                    'Review Score (/10)': None,
+                    'Price Status': 'Extraído do cartão' if price is not None else 'Não confirmado'})
+        match = re.search(r'(?:Com nota|Pontuação|Scored|Nota)\s*([0-9]+(?:[.,][0-9])?)', row.pop('Review Text', ''), re.I)
+        if match and 0 <= float(match[1].replace(',', '.')) <= 10:
+            row['Review Score (/10)'] = float(match[1].replace(',', '.'))
+        rows.append(row)
+    return rows, raw['url']
+
+
+def stable_batch(rows, seen, now, stable_seconds=3):
+    from urllib.parse import urlsplit
+    current, stable = {}, []
+    for row in rows:
+        u = urlsplit(row.get('Hotel URL', ''))
+        if u.scheme != 'https' or u.hostname not in ('www.booking.com', 'booking.com') or not row.get('Hotel Name'):
+            continue
+        key = u.hostname + u.path
+        signature = tuple(row.get(k) for k in ('Hotel Name', 'Price Text', 'Taxes Text', 'Stay Text', 'Room Text'))
+        previous = seen.get(key)
+        since = previous[1] if previous and previous[0] == signature else now
+        current[key] = (signature, since)
+        if row.get('Price') is not None and now - since >= stable_seconds:
+            stable.append(row)
+    seen.clear(); seen.update(current)
+    return stable
+
+
+def extract_fast_batch(driver, on_progress=None, confirm=None):
+    import json
+    began = time.monotonic()
+    seen, first, last_signature = {}, None, None
+    count, last_growth = 0, began
+    last_scroll = began
+    while True:
+        rows, current_url = read_cards_batch(driver)
+        if confirm and not confirm(current_url):
+            raise RuntimeError('Consulta mudou durante a coleta; ofertas não confirmadas.')
+        now = time.monotonic()
+        if len(rows) > count:
+            count, last_growth = len(rows), now
+            print('Hotéis carregados: ' + str(count), flush=True)
+        stable = stable_batch(rows, seen, now)
+        signature = json.dumps(stable, sort_keys=True, ensure_ascii=False)
+        if signature != last_signature and (stable or first is not None):
+            if stable and first is None:
+                first = now - began
+                print('Primeiro lote conferido em ' + str(round(first, 2)) + ' s após iniciar leitura dos cartões.', flush=True)
+            if on_progress: on_progress(stable)
+            last_signature = signature
+        # Primeiro lote antes da rolagem; depois carrega o restante sem visitas individuais.
+        if first is not None and now - last_scroll >= 2.5:
+            driver.execute_script('window.scrollBy(0, 2000)')
+            last_scroll = now
+        if now - began >= 45 or (first is not None and now - last_growth >= 12):
+            if not stable:
+                raise RuntimeError('Nenhum preço estável disponível ao encerrar a coleta.')
+            print('Coleta encerrada com ' + str(len(stable)) + ' ofertas estáveis; cobertura parcial.', flush=True)
+            return stable
+        time.sleep(.5)
+
+
+def extract_hotels(driver, fast=False, on_progress=None, confirm=None):
+    if fast:
+        return extract_fast_batch(driver, on_progress=on_progress, confirm=confirm)
+    hotels = scroll_until_all_hotels_loaded(driver, max_wait_time=12 if fast else 60, total_timeout=45 if fast else None)
     hotel_list = []
     for hotel in hotels:
         raw_price = first_text(hotel, ['[data-testid="price-and-discounted-price"]'])
@@ -217,6 +347,7 @@ def fetch_details(driver, url):
 
 
 def calculate_distance(hotel_coords, event_coords):
+    from geopy.distance import geodesic
     try:
         return round(geodesic(hotel_coords, event_coords).kilometers, 2)
     except (ValueError, TypeError):
@@ -244,7 +375,152 @@ def is_petropolis(destination):
     return value == 'petropolis'
 
 
-def run_scraping(destination, checkin, checkout, *, return_records=False):
+def query_matches(current_url, params):
+    from urllib.parse import urlparse, parse_qs
+    import unicodedata
+    parsed = urlparse(current_url)
+    if parsed.scheme != 'https' or parsed.hostname not in ('www.booking.com', 'booking.com'):
+        return False
+    values = parse_qs(parsed.query)
+    def normalized(text):
+        return ' '.join(''.join(c for c in unicodedata.normalize('NFD', text.casefold())
+                               if unicodedata.category(c) != 'Mn').split())
+    for key in ('ss', 'checkin', 'checkout', 'group_adults', 'group_children', 'no_rooms'):
+        found = values.get(key, [])
+        if len(found) != 1:
+            return False
+        if key == 'ss':
+            if normalized(found[0]) != normalized(str(params[key])):
+                return False
+        elif found[0] != str(params[key]):
+            return False
+    return True
+
+
+def fill_search_form(driver, params):
+    from selenium.webdriver.common.keys import Keys
+    from datetime import date
+    from selenium.common.exceptions import TimeoutException
+    wait = WebDriverWait(driver, 15)
+    def visible(selector):
+        return next((e for e in driver.find_elements(By.CSS_SELECTOR, selector)
+                     if e.is_displayed() and e.is_enabled()), False)
+    def calendar():
+        button = wait.until(lambda d: visible('[data-testid="searchbox-dates-container"]'))
+        if button.get_attribute('aria-expanded') != 'true':
+            button.click()
+        wait.until(lambda d: visible('[data-date]'))
+    calendar()
+    for key in ('checkin', 'checkout'):
+        target = date.fromisoformat(params[key]).isoformat()
+        for step in range(25):
+            day = visible('[data-date="' + target + '"]')
+            if day:
+                if day.get_attribute('aria-disabled') == 'true':
+                    raise RuntimeError('Data indisponível no calendário: ' + target)
+                day.click()
+                print('Data selecionada no formulário: ' + target, flush=True)
+                break
+            shown = [e.get_attribute('data-date') for e in driver.find_elements(By.CSS_SELECTOR, '[data-date]') if e.is_displayed()]
+            if not shown or target < min(shown) or step == 24:
+                raise RuntimeError('Data fora do calendário acessível: ' + target)
+            button = visible('button[aria-label="Mês seguinte"]')
+            if not button:
+                raise RuntimeError('Botão de próximo mês não encontrado.')
+            button.click()
+            wait.until(lambda d: [e.get_attribute('data-date') for e in d.find_elements(By.CSS_SELECTOR, '[data-date]') if e.is_displayed()] != shown)
+    # Reabre para conferir os dois extremos selecionados antes de enviar.
+    calendar()
+    for key in ('checkin', 'checkout'):
+        day = visible('[data-date="' + params[key] + '"]')
+        if not day or day.get_attribute('aria-checked') != 'true':
+            raise RuntimeError('Não foi possível conferir as datas selecionadas no formulário.')
+    visible('[data-testid="searchbox-dates-container"]').click()
+    # O diagnóstico mostrou um campo vazio após digitação; conferir o valor estável.
+    retained = False
+    for attempt in range(2):
+        field = wait.until(lambda d: visible('input[name="ss"]'))
+        field.click()
+        field.send_keys(Keys.CONTROL, 'a')
+        field.send_keys(Keys.BACKSPACE)
+        field.send_keys(params['ss'])
+        time.sleep(1)
+        field = visible('input[name="ss"]')
+        if field and field.get_attribute('value').strip().casefold() == params['ss'].strip().casefold():
+            retained = True
+            break
+    if not retained:
+        raise RuntimeError('Booking apagou o destino digitado; formulário não enviado.')
+    field.send_keys(Keys.ESCAPE)
+    field.send_keys(Keys.TAB)
+    if visible('input[name="ss"]').get_attribute('value').strip().casefold() != params['ss'].strip().casefold():
+        raise RuntimeError('Destino mudou ao sair do campo; formulário não enviado.')
+    button = wait.until(lambda d: visible('form[aria-label="Buscar propriedades"] button[type="submit"]'))
+    print('Destino preenchido e datas conferidas; enviando pelo formulário...', flush=True)
+    button.click()
+
+
+def open_confirmed_search(driver, url, params):
+    from selenium.common.exceptions import TimeoutException
+    driver.get(url)
+    def ready(d):
+        cards = d.find_elements(By.CSS_SELECTOR, '[data-testid="property-card"]')
+        return cards if cards and query_matches(d.current_url, params) else False
+    try:
+        return WebDriverWait(driver, 20).until(ready)
+    except TimeoutException as exc:
+        if query_matches(driver.current_url, params):
+            raise RuntimeError('Consulta manteve os parâmetros, mas não apresentou cartões em 20 segundos.') from exc
+    print('Parâmetros perdidos na URL; recuperando a consulta pelo formulário...', flush=True)
+    fill_search_form(driver, params)
+    try:
+        cards = WebDriverWait(driver, 20).until(ready)
+    except TimeoutException as exc:
+        raise RuntimeError('Busca pelo formulário não retornou cartões com destino, datas e ocupação correspondentes. Nenhum preço foi aceito.') from exc
+    print('Consulta do formulário conferida na URL; cartões disponíveis.', flush=True)
+    return cards
+
+
+def write_hotels_excel(path, rows, engine=None):
+    """Grava os registros diretamente, sem montar um DataFrame."""
+    columns = list(dict.fromkeys(key for row in rows for key in row))
+    if engine is None:
+        from importlib.util import find_spec
+        engine = 'xlsxwriter' if find_spec('xlsxwriter') else 'openpyxl'
+    if engine == 'xlsxwriter':
+        import xlsxwriter
+        with xlsxwriter.Workbook(str(path), {'constant_memory': True, 'strings_to_formulas': False,
+                                             'strings_to_urls': False}) as workbook:
+            sheet = workbook.add_worksheet('Sheet1')
+            header = workbook.add_format({'bold': True})
+            for col, name in enumerate(columns):sheet.write_string(0, col, name, header)
+            for number, row in enumerate(rows, 1):
+                for col, name in enumerate(columns):
+                    value = row.get(name)
+                    if value is None:continue
+                    if isinstance(value, str):sheet.write_string(number, col, value)
+                    else:sheet.write(number, col, value)
+    elif engine == 'openpyxl':
+        from openpyxl import Workbook
+        from openpyxl.cell import WriteOnlyCell
+        from openpyxl.styles import Font
+        workbook = Workbook(write_only=True)
+        sheet = workbook.create_sheet('Sheet1')
+        def cell(value, bold=False):
+            result = WriteOnlyCell(sheet, value=value)
+            if isinstance(value, str):result.data_type = 's'
+            if bold:result.font = Font(bold=True)
+            return result
+        sheet.append([cell(name, True) for name in columns])
+        for row in rows:sheet.append([cell(row.get(name)) for name in columns])
+        workbook.save(str(path))
+        workbook.close()
+    else:
+        raise ValueError('Exportador Excel desconhecido.')
+    return engine
+
+
+def run_scraping(destination, checkin, checkout, *, return_records=False, fast=False, headless=False, on_progress=None):
     from datetime import datetime
     from pathlib import Path
     from urllib.parse import urlencode
@@ -258,14 +534,40 @@ def run_scraping(destination, checkin, checkout, *, return_records=False):
                   group_adults=2, no_rooms=1, group_children=0,
                   nflt='ht_id=204', selected_currency='BRL')
     url = 'https://www.booking.com/searchresults.pt-br.html?' + urlencode(params)
-    driver = create_driver()
+    began = time.monotonic()
+    timings = {}
+    print("Abrindo Booking em segundo plano." if headless else "Abrindo Booking para diagnóstico visual.", flush=True)
+    driver = create_driver(headless=headless)
+    timings['driver_seconds'] = round(time.monotonic() - began, 2)
     hotels = []
     try:
         driver.set_page_load_timeout(60)
-        driver.get(url)
-        WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, '//div[@data-testid="property-card"]')))
-        hotels = extract_hotels(driver)
+        navigation_started = time.monotonic()
+        open_confirmed_search(driver, url, params)
+        timings['navigation_seconds'] = round(time.monotonic() - navigation_started, 2)
+        timings["open_seconds"] = round(time.monotonic() - began, 2)
+        phase_start = time.monotonic()
+        print("Carregando preços dos cartões...", flush=True)
+        def preview(rows):
+            if not on_progress:return
+            stamp = datetime.now().astimezone().isoformat(timespec='seconds')
+            prepared = [{**r, 'Destination': destination, 'Check-in': checkin, 'Check-out': checkout,
+                         'Nights': nights, 'Adults': 2, 'Children': 0, 'Rooms': 1,
+                         'Address': NOT_INFORMED, 'Latitude': None, 'Longitude': None,
+                         'Details Status': 'Prévia conferida; busca em andamento', 'Collected At': stamp}
+                        for r in rows]
+            if rows and 'first_batch_seconds' not in timings:
+                timings['first_batch_seconds'] = round(time.monotonic() - began, 2)
+            on_progress(prepared)
+        if fast:
+            hotels = extract_hotels(driver, fast=True, on_progress=preview,
+                                    confirm=lambda current_url: query_matches(current_url, params))
+        else:
+            hotels = extract_hotels(driver, fast=False)
+        if not query_matches(driver.current_url, params):
+            raise RuntimeError("Parâmetros da consulta mudaram durante a coleta; resultados descartados.")
+        timings["cards_seconds"] = round(time.monotonic() - phase_start, 2)
+        phase_start = time.monotonic()
         if not hotels:
             raise RuntimeError('Nenhum cartão de hospedagem foi extraído.')
         print(f'\n{len(hotels)} hospedagens encontradas em {destination}.', flush=True)
@@ -274,13 +576,15 @@ def run_scraping(destination, checkin, checkout, *, return_records=False):
             lat = lon = None
             address = NOT_INFORMED
             error = ''
-            if hotel['Hotel URL'] != NOT_INFORMED:
+            if not fast and hotel['Hotel URL'] != NOT_INFORMED:
                 try:
                     lat, lon, address = fetch_details(driver, hotel['Hotel URL'])
                 except Exception as exc:
                     error = str(exc)
                     print(f'  Falha nos detalhes; preço do cartão preservado: {exc}', flush=True)
-            if error:
+            if fast:
+                detail_status = "Detalhes não consultados: busca de preços"
+            elif error:
                 detail_status = 'Falha ao consultar detalhes'
             elif address == NOT_INFORMED or lat is None or lon is None:
                 detail_status = 'Detalhes parciais'
@@ -300,8 +604,35 @@ def run_scraping(destination, checkin, checkout, *, return_records=False):
                 'Details Status': detail_status, 'Details Error': error,
                 'Collected At': datetime.now().astimezone().isoformat(timespec='seconds'),
             })
+        timings["details_seconds"] = round(time.monotonic() - phase_start, 2)
+    except Exception as exc:
+        try:
+            import json
+            import zipfile
+            diagnostic_dir = Path.cwd() / 'data' / 'diagnostics'
+            diagnostic_dir.mkdir(parents=True, exist_ok=True)
+            diagnostic = diagnostic_dir / ('booking-' + datetime.now().strftime('%Y%m%d-%H%M%S-%f') + '.zip')
+            metadata = {'error_type': type(exc).__name__, 'message': str(exc), 'requested_url': url}
+            with zipfile.ZipFile(diagnostic, 'x', zipfile.ZIP_DEFLATED) as archive:
+                for name, getter in [('url', lambda: driver.current_url), ('title', lambda: driver.title)]:
+                    try: metadata[name] = getter()
+                    except Exception: pass
+                try: archive.writestr('page.html', driver.page_source)
+                except Exception: pass
+                try: archive.writestr('page.png', driver.get_screenshot_as_png())
+                except Exception: pass
+                archive.writestr('report.json', json.dumps(metadata, ensure_ascii=False, indent=2))
+            print('Diagnóstico salvo: ' + str(diagnostic), flush=True)
+        except Exception:
+            pass
+        if headless:
+            print("Consulta oculta não concluída. Verifique o erro; o navegador não será aberto automaticamente.", flush=True)
+        raise
     finally:
-        driver.quit()
+        try:driver.quit()
+        except Exception as cleanup_error:print('Navegador já encerrado: '+type(cleanup_error).__name__, flush=True)
+
+    export_started = time.monotonic()
 
     # Ordena por total com taxas; totais desconhecidos permanecem no fim.
     for hotel in hotels:
@@ -310,8 +641,9 @@ def run_scraping(destination, checkin, checkout, *, return_records=False):
         hotel['Additional Taxes (BRL)'] = additional
         hotel['Total Displayed (BRL)'] = total
         hotel['Total Status'] = status
-    df = pd.DataFrame(hotels).sort_values(
-        ['Total Displayed (BRL)', 'Price'], ascending=True, na_position='last', kind='stable')
+    hotels.sort(key=lambda row: (row['Total Displayed (BRL)'] is None,
+                row['Total Displayed (BRL)'] if row['Total Displayed (BRL)'] is not None else 0,
+                row['Price'] is None, row['Price'] if row['Price'] is not None else 0))
     safe_name = re.sub(r'[^\w .-]', '_', destination).strip(' .') or 'destino'
     stamp = datetime.now().strftime('%Y%m%d-%H%M%S-%f')
     filename = Path(f'Hotels - {safe_name} - {checkin} - {checkout} - {stamp}.xlsx').resolve()
@@ -319,20 +651,24 @@ def run_scraping(destination, checkin, checkout, *, return_records=False):
     try:
         with tempfile.NamedTemporaryFile(dir=filename.parent, suffix='.xlsx', delete=False) as f:
             temporary = f.name
-        df.to_excel(temporary, index=False)
+        export_engine = write_hotels_excel(temporary, hotels)
         os.replace(temporary, filename)
     finally:
         if temporary and os.path.exists(temporary):
             os.unlink(temporary)
-    valid = int(df['Price'].notna().sum())
-    addresses = int((df['Address'] != NOT_INFORMED).sum())
-    stars = int((df['Stars'] != NOT_INFORMED).sum())
-    totals = int(df['Total Displayed (BRL)'].notna().sum())
-    print(f'\nExportadas: {len(df)} | Com preço: {valid} | Totais: {totals} | Endereços: {addresses} | Estrelas: {stars}', flush=True)
+    valid = sum(row['Price'] is not None for row in hotels)
+    addresses = sum(row.get('Address') not in (None, '', NOT_INFORMED) for row in hotels)
+    stars = sum(type(row.get('Stars')) is int for row in hotels)
+    totals = sum(row['Total Displayed (BRL)'] is not None for row in hotels)
+    print(f'\nExportadas: {len(hotels)} | Com preço: {valid} | Totais: {totals} | Endereços: {addresses} | Estrelas: {stars}', flush=True)
     print(f'Arquivo salvo: {filename}', flush=True)
+    print('Exportador Excel: ' + str(export_engine), flush=True)
+    timings["export_seconds"] = round(time.monotonic() - export_started, 2)
+    timings["total_seconds"] = round(time.monotonic() - began, 2)
+    print("Tempos por etapa: " + str(timings), flush=True)
     if return_records:
-        return {"records": hotels, "excel": str(filename), "search_url": url}
-    return len(df), str(filename)
+        return {"records": hotels, "excel": str(filename), "search_url": url, "fast": fast, "headless": headless, "timings": timings}
+    return len(hotels), str(filename)
 
 
 def on_submit():

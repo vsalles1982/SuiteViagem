@@ -70,6 +70,9 @@ def search(history, location, start, end, limit=5, *, engine=None, log=print):
     except Exception as exc:
         status='failed'
         errors.append({'code':'cars_error','stage':'collection_or_normalization','message':str(exc)[:2000]})
+        options=getattr(exc,'location_options',None)
+        if isinstance(options,list) and options and all(isinstance(x,str) for x in options):
+            errors[-1].update(code='location_choice_required',message='Escolha o local de retirada para continuar.',location_options=options[:30])
     coverage={'status':'partial','scope':'Menores totais entre as ofertas coletadas com Price confirmado.',
               'metrics':[{'name':'returned','unit':'offers','value':len(results)},
                          {'name':'collected','unit':'offers','value':report.get('ofertas_coletadas')},

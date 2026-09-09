@@ -60,30 +60,45 @@ def normalize(row,qid,start,end):
                        'adults':2,'children':0,'rooms':1,'nights':row['Nights'],
                        'details_status':row.get('Details Status'),'source_record':row},'warnings':warnings}
 
-def search(history,destination,start,end,*,engine=None,log=print):
+def search(history,destination,start,end,*,engine=None,log=print,fast=False,headless=False,on_progress=None):
     if not destination.strip():raise ValueError('Informe destino.')
     for value in (start,end):
         if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',value):raise ValueError('Use AAAA-MM-DD.')
     if date.fromisoformat(end)<=date.fromisoformat(start):raise ValueError('Check-out deve ser posterior ao check-in.')
-    requested={'destination':destination.strip(),'checkin':start,'checkout':end,'adults':2,'children':0,'rooms':1,'currency':'BRL'}
+    requested={'destination':destination.strip(),'checkin':start,'checkout':end,'adults':2,'children':0,'rooms':1,'currency':'BRL','fast':fast,'headless':headless}
     q=new_query('hotels',requested)
     qid=history.create(q);history.start(qid)
     log('Consulta registrada: '+qid)
     results,errors,warnings=[],[],[]
     report,version={},None
     status='succeeded'
+    first_batch=[]
     try:
         if engine is None:engine,version=load_engine()
-        report=engine.run_scraping(destination,start,end,return_records=True)
+        def preview(rows):
+            nonlocal first_batch
+            batch=[normalize(row,qid,start,end) for row in rows]
+            batch.sort(key=lambda r:(r['price']['total_minor'] is None, r['price']['total_minor'] or r['price']['amount_minor']))
+            if batch and not first_batch:first_batch=batch
+            if on_progress:on_progress({'query_id':qid,'module':'hotels','requested':requested,
+                'created_at':q['created_at'],'status':'running','results':batch,'errors':[],
+                'warnings':[], 'coverage':{'status':'partial','scope':'Menores preços encontrados até agora. A busca continua.'}})
+        kwargs=dict(return_records=True,fast=fast,headless=headless)
+        if on_progress:kwargs['on_progress']=preview
+        report=engine.run_scraping(destination,start,end,**kwargs)
         for row in report['records']:
             try:results.append(normalize(row,qid,start,end))
             except Exception as exc:
                 errors.append({'code':'hotel_normalization','message':str(exc),'hotel':row.get('Hotel Name')})
         if errors:status='failed'
+        if fast:warnings.append('Busca de preços: endereço completo e coordenadas não consultados. Rolagem limitada; pode haver mais ofertas.')
+        if report.get('timings'):warnings.append('Tempos por etapa (segundos): '+str(report['timings']))
         if report.get('excel'):warnings.append('Excel do coletor: '+report['excel'])
-    except KeyboardInterrupt:status='cancelled'
+    except KeyboardInterrupt:
+        status='cancelled';results=first_batch
+        if results:warnings.append('Busca cancelada: primeiro lote conferido preservado, com os valores observados naquele momento.')
     except Exception as exc:
-        status='failed';errors.append({'code':'booking_error','message':str(exc)[:2000]})
+        status='failed';errors.append({'code':'booking_error','message':type(exc).__name__+': '+str(exc).split('Stacktrace:')[0].strip()[:1200]})
     results.sort(key=lambda item:(item['price'] is None or item['price']['total_minor'] is None,
                                 item['price']['total_minor'] if item['price'] and item['price']['total_minor'] is not None else 0))
     coverage={'status':'partial','scope':'Cartões carregados pelo motor Booking; parada por ausência de novos cartões.',
@@ -92,5 +107,5 @@ def search(history,destination,start,end,*,engine=None,log=print):
               'stop_reason':'collector_finished' if status=='succeeded' else status,
               'limitations':['Não garante todas as hospedagens disponíveis.', 'Parâmetros do site não confirmados independentemente pelo adaptador.']}
     return history.finish(qid,status=status,results=results,coverage=coverage,
-                          effective={'search_url':report.get('search_url'),'confirmed_parameters':None},
+                          effective={'search_url':report.get('search_url'),'confirmed_parameters':None,'timings':report.get('timings'),'fast':fast,'headless':headless},
                           errors=errors,warnings=warnings,collector_version=version)

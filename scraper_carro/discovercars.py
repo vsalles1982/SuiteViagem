@@ -141,6 +141,12 @@ def normalizar_local(texto):
     return ' '.join(unicodedata.normalize('NFKD', texto).encode('ascii', 'ignore').decode().lower().split())
 
 
+class LocalAmbiguo(ValueError):
+    def __init__(self, options):
+        self.location_options = list(dict.fromkeys(options))[:30]
+        super().__init__('Escolha o local de retirada: ' + ' | '.join(self.location_options))
+
+
 def escolher_rotulo(destino, opcoes):
     """Exigir correspondência única; 'Ibiza' não vira aeroporto implicitamente."""
     alvo = normalizar_local(destino)
@@ -151,9 +157,34 @@ def escolher_rotulo(destino, opcoes):
                   if normalizar_local(re.sub(r'\s*\([A-Z]{3}\)\s*$', '', lugar)) == alvo]
     unicos = list(dict.fromkeys(exatos))
     if len(unicos) != 1:
-        raise ValueError('Local ambíguo ou não identificado. Digite uma opção específica: ' +
-                         ' | '.join(dict.fromkeys(rotulo for rotulo, _ in opcoes))[:1000])
+        raise LocalAmbiguo(rotulo for rotulo, _ in opcoes)
     return unicos[0]
+
+
+def texto_busca_local(destino):
+    # O rótulo completo continua obrigatório na escolha; só a digitação é curta.
+    prefixo = destino.split(',')[0].strip()
+    return prefixo if 'airport' in normalizar_local(prefixo) else destino
+
+
+def fase_calendario(visiveis, placeholder):
+    calendarios = visiveis('.rdrCalendarWrapper')
+    if not calendarios:
+        return False
+    compacto = any(c.find_elements(By.CSS_SELECTOR, '.rdrDateDisplayItem') for c in calendarios)
+    for calendario in calendarios:
+        if calendario.find_elements(By.CSS_SELECTOR,
+                '.rdrDateDisplayItemActive input[placeholder="' + placeholder + '"]'):
+            return True
+    if compacto:
+        return False
+    # Desktop não possui rdrDateDisplay: a classe ativa está no campo externo.
+    campos = visiveis('.DatePicker-CalendarField')
+    if len(campos) != 2:
+        return False
+    ativos = [i for i,c in enumerate(campos)
+              if 'DatePicker-CalendarField_isActive' in (c.get_attribute('class') or '').split()]
+    return ativos == ([0] if placeholder == 'Early' else [1])
 
 
 def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
@@ -213,7 +244,7 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
     campo = visiveis(seletor)[0]
     campo.send_keys(Keys.CONTROL + 'a')
     campo.send_keys(Keys.BACKSPACE)
-    campo.send_keys(destino)
+    campo.send_keys(texto_busca_local(destino))
     anterior, desde = None, time.monotonic()
 
     def sugestoes_estaveis(d):
@@ -248,13 +279,9 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
     # O cabeçalho de datas fica oculto no layout móvel, mas registra
     # qual extremo do intervalo receberá o próximo clique no calendário.
     def fase_data(placeholder):
-        calendarios = visiveis('.rdrCalendarWrapper')
-        return any(c.find_elements(By.CSS_SELECTOR,
-            '.rdrDateDisplayItemActive input[placeholder="' + placeholder + '"]')
-            for c in calendarios)
+        return fase_calendario(visiveis, placeholder)
 
-    if not fase_data('Early'):
-        raise ValueError('Calendário não iniciou na retirada. Feche a consulta e tente novamente.')
+    wait.until(lambda d: fase_data('Early'))
     log('Calendário aberto: selecionando retirada e devolução pelos dias...')
     meses = ['January','February','March','April','May','June','July','August',
              'September','October','November','December']
@@ -291,9 +318,11 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
     log('Devolução selecionada: ' + devolucao.isoformat())
     botoes = driver.find_elements(By.XPATH, '//button[normalize-space(.)="Select dates"]')
     botao = next((b for b in botoes if b.is_displayed()), None)
-    if botao is None:
-        raise ValueError('Botão Select dates não encontrado')
-    botao.click()
+    if botao is not None:
+        botao.click()
+    else:
+        # No desktop a seleção da devolução fecha o calendário automaticamente.
+        wait.until(lambda d: not visiveis('.rdrCalendarWrapper'))
     # Fixar os horários deste teste em 11h, sem assumir defaults silenciosamente.
     for indice in range(2):
         campos = visiveis('.SearchModifier-TimeSelect')
@@ -302,7 +331,7 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
         if campos[indice].text.strip() != '11:00':
             campos[indice].click()
             def opcao_hora(d):
-                for item in visiveis('.CustomSelect-MobileOption'):
+                for item in visiveis('.CustomSelect-MobileOption, .CustomSelect-SelectOption'):
                     if item.text.strip() == '11:00':
                         return item
                 return False
