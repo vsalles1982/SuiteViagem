@@ -65,9 +65,11 @@ def search(history, location, start, end, limit=5, *, engine=None, log=print):
             results.append(normalize(row,qid,engine,effective))
         warnings.extend(report['erros'])
         if report.get('csv'):warnings.append('CSV do coletor: '+report['csv'])
-    except KeyboardInterrupt:
+    except KeyboardInterrupt as exc:
+        report['timings']=getattr(exc,'car_timings',report.get('timings',{}))
         status='cancelled'
     except Exception as exc:
+        report['timings']=getattr(exc,'car_timings',report.get('timings',{}))
         status='failed'
         errors.append({'code':'cars_error','stage':'collection_or_normalization','message':str(exc)[:2000]})
         options=getattr(exc,'location_options',None)
@@ -79,5 +81,8 @@ def search(history, location, start, end, limit=5, *, engine=None, log=print):
                          {'name':'requested_limit','unit':'offers','value':limit}],
               'stop_reason':report.get('motivo',status),
               'limitations':['Não garante todas as ofertas disponíveis; quantidade total do site não medida.']}
+    for name,value in report.get('timings',{}).items():
+        if isinstance(name,str) and name.endswith('_seconds') and type(value) in (int,float) and value>=0:
+            coverage['metrics'].append({'name':name.removesuffix('_seconds')+'_milliseconds','unit':'milliseconds','value':round(value*1000)})
     return history.finish(qid,status=status,results=results,coverage=coverage,effective=effective,
                           errors=errors,warnings=warnings,collector_version=version)

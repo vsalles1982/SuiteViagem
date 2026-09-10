@@ -187,7 +187,31 @@ def fase_calendario(visiveis, placeholder):
     return ativos == ([0] if placeholder == 'Early' else [1])
 
 
-def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
+def ler_sugestoes_em_lote(driver):
+    """Uma única leitura do navegador, incluindo os textos e a visibilidade."""
+    return driver.execute_script(r"""
+        function visible(el) {
+            if (!el.getClientRects().length) return false;
+            for (let node = el; node; node = node.parentElement) {
+                const style = getComputedStyle(node);
+                if (style.display === 'none' || style.visibility === 'hidden' ||
+                    style.visibility === 'collapse' || Number(style.opacity) === 0 ||
+                    node.getAttribute('aria-hidden') === 'true') return false;
+                if (node.classList.contains('Modal-Container') &&
+                    !node.classList.contains('Modal-Container_isActive')) return false;
+            }
+            return true;
+        }
+        return [...document.querySelectorAll('.Autocomplete-AutocompleteItem[data-label]')]
+            .filter(visible)
+            .map(el => {
+                const place = el.querySelector('.Autocomplete-AutocompletePlace');
+                return place ? [el.getAttribute('data-label'), place.innerText.trim()] : null;
+            }).filter(row => row && row[0] && row[1]);
+    """)
+
+
+def abrir_busca_por_local(driver, destino, retirada, devolucao, log, tempos=None):
     from selenium.webdriver.common.keys import Keys
     wait = WebDriverWait(driver, 30)
 
@@ -230,6 +254,7 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
         wait.until(tentar)
 
     driver.get('https://www.discovercars.com/')
+    if tempos: tempos.enter('location_seconds')
     log('Preenchendo o local. Se houver aviso de cookies, feche-o na janela.')
     wait.until(lambda d: visiveis('form.SearchModifier-Form input[name="PickupLocation"]') or False)
     overlays = visiveis('form.SearchModifier-Form .Autocomplete-LocationPickerOverlay')
@@ -249,8 +274,7 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
 
     def sugestoes_estaveis(d):
         nonlocal anterior, desde
-        dados = [(e.get_attribute('data-label'), e.find_element(By.CSS_SELECTOR, '.Autocomplete-AutocompletePlace').text)
-                 for e in visiveis('.Autocomplete-AutocompleteItem[data-label]')]
+        dados = ler_sugestoes_em_lote(d)
         if not dados or dados != anterior:
             anterior, desde = dados, time.monotonic()
             return False
@@ -269,6 +293,7 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
 
     wait.until(local_confirmado)
     log('Local selecionado: ' + rotulo)
+    if tempos: tempos.enter('dates_seconds')
     # A primeira versão por local faz devolução no mesmo ponto.
     for checkbox in visiveis('input[name="IsSameLocation"]'):
         if not checkbox.is_selected():
@@ -336,6 +361,7 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
                         return item
                 return False
             wait.until(opcao_hora).click()
+    if tempos: tempos.enter('submit_seconds')
     log('Datas preenchidas; enviando a pesquisa...')
     wait.until(lambda d: next(iter(visiveis('button.SearchModifier-SubmitBtn')), False)).click()
 
@@ -360,8 +386,28 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log):
     return driver.current_url, consulta, rotulo
 
 
+class TemposCarros:
+    """Etapas exclusivas; primeiro lote e total são tempos acumulados."""
+    def __init__(self, clock=None):
+        self.clock = clock or time.monotonic
+        self.started = self.last = self.clock()
+        self.stage = 'validation_seconds'
+        self.values = {}
+    def enter(self, stage):
+        now = self.clock()
+        self.values[self.stage] = round(self.values.get(self.stage, 0) + now - self.last, 4)
+        self.last, self.stage = now, stage
+    def first_batch(self):
+        if 'first_batch_seconds' not in self.values:
+            self.values['first_batch_seconds'] = round(self.clock() - self.started, 4)
+    def finish(self):
+        self.enter('finished_seconds')
+        self.values['total_seconds'] = round(self.last - self.started, 4)
+
+
 def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, log=print):
     """Retorna registros e cobertura; usado pela TUI e pelo adaptador."""
+    tempos = TemposCarros()
     ofertas, erros, consulta = {}, set(), None
     cobertura = 'Não identificado'
     motivo = 'timeout'
@@ -395,18 +441,22 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
         options.binary_location = binary
         options.add_argument('--window-size=1200,800')
         options.add_argument('--lang=en-US')
+        tempos.enter('driver_seconds')
         driver = webdriver.Chrome(options=options)
         driver.set_page_load_timeout(60)
         log('Abrindo consulta. Se houver aviso de cookies, feche-o na janela.')
         local_selecionado = 'Conforme link informado'
+        tempos.enter('navigation_seconds')
         if por_link:
             driver.get(url)
         else:
             url, consulta, local_selecionado = abrir_busca_por_local(
-                driver, destino.strip(), retirada, devolucao, log)
+                driver, destino.strip(), retirada, devolucao, log, tempos)
         log('Datas conferidas: ' + consulta['PickupDateTime'] + ' → ' + consulta['DropOffDateTime'])
+        tempos.enter('results_wait_seconds')
         wait = WebDriverWait(driver, 60)
         wait.until(lambda d: d.find_elements(By.CSS_SELECTOR,'.SearchList-Card'))
+        tempos.enter('sorting_seconds')
         log('Ordenando por preço...')
         def ordenado(d):
             # O valor do select sozinho não prova que a aplicação atualizou.
@@ -450,6 +500,7 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
         except Exception:
             log('Não foi possível confirmar a seleção automática. Selecione Sort by → Price; aguardando 60 segundos...')
             wait.until(ordenado)
+        tempos.enter('collection_seconds')
         log('Ordenação Price confirmada. Coletando ofertas estáveis...')
         ofertas, erros = {}, set()
         assinatura, desde = None, time.monotonic()
@@ -482,6 +533,7 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
                     r.update(LocalSelecionado=local_selecionado, CoberturaAdicional=cobertura, ColetadoEm=datetime.now().astimezone().isoformat(),
                         Escopo='Menores totais entre ofertas coletadas; não garante todas as ofertas disponíveis')
                     ofertas[r['Link']] = r
+                tempos.first_batch()
                 log(f'Ofertas confirmadas: {len(ofertas)}/{limite}')
                 if len(ofertas) >= limite:
                     motivo = 'result_limit'
@@ -495,6 +547,7 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
             time.sleep(.5)
         if not ofertas:
             raise ValueError('Nenhum total confirmado. ' + '; '.join(sorted(erros))[:600])
+        tempos.enter('export_seconds')
         resultados = sorted(ofertas.values(), key=lambda r:r['TotalBRL'])[:limite]
         pasta.mkdir(exist_ok=True)
         path = pasta / f'discovercars_{stamp}.csv'
@@ -512,8 +565,13 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
             log('Cartão não aproveitado: ' + err)
         log('CSV salvo: ' + str(path))
         return dict(resultados=resultados, consulta=consulta, erros=sorted(erros),
-                    motivo=motivo, csv=str(path), ofertas_coletadas=len(ofertas))
+                    motivo=motivo, csv=str(path), ofertas_coletadas=len(ofertas), timings=tempos.values)
+    except KeyboardInterrupt as exc:
+        exc.car_timings = tempos.values
+        raise
     except Exception as exc:
+        exc.car_timings = tempos.values
+        tempos.enter('diagnostic_seconds')
         log(f'FALHA: {type(exc).__name__}: {str(exc).split(chr(10) + "Stacktrace:")[0][:900]}')
         if driver:
             try:
@@ -527,11 +585,14 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
                 pass
         raise
     finally:
+        tempos.enter('cleanup_seconds')
         if driver:
             try:
                 driver.quit()
             except Exception:
                 pass
+        tempos.finish()
+        log('Tempos por etapa (segundos): ' + str(tempos.values))
 
 
 def executar_scraper(destino, data_retirada, data_devolucao, limite_resultados, log_widget):
