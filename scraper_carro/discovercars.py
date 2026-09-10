@@ -9,11 +9,13 @@ import math
 import re
 import shutil
 import time
+import urllib.request
+import urllib.error
 from datetime import datetime
 from decimal import Decimal
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlparse, parse_qs, urljoin
+from urllib.parse import urlparse, parse_qs, urljoin, urlencode
 
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Input, Button, Label, Log
@@ -136,6 +138,185 @@ def extrair_card(card, consulta, url):
         Residencia=consulta['ResidenceCountry'], Idade=consulta['DriverAge'])
 
 
+CREATE_SEARCH_URL = 'https://www.discovercars.com/api/v2/search/create-search?'
+AUTOCOMPLETE_URL = 'https://www.discovercars.com/api/v2/autocomplete'
+LOCATION_CACHE = Path(__file__).resolve().parents[1] / 'data' / 'discovercars_locations.json'
+
+
+def _json_request(url, *, payload=None, timeout=20):
+    headers = {
+        'Accept': 'application/json, text/plain, */*',
+        'User-Agent': 'Mozilla/5.0',
+        'Referer': 'https://www.discovercars.com/',
+    }
+    data = None
+    method = 'GET'
+    if payload is not None:
+        data = json.dumps(payload).encode('utf-8')
+        method = 'POST'
+        headers.update({
+            'Content-Type': 'application/json',
+            'Origin': 'https://www.discovercars.com',
+        })
+    request = urllib.request.Request(url, data=data, headers=headers, method=method)
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        if response.status != 200:
+            raise ValueError(f'DiscoverCars API respondeu HTTP {response.status}')
+        return json.loads(response.read().decode('utf-8'))
+
+
+def _walk_dicts(value):
+    if isinstance(value, dict):
+        yield value
+        for child in value.values():
+            yield from _walk_dicts(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from _walk_dicts(child)
+
+
+def _keymap(row):
+    return {re.sub(r'[^a-z0-9]', '', str(k).lower()): v for k, v in row.items()}
+
+
+def _first_value(row, *keys):
+    km = _keymap(row)
+    for key in keys:
+        value = km.get(re.sub(r'[^a-z0-9]', '', key.lower()))
+        if value not in (None, ''):
+            return value
+    return None
+
+
+def _as_int(value):
+    if isinstance(value, bool):
+        return None
+    try:
+        number = int(value)
+    except (TypeError, ValueError):
+        return None
+    return number if number > 0 else None
+
+
+def _candidate_from_dict(row):
+    """Aceita variações de schema do autocomplete; retorna apenas candidatos completos."""
+    location_id = _as_int(_first_value(row, 'location_id', 'locationId', 'pickup_id', 'pickupId'))
+    city_id = _as_int(_first_value(row, 'city_id', 'cityId'))
+    country_id = _as_int(_first_value(row, 'country_id', 'countryId'))
+
+    # Alguns schemas aninham cidade/país.
+    city = row.get('city') if isinstance(row.get('city'), dict) else {}
+    country = row.get('country') if isinstance(row.get('country'), dict) else {}
+    city_id = city_id or _as_int(_first_value(city, 'id', 'city_id', 'cityId'))
+    country_id = country_id or _as_int(_first_value(country, 'id', 'country_id', 'countryId'))
+
+    if not (location_id and city_id and country_id):
+        return None
+
+    labels = []
+    for key in ('label', 'name', 'title', 'description', 'full_name', 'fullName', 'location_name', 'locationName'):
+        value = _first_value(row, key)
+        if isinstance(value, str) and value.strip():
+            labels.append(value.strip())
+    for nested in (city, country):
+        value = _first_value(nested, 'name', 'label', 'title')
+        if isinstance(value, str) and value.strip():
+            labels.append(value.strip())
+    label = ', '.join(dict.fromkeys(labels)) or str(location_id)
+    return {'label': label, 'location_id': location_id, 'city_id': city_id, 'country_id': country_id}
+
+
+def _load_location_cache():
+    try:
+        raw = json.loads(LOCATION_CACHE.read_text(encoding='utf-8'))
+        return raw if isinstance(raw, list) else []
+    except (OSError, ValueError, TypeError):
+        return []
+
+
+def resolver_local_api(destino, timeout=20):
+    """Resolve IDs sem navegador. Falha fechada para permitir fallback v12.1."""
+    alvo = normalizar_local(destino)
+    cache = _load_location_cache()
+    cached = [x for x in cache if isinstance(x, dict) and normalizar_local(x.get('label', '')) == alvo]
+    if len(cached) == 1:
+        item = cached[0]
+        if all(_as_int(item.get(k)) for k in ('location_id', 'city_id', 'country_id')):
+            return item
+
+    query = urlencode({'location': texto_busca_local(destino)})
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+    candidates = []
+    seen = set()
+    for row in _walk_dicts(data):
+        item = _candidate_from_dict(row)
+        if not item:
+            continue
+        key = (item['location_id'], item['city_id'], item['country_id'])
+        if key not in seen:
+            candidates.append(item)
+            seen.add(key)
+
+    exact = [x for x in candidates if normalizar_local(x['label']) == alvo]
+    if not exact:
+        # Rótulos do endpoint podem conter detalhes extras; aceitar somente match único forte.
+        exact = [x for x in candidates if alvo in normalizar_local(x['label']) or normalizar_local(x['label']) in alvo]
+    if len(exact) != 1:
+        raise LocalAmbiguo(x['label'] for x in candidates) if candidates else ValueError('Autocomplete API não resolveu o local.')
+    return exact[0]
+
+
+def criar_busca_direta(destino, retirada, devolucao, log=print):
+    local = resolver_local_api(destino)
+    payload = {
+        'is_drop_off': False,
+        'pick_up_country_id': local['country_id'],
+        'pick_up_city_id': local['city_id'],
+        'pick_up_location_id': local['location_id'],
+        'pickup_id': local['location_id'],
+        'drop_off_country_id': local['country_id'],
+        'drop_off_city_id': local['city_id'],
+        'drop_off_location_id': local['location_id'],
+        'dropoff_id': local['location_id'],
+        'pickup_from': retirada.isoformat() + ' 11:00',
+        'pickup_to': devolucao.isoformat() + ' 11:00',
+        'pick_time': '11:00',
+        'drop_time': '11:00',
+        'driver_age': '35',
+        'residence_country': 'BR',
+        'partnerID': 0,
+        'excludeLocations': 0,
+        'recent_search': 0,
+        'isWhitelabel': False,
+    }
+    body = _json_request(CREATE_SEARCH_URL, payload=payload, timeout=30)
+    data = body.get('data') if isinstance(body, dict) else None
+    url = data.get('url') if isinstance(data, dict) else None
+    if not isinstance(url, str) or '/search/' not in urlparse(url).path:
+        raise ValueError('create-search não devolveu URL canônica válida.')
+    consulta = ler_consulta(url)
+    esperado_r = retirada.isoformat() + 'T11:00:00'
+    esperado_d = devolucao.isoformat() + 'T11:00:00'
+    if (consulta['PickupLocationId'] != local['location_id'] or
+            consulta['DropOffLocationId'] != local['location_id'] or
+            consulta['PickupDateTime'] != esperado_r or consulta['DropOffDateTime'] != esperado_d or
+            consulta['ResidenceCountry'] != 'BR' or consulta['DriverAge'] != 35):
+        raise ValueError('create-search devolveu parâmetros diferentes dos solicitados.')
+    log('Caminho rápido: create-search direto confirmado para ' + local['label'])
+    return url, consulta, local['label']
+
+
+def snapshot_cards(driver):
+    """Leitura atômica do DOM para estabilidade, sem WebElement sujeito a stale."""
+    return driver.execute_script("""
+        return Array.from(document.querySelectorAll('.SearchList-Card')).map((el) => {
+            const link = el.querySelector('a[href*="/offer/"]');
+            const prices = Array.from(el.querySelectorAll('.SearchCar-Price')).map(x => (x.innerText || '').trim());
+            return [(link && link.href) || '', prices.join('|'), (el.innerText || '').length];
+        });
+    """)
+
+
 def normalizar_local(texto):
     import unicodedata
     return ' '.join(unicodedata.normalize('NFKD', texto).encode('ascii', 'ignore').decode().lower().split())
@@ -185,30 +366,6 @@ def fase_calendario(visiveis, placeholder):
     ativos = [i for i,c in enumerate(campos)
               if 'DatePicker-CalendarField_isActive' in (c.get_attribute('class') or '').split()]
     return ativos == ([0] if placeholder == 'Early' else [1])
-
-
-def ler_sugestoes_em_lote(driver):
-    """Uma única leitura do navegador, incluindo os textos e a visibilidade."""
-    return driver.execute_script(r"""
-        function visible(el) {
-            if (!el.getClientRects().length) return false;
-            for (let node = el; node; node = node.parentElement) {
-                const style = getComputedStyle(node);
-                if (style.display === 'none' || style.visibility === 'hidden' ||
-                    style.visibility === 'collapse' || Number(style.opacity) === 0 ||
-                    node.getAttribute('aria-hidden') === 'true') return false;
-                if (node.classList.contains('Modal-Container') &&
-                    !node.classList.contains('Modal-Container_isActive')) return false;
-            }
-            return true;
-        }
-        return [...document.querySelectorAll('.Autocomplete-AutocompleteItem[data-label]')]
-            .filter(visible)
-            .map(el => {
-                const place = el.querySelector('.Autocomplete-AutocompletePlace');
-                return place ? [el.getAttribute('data-label'), place.innerText.trim()] : null;
-            }).filter(row => row && row[0] && row[1]);
-    """)
 
 
 def abrir_busca_por_local(driver, destino, retirada, devolucao, log, tempos=None):
@@ -274,7 +431,8 @@ def abrir_busca_por_local(driver, destino, retirada, devolucao, log, tempos=None
 
     def sugestoes_estaveis(d):
         nonlocal anterior, desde
-        dados = ler_sugestoes_em_lote(d)
+        dados = [(e.get_attribute('data-label'), e.find_element(By.CSS_SELECTOR, '.Autocomplete-AutocompletePlace').text)
+                 for e in visiveis('.Autocomplete-AutocompleteItem[data-label]')]
         if not dados or dados != anterior:
             anterior, desde = dados, time.monotonic()
             return False
@@ -441,6 +599,7 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
         options.binary_location = binary
         options.add_argument('--window-size=1200,800')
         options.add_argument('--lang=en-US')
+        options.add_argument('--ozone-platform=x11')
         tempos.enter('driver_seconds')
         driver = webdriver.Chrome(options=options)
         driver.set_page_load_timeout(60)
@@ -450,8 +609,17 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
         if por_link:
             driver.get(url)
         else:
-            url, consulta, local_selecionado = abrir_busca_por_local(
-                driver, destino.strip(), retirada, devolucao, log, tempos)
+            try:
+                t_fast = time.monotonic()
+                url, consulta, local_selecionado = criar_busca_direta(destino.strip(), retirada, devolucao, log)
+                driver.get(url)
+                tempos.values['fast_path_seconds'] = round(time.monotonic() - t_fast, 4)
+                tempos.values['fast_path_used'] = 1
+            except (ValueError, OSError, urllib.error.URLError, TimeoutError) as exc:
+                log('Caminho rápido indisponível; usando formulário v12.1: ' + str(exc)[:240])
+                tempos.values['fast_path_used'] = 0
+                url, consulta, local_selecionado = abrir_busca_por_local(
+                    driver, destino.strip(), retirada, devolucao, log, tempos)
         log('Datas conferidas: ' + consulta['PickupDateTime'] + ' → ' + consulta['DropOffDateTime'])
         tempos.enter('results_wait_seconds')
         wait = WebDriverWait(driver, 60)
@@ -510,24 +678,27 @@ def coletar_ofertas(destino, data_retirada, data_devolucao, limite_resultados, l
         while time.monotonic() - inicio < 180:
             if not ordenado(driver):
                 raise ValueError('Ordenação mudou durante a coleta')
-            root = Document(driver.page_source).root
-            checks = [n for n in root.all() if n.tag == 'input' and 'Full Coverage' in n.attrs.get('aria-label','')]
-            # checked é propriedade dinâmica: consultar o navegador, não o HTML.
-            ce = driver.find_elements(By.CSS_SELECTOR,'.CoverageTumbler input[type="checkbox"]')
-            atual = ('Incluída' if ce[0].is_selected() else 'Não incluída') if ce else 'Não identificado'
-            if ofertas and atual != cobertura:
-                raise ValueError('Cobertura adicional mudou durante a coleta')
-            cobertura = atual
-            lote = []
-            for card in root.select('SearchList-Card'):
-                try:
-                    lote.append(extrair_card(card, consulta, driver.current_url))
-                except ValueError as exc:
-                    erros.add(str(exc))
-            sig = tuple((r['Link'],str(r['TotalBRL'])) for r in lote)
+            # Detectar estabilidade com snapshot JS atômico. Só parsear page_source quando o lote estabilizar.
+            sig = tuple(tuple(x) for x in snapshot_cards(driver))
             if not sig or sig != assinatura:
                 assinatura, desde = sig, time.monotonic()
-            elif time.monotonic() - desde >= 3:
+            elif time.monotonic() - desde >= 1.5:
+                root = Document(driver.page_source).root
+                # checked é propriedade dinâmica: consultar o navegador, não o HTML.
+                cobertura_js = driver.execute_script("""
+                    const e = document.querySelector('.CoverageTumbler input[type=\"checkbox\"]');
+                    return e ? !!e.checked : null;
+                """)
+                atual = 'Incluída' if cobertura_js is True else 'Não incluída' if cobertura_js is False else 'Não identificado'
+                if ofertas and atual != cobertura:
+                    raise ValueError('Cobertura adicional mudou durante a coleta')
+                cobertura = atual
+                lote = []
+                for card in root.select('SearchList-Card'):
+                    try:
+                        lote.append(extrair_card(card, consulta, driver.current_url))
+                    except ValueError as exc:
+                        erros.add(str(exc))
                 antes = len(ofertas)
                 for r in lote:
                     r.update(LocalSelecionado=local_selecionado, CoberturaAdicional=cobertura, ColetadoEm=datetime.now().astimezone().isoformat(),
