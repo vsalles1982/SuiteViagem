@@ -198,47 +198,129 @@ def _as_int(value):
     return number if number > 0 else None
 
 
-def _candidate_from_dict(row):
-    """Aceita variações de schema do autocomplete; retorna apenas candidatos completos."""
-    location_id = _as_int(_first_value(row, 'location_id', 'locationId', 'pickup_id', 'pickupId'))
-    city_id = _as_int(_first_value(row, 'city_id', 'cityId'))
-    country_id = _as_int(_first_value(row, 'country_id', 'countryId'))
+RUNTIME_LOCATION_CACHE = Path.home() / '.cache' / 'suiteviagem' / 'discovercars_locations.json'
 
-    # Alguns schemas aninham cidade/país.
-    city = row.get('city') if isinstance(row.get('city'), dict) else {}
-    country = row.get('country') if isinstance(row.get('country'), dict) else {}
-    city_id = city_id or _as_int(_first_value(city, 'id', 'city_id', 'cityId'))
-    country_id = country_id or _as_int(_first_value(country, 'id', 'country_id', 'countryId'))
+
+def _candidate_from_dict(row):
+    """Converte o schema real do autocomplete em IDs internos estáveis."""
+    location_id = _as_int(_first_value(
+        row, 'placeID', 'place_id', 'location_id', 'locationId', 'pickup_id', 'pickupId'))
+    city_id = _as_int(_first_value(row, 'cityID', 'city_id', 'cityId'))
+    country_id = _as_int(_first_value(row, 'countryID', 'country_id', 'countryId'))
+
+    # Mantém compatibilidade se o fornecedor aninhar cidade/país no futuro.
+    city_obj = row.get('city') if isinstance(row.get('city'), dict) else {}
+    country_obj = row.get('country') if isinstance(row.get('country'), dict) else {}
+    city_id = city_id or _as_int(_first_value(city_obj, 'id', 'cityID', 'city_id', 'cityId'))
+    country_id = country_id or _as_int(_first_value(country_obj, 'id', 'countryID', 'country_id', 'countryId'))
 
     if not (location_id and city_id and country_id):
         return None
 
-    labels = []
-    for key in ('label', 'name', 'title', 'description', 'full_name', 'fullName', 'location_name', 'locationName'):
-        value = _first_value(row, key)
-        if isinstance(value, str) and value.strip():
-            labels.append(value.strip())
-    for nested in (city, country):
-        value = _first_value(nested, 'name', 'label', 'title')
-        if isinstance(value, str) and value.strip():
-            labels.append(value.strip())
-    label = ', '.join(dict.fromkeys(labels)) or str(location_id)
-    return {'label': label, 'location_id': location_id, 'city_id': city_id, 'country_id': country_id}
+    place = _first_value(row, 'place', 'name', 'title', 'location_name', 'locationName')
+    city = _first_value(row, 'city') if isinstance(row.get('city'), str) else None
+    country = _first_value(row, 'country') if isinstance(row.get('country'), str) else None
+    label = _first_value(row, 'label', 'full_name', 'fullName', 'description')
+    if not isinstance(label, str) or not label.strip():
+        parts = [x.strip() for x in (place, city, country) if isinstance(x, str) and x.strip()]
+        label = ', '.join(dict.fromkeys(parts)) or str(location_id)
+
+    return {
+        'label': label.strip(),
+        'place': place.strip() if isinstance(place, str) else '',
+        'city': city.strip() if isinstance(city, str) else '',
+        'country': country.strip() if isinstance(country, str) else '',
+        'location_type': str(_first_value(row, 'location', 'type') or ''),
+        'translation_key': str(_first_value(row, 'translationKey', 'translation_key') or ''),
+        'location_id': location_id,
+        'city_id': city_id,
+        'country_id': country_id,
+    }
 
 
-def _load_location_cache():
+def _read_cache_file(path):
     try:
-        raw = json.loads(LOCATION_CACHE.read_text(encoding='utf-8'))
+        raw = json.loads(path.read_text(encoding='utf-8'))
         return raw if isinstance(raw, list) else []
     except (OSError, ValueError, TypeError):
         return []
 
 
+def _load_location_cache():
+    items, seen = [], set()
+    for path in (LOCATION_CACHE, RUNTIME_LOCATION_CACHE):
+        for item in _read_cache_file(path):
+            if not isinstance(item, dict):
+                continue
+            key = (item.get('location_id'), item.get('city_id'), item.get('country_id'), item.get('label'))
+            if key not in seen:
+                items.append(item)
+                seen.add(key)
+    return items
+
+
+def _save_runtime_location(item):
+    """Cache de usuário; nunca altera os arquivos versionados do projeto."""
+    try:
+        RUNTIME_LOCATION_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        current = _read_cache_file(RUNTIME_LOCATION_CACHE)
+        key = (item['location_id'], item['city_id'], item['country_id'])
+        current = [x for x in current if not isinstance(x, dict) or
+                   (x.get('location_id'), x.get('city_id'), x.get('country_id')) != key]
+        current.append(item)
+        tmp = RUNTIME_LOCATION_CACHE.with_suffix('.tmp')
+        tmp.write_text(json.dumps(current, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        tmp.replace(RUNTIME_LOCATION_CACHE)
+    except OSError:
+        pass
+
+
+def _select_location_candidate(destino, candidates):
+    if not candidates:
+        raise ValueError('Autocomplete API não resolveu o local.')
+    alvo = normalizar_local(destino)
+
+    # 1. Rótulo completo ou nome exato do ponto informado.
+    exact = [x for x in candidates if alvo in {
+        normalizar_local(x.get('label', '')), normalizar_local(x.get('place', ''))}]
+    if len(exact) == 1:
+        return exact[0]
+
+    # 2. Código IATA explícito: (GIG), GIG, GRU etc.
+    codes = re.findall(r'(?<![A-Z])([A-Z]{3})(?![A-Z])', destino.upper())
+    if codes:
+        by_code = [x for x in candidates if any(
+            re.search(r'\(' + re.escape(code) + r'\)', x.get('place', ''), re.I) for code in codes)]
+        if len(by_code) == 1:
+            return by_code[0]
+
+    # 3. Nome puro de cidade escolhe explicitamente "all locations", nunca um aeroporto implícito.
+    all_locations = [x for x in candidates
+                     if normalizar_local(x.get('city', '')) == alvo
+                     and '(all locations)' in x.get('place', '').lower()]
+    if len(all_locations) == 1:
+        return all_locations[0]
+
+    # 4. Se o próprio endpoint devolveu uma única opção, não há ambiguidade a resolver.
+    if len(candidates) == 1:
+        return candidates[0]
+
+    # 5. Correspondência forte por inclusão somente se for única.
+    strong = [x for x in candidates if alvo and (
+        alvo in normalizar_local(x.get('label', '')) or
+        alvo in normalizar_local(x.get('place', '')))]
+    if len(strong) == 1:
+        return strong[0]
+
+    raise LocalAmbiguo(x['label'] for x in candidates)
+
+
 def resolver_local_api(destino, timeout=20):
-    """Resolve IDs sem navegador. Falha fechada para permitir fallback v12.1."""
+    """Resolve IDs pelo autocomplete real; falha fechada para fallback v12.1."""
     alvo = normalizar_local(destino)
     cache = _load_location_cache()
-    cached = [x for x in cache if isinstance(x, dict) and normalizar_local(x.get('label', '')) == alvo]
+    cached = [x for x in cache if isinstance(x, dict) and alvo in {
+        normalizar_local(x.get('label', '')), normalizar_local(x.get('place', ''))}]
     if len(cached) == 1:
         item = cached[0]
         if all(_as_int(item.get(k)) for k in ('location_id', 'city_id', 'country_id')):
@@ -257,13 +339,9 @@ def resolver_local_api(destino, timeout=20):
             candidates.append(item)
             seen.add(key)
 
-    exact = [x for x in candidates if normalizar_local(x['label']) == alvo]
-    if not exact:
-        # Rótulos do endpoint podem conter detalhes extras; aceitar somente match único forte.
-        exact = [x for x in candidates if alvo in normalizar_local(x['label']) or normalizar_local(x['label']) in alvo]
-    if len(exact) != 1:
-        raise LocalAmbiguo(x['label'] for x in candidates) if candidates else ValueError('Autocomplete API não resolveu o local.')
-    return exact[0]
+    selected = _select_location_candidate(destino, candidates)
+    _save_runtime_location(selected)
+    return selected
 
 
 def criar_busca_direta(destino, retirada, devolucao, log=print):
