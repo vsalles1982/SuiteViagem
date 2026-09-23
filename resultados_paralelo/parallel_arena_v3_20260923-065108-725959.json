@@ -1,0 +1,146 @@
+{
+  "variant": "suiteviagem-parallel-arena-v3.7-early-release",
+  "requested": {
+    "flight_origin": "RIO",
+    "flight_dest": "SAO",
+    "hotel_city": "Petrópolis",
+    "car_location": "Sao Paulo Guarulhos Airport (GRU), Sao Paulo, Brazil",
+    "event_city": "São Paulo",
+    "start": "2026-11-07",
+    "end": "2026-11-08",
+    "limit": 5
+  },
+  "user_query_wall_seconds": 107.455,
+  "heavy_gate_reason": "gate_timeout_9s",
+  "results": {
+    "flights": {
+      "module": "flights",
+      "ok": true,
+      "seconds": 20.678,
+      "price": 390.0,
+      "price_count": 144,
+      "session_reused": true
+    },
+    "cars": {
+      "module": "cars",
+      "ok": true,
+      "seconds": 43.712,
+      "count": 5,
+      "best_price": 161.97,
+      "top": [
+        {
+          "name": "Fiat Mobi",
+          "supplier": "Foco",
+          "price": 161.97,
+          "currency": "BRL"
+        },
+        {
+          "name": "Fiat Mobi",
+          "supplier": "Foco",
+          "price": 174.51,
+          "currency": "BRL"
+        },
+        {
+          "name": "Fiat Mobi",
+          "supplier": "Localiza",
+          "price": 184.21,
+          "currency": "BRL"
+        },
+        {
+          "name": "Peugeot 208",
+          "supplier": "Foco",
+          "price": 186.72,
+          "currency": "BRL"
+        },
+        {
+          "name": "Volkswagen Polo",
+          "supplier": "Foco",
+          "price": 186.77,
+          "currency": "BRL"
+        }
+      ],
+      "timings": {
+        "driver_seconds": 0.0,
+        "fast_path_seconds": 9.3456,
+        "fast_path_used": 1,
+        "navigation_seconds": 9.3456,
+        "results_wait_seconds": 5.824,
+        "sorting_seconds": 0.2077,
+        "first_batch_seconds": 15.5035,
+        "collection_seconds": 0.0,
+        "export_seconds": 0.4181,
+        "cleanup_seconds": 0.0,
+        "total_seconds": 15.9217
+      },
+      "logs_tail": [
+        "Fiat Mobi | Foco | R$ 174,51",
+        "Fiat Mobi | Localiza | R$ 184,21",
+        "Peugeot 208 | Foco | R$ 186,72",
+        "Volkswagen Polo | Foco | R$ 186,77",
+        "Exportadas: 5 | Limite solicitado: 5 | Cobertura: Não incluída"
+      ]
+    },
+    "hotels": {
+      "module": "hotels",
+      "ok": true,
+      "seconds": 74.707,
+      "count": 15,
+      "best_price": 190.0,
+      "top": [
+        {
+          "name": "Hospedaria Nossa Senhora da Glória",
+          "price": 190.0,
+          "total": 190.0,
+          "currency": "BRL",
+          "url": "https://www.booking.com/hotel/br/hospedaria-nossa-senhora-da-gloria.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCu8HO1QbAAgHSAiQ5ODIwZTI2ZS04ZmEzLTQ1NGEtOGRiMy05NTc2OWI4MTE5ZDbYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-11-07&checkout=2026-11-08&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=price&srpvid=5df8451d1943054f&srepoch=1790157028&all_sr_blocks=458600309_391619134_2_0_0&highlighted_blocks=458600309_391619134_2_0_0&matching_block_id=458600309_391619134_2_0_0&sr_pri_blocks=458600309_391619134_2_0_0__19000&from=searchresults"
+        },
+        {
+          "name": "Apartmento para a Bauernfest",
+          "price": 252.0,
+          "total": 252.0,
+          "currency": "BRL",
+          "url": "https://www.booking.com/hotel/br/apartmento-para-a-bauernfest.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCu8HO1QbAAgHSAiQ5ODIwZTI2ZS04ZmEzLTQ1NGEtOGRiMy05NTc2OWI4MTE5ZDbYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-11-07&checkout=2026-11-08&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=2&hapos=2&sr_order=price&srpvid=5df8451d1943054f&srepoch=1790157028&all_sr_blocks=1669009601_438711347_2_0_0&highlighted_blocks=1669009601_438711347_2_0_0&matching_block_id=1669009601_438711347_2_0_0&sr_pri_blocks=1669009601_438711347_2_0_0__25200&from=searchresults"
+        },
+        {
+          "name": "Recanto do major",
+          "price": 315.0,
+          "total": 315.0,
+          "currency": "BRL",
+          "url": "https://www.booking.com/hotel/br/recanto-do-majo.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCu8HO1QbAAgHSAiQ5ODIwZTI2ZS04ZmEzLTQ1NGEtOGRiMy05NTc2OWI4MTE5ZDbYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-11-07&checkout=2026-11-08&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=3&hapos=3&sr_order=price&srpvid=5df8451d1943054f&srepoch=1790157028&all_sr_blocks=1178799201_390373607_2_2_0&highlighted_blocks=1178799201_390373607_2_2_0&matching_block_id=1178799201_390373607_2_2_0&sr_pri_blocks=1178799201_390373607_2_2_0__31500&from=searchresults"
+        },
+        {
+          "name": "Apt Petrópolis - Imperial",
+          "price": 351.0,
+          "total": 391.0,
+          "currency": "BRL",
+          "url": "https://www.booking.com/hotel/br/apt-petropolis-imperial.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCu8HO1QbAAgHSAiQ5ODIwZTI2ZS04ZmEzLTQ1NGEtOGRiMy05NTc2OWI4MTE5ZDbYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-11-07&checkout=2026-11-08&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=4&hapos=4&sr_order=price&srpvid=5df8451d1943054f&srepoch=1790157028&all_sr_blocks=1651488801_437147844_2_0_0&highlighted_blocks=1651488801_437147844_2_0_0&matching_block_id=1651488801_437147844_2_0_0&sr_pri_blocks=1651488801_437147844_2_0_0__35100&from=searchresults"
+        },
+        {
+          "name": "Loft para casal em prédio familiar 3,5km do centro histórico",
+          "price": 341.0,
+          "total": 416.0,
+          "currency": "BRL",
+          "url": "https://www.booking.com/hotel/br/apartamento-em-predio-familiar.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCu8HO1QbAAgHSAiQ5ODIwZTI2ZS04ZmEzLTQ1NGEtOGRiMy05NTc2OWI4MTE5ZDbYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-11-07&checkout=2026-11-08&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=5&hapos=5&sr_order=price&srpvid=5df8451d1943054f&srepoch=1790157028&all_sr_blocks=1481984601_419695036_2_0_0&highlighted_blocks=1481984601_419695036_2_0_0&matching_block_id=1481984601_419695036_2_0_0&sr_pri_blocks=1481984601_419695036_2_0_0__34110&from=searchresults"
+        }
+      ],
+      "timings": {
+        "driver_seconds": 16.776,
+        "driver_reused": false,
+        "navigation_seconds": 44.508,
+        "cards_seconds": 13.422,
+        "finalize_seconds": 0.0,
+        "export_seconds": 0.0,
+        "total_seconds": 74.707
+      }
+    },
+    "events": {
+      "module": "events",
+      "ok": true,
+      "seconds": 98.436,
+      "count": 0,
+      "results": [],
+      "pages_scanned": 15,
+      "links_seen": 218
+    }
+  }
+}

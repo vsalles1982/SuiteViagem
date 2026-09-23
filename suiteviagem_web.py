@@ -27,8 +27,8 @@ DEFAULTS = {
     "hotel_city": "Petrópolis",
     "car_location": "Sao Paulo Guarulhos Airport (GRU), Sao Paulo, Brazil",
     "event_city": "São Paulo",
-    "start": "2026-09-20",
-    "end": "2026-09-21",
+    "start": "2026-11-07",
+    "end": "2026-11-08",
     "limit": 5,
 }
 
@@ -429,12 +429,15 @@ async function pollReady(){
     const r=await fetch('/api/status'); const j=await r.json();
     ready=j.ready;
     $('go').disabled=!ready;
-    if(ready){
+    if(ready&&j.warm_failures&&j.warm_failures.length){
+      $('readyBadge').innerHTML='<span style="color:#ffcc00">●</span><span><b>Motores prontos, warmup parcial</b><small>'+j.warm_failures.join('; ')+'</small></span>';
+      $('status').textContent='Pronto — busca seguirá mesmo com warmup pendente.';
+    }else if(ready){
       $('readyBadge').innerHTML='<span class="engine-dot"></span><span><b>Motores quentes</b><small>Todos os módulos prontos</small></span>';
       $('status').textContent='Pronto para pesquisar ao vivo.';
       $('bar').style.width='100%';
     }else if(j.error){
-      $('readyBadge').innerHTML='<span style="color:#ff8b8b">●</span><span><b>Falha no warmup</b><small>Verifique o terminal</small></span>';
+      $('readyBadge').innerHTML='<span style="color:#ff8b8b">●</span><span><b>Falha no boot</b><small>Verifique o terminal</small></span>';
       $('status').textContent=j.error;
     }else{
       $('status').textContent=j.stage||'Inicializando…';
@@ -489,6 +492,7 @@ class EngineState:
         threading.Thread(target=self._boot, daemon=True).start()
 
     def _boot(self):
+        self.warm_failures = []
         try:
             for name in ("flights", "cars", "hotels"):
                 self.stage = f"Subindo {name}…"
@@ -498,21 +502,38 @@ class EngineState:
             self.stage = "Aquecendo Flights…"
             self.workers["flights"].send({"op":"warm","origin":DEFAULTS["flight_origin"],
                                           "dest":DEFAULTS["flight_dest"],"start":DEFAULTS["start"]})
-            self.workers["flights"].wait("WARM", timeout=120)
+            try:
+                self.workers["flights"].wait("WARM", timeout=120)
+            except Exception as exc:
+                self.warm_failures.append(f"flights: {type(exc).__name__}")
 
             self.stage = "Aquecendo Cars…"
             self.workers["cars"].send({"op":"warm"})
-            self.workers["cars"].wait("WARM", timeout=120)
+            try:
+                self.workers["cars"].wait("WARM", timeout=120)
+            except Exception as exc:
+                self.warm_failures.append(f"cars: {type(exc).__name__}")
 
             self.stage = "Aquecendo Booking…"
             self.workers["hotels"].send({"op":"warm","city":DEFAULTS["hotel_city"],
                                          "start":DEFAULTS["start"],"end":DEFAULTS["end"]})
-            self.workers["hotels"].wait("WARM", timeout=120)
+            try:
+                self.workers["hotels"].wait("WARM", timeout=120)
+            except Exception as exc:
+                self.warm_failures.append(f"hotels: {type(exc).__name__}")
 
+            # v3.8.7 — warmup falho NÃO pode bloquear a busca. Os searches têm
+            # retry próprio; warmup é só vantagem de latência.
             self.stage = "Assentando sessões…"
             time.sleep(3.0)
             self.ready = True
-            self.stage = "Pronto"
+            if self.warm_failures:
+                self.stage = (
+                    "Pronto (warmup parcial: "
+                    + "; ".join(self.warm_failures) + ")"
+                )
+            else:
+                self.stage = "Pronto"
         except Exception as exc:
             self.error = f"{type(exc).__name__}: {exc}"
             self.stage = self.error
@@ -546,7 +567,11 @@ class EngineState:
             except FutureTimeout:
                 gate = "gate_timeout_9s"
 
-            ef = executor.submit(run_events, p["event_city"], p["start"], p["end"], int(p.get("limit",5)))
+            # v3.8.8 — Events espera 20s p/ não disputar CPU/rede com o Flight.
+            def _events_later(event_city, start, end, limit):
+                time.sleep(20)
+                return run_events(event_city, start, end, limit)
+            ef = executor.submit(_events_later, p["event_city"], p["start"], p["end"], int(p.get("limit",5)))
 
             self.workers["cars"].send({"op":"search","location":p["car_location"],
                                        "start":p["start"],"end":p["end"],"limit":int(p.get("limit",5))})
@@ -611,7 +636,9 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(raw)
             return
         if path=="/api/status":
-            self._send_json({"ready":STATE.ready,"stage":STATE.stage,"error":STATE.error})
+            self._send_json({"ready":STATE.ready,"stage":STATE.stage,
+                             "error":STATE.error,
+                             "warm_failures":getattr(STATE, "warm_failures", [])})
             return
         self.send_error(404)
 

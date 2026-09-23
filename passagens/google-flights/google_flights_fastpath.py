@@ -11,6 +11,8 @@ TARGET = "FlightsFrontendService/GetShoppingResults"
 PRICE_PATTERNS = [
     re.compile(r'\[\[null,([0-9]+(?:\.[0-9]+)?)\],\\\"[A-Za-z0-9_+/=-]{20,}'),
     re.compile(r'\[\[null,([0-9]+(?:\.[0-9]+)?)\],"[A-Za-z0-9_+/=-]{20,}'),
+    # v3.8.8 — fallback genérico: o Google varia a forma do token após o preço.
+    re.compile(r'\[\[null,([0-9]+(?:\.[0-9]+)?)\]'),
 ]
 
 BLOCK_TYPES = {"image", "font", "media"}
@@ -102,17 +104,21 @@ class GoogleFlightsFastSession:
         url = _montar_url(origem, destino, data)
         t0 = time.monotonic()
         captured = {}
+        diag = {"rpc_seen": 0, "no_price_bodies": 0}
 
         def on_response(response):
+            diag["rpc_seen"] += 1
             if TARGET not in response.url or captured:
                 return
             try:
                 body = response.text()
             except Exception:
+                diag["no_price_bodies"] += 1
                 return
 
             prices = _extract_prices(body)
             if not prices:
+                diag["no_price_bodies"] += 1
                 return
 
             captured.update(
@@ -124,10 +130,11 @@ class GoogleFlightsFastSession:
 
         self.page.on("response", on_response)
         try:
-            # v3.8.6 — o RPC do Google às vezes demora >30s ou não dispara na
-            # primeira navegação (intermitente). Total de até ~65s com reloads.
+            # v3.8.8 — sob carga (booking+events em paralelo) o RPC chega atrasado.
+            # Rounds com 20/25/25/30s; 4ª tentativa é o desempate sob contenção.
             attempts = 0
-            for target in (url, None, None):
+            waits = (20, 25, 25, 30)
+            for target in (url, None, None, None):
                 if captured:
                     break
                 attempts += 1
@@ -151,14 +158,15 @@ class GoogleFlightsFastSession:
                         pass
                     self.consent_checked = True
 
-                deadline = time.monotonic() + (20 if attempts == 1 else 25)
+                deadline = time.monotonic() + waits[attempts - 1]
                 while time.monotonic() < deadline and not captured:
                     self.page.wait_for_timeout(10)
 
             if not captured:
                 raise RuntimeError(
-                    f"GetShoppingResults válido não apareceu após {attempts} "
-                    "tentativas (~65s)."
+                    f"GetShoppingResults não capturado após {attempts} tentativas "
+                    f"(~100s). diag: rpc_seen={diag['rpc_seen']} "
+                    f"no_price_bodies={diag['no_price_bodies']}"
                 )
 
             prices = captured["prices"]
@@ -172,6 +180,8 @@ class GoogleFlightsFastSession:
                 "total_seconds": round(time.monotonic() - t0, 3),
                 "response_chars": captured["response_chars"],
                 "status": captured["status"],
+                "rpc_seen": diag["rpc_seen"],
+                "no_price_bodies": diag["no_price_bodies"],
                 "source": "google_flights_rpc",
             }
         finally:

@@ -379,8 +379,11 @@ def main():
             print(f"{time.monotonic()-t0:6.2f}s  → FASE B liberada por timeout de 9s", flush=True)
 
         # FASE B: depois da janela crítica do RPC, entra o restante.
+        def _events_later(city, start, end, limit):
+            time.sleep(20)
+            return run_events(city, start, end, limit)
         events_future = executor.submit(
-            run_events, args.event_city, args.start, args.end, args.limit
+            _events_later, args.event_city, args.start, args.end, args.limit
         )
         print(f"{time.monotonic()-t0:6.2f}s  → EVENTS disparado", flush=True)
 
