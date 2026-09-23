@@ -1,0 +1,29 @@
+{
+  "variant": "google-flights-same-session-probe-v1",
+  "runs": [
+    {
+      "label": "WARM",
+      "ok": true,
+      "elapsed": 9.036,
+      "price": 879.0,
+      "price_count": 154,
+      "session_reused": false
+    },
+    {
+      "label": "SEARCH_1",
+      "ok": true,
+      "elapsed": 6.753,
+      "price": 879.0,
+      "price_count": 154,
+      "session_reused": true
+    },
+    {
+      "label": "SEARCH_2",
+      "ok": true,
+      "elapsed": 6.35,
+      "price": 879.0,
+      "price_count": 154,
+      "session_reused": true
+    }
+  ]
+}

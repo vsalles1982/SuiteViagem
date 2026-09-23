@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 798, in coletar_ofertas
+    raise ValueError('Nenhum total confirmado. ' + '; '.join(sorted(erros))[:600])
+ValueError: Nenhum total confirmado. Oferta sem link com os mesmos parâmetros da consulta

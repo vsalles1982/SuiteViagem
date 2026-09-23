@@ -3,6 +3,7 @@ import re
 import time
 from datetime import datetime, timedelta
 from playwright.sync_api import sync_playwright
+from google_flights_fastpath import run_fast_search as run_google_flights_fast_search, close_fast_session as close_google_flights_fast_session
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Prompt
@@ -289,19 +290,35 @@ def raspar_melhor_preco(nome, origem, destino, dias, passo, ida_volta=False, dur
                     f"[cyan]Consultando {data}; aguardando cartões estáveis…[/cyan]",
                     spinner="dots",
                 ):
-                    with sync_playwright() as p:
-                        browser = p.chromium.launch(headless=True)
-                        try:
-                            context = browser.new_context(
-                                viewport={"width": 1280, "height": 900},
-                                locale="pt-BR",
-                            )
-                            page = context.new_page()
-                            preco = executar_raspagem(page, url)
-                            if preco is None or preco <= 0:
-                                raise RuntimeError("Nenhum preço válido nos cartões.")
-                        finally:
-                            browser.close()
+                    try:
+                        fast_result = run_google_flights_fast_search(
+                            origem, destino, data, headless=True
+                        )
+                        preco = fast_result["price"]
+                        console.print(
+                            f"  [dim]Fastpath RPC: {fast_result['price_count']} preços; "
+                            f"{fast_result['total_seconds']:.2f}s; "
+                            f"sessão reutilizada={fast_result['session_reused']}[/dim]"
+                        )
+                    except Exception as fast_error:
+                        console.print(
+                            f"  [yellow]Fastpath RPC falhou; usando fallback DOM: "
+                            f"{fast_error}[/yellow]"
+                        )
+                        with sync_playwright() as p:
+                            browser = p.chromium.launch(headless=True)
+                            try:
+                                context = browser.new_context(
+                                    viewport={"width": 1280, "height": 900},
+                                    locale="pt-BR",
+                                )
+                                page = context.new_page()
+                                preco = executar_raspagem(page, url)
+                            finally:
+                                browser.close()
+
+                    if preco is None or preco <= 0:
+                        raise RuntimeError("Nenhum preço válido confirmado.")
 
                 resultado["sucessos"].append({"data": data, "preco": preco})
                 if resultado["preco"] is None or preco < resultado["preco"]:

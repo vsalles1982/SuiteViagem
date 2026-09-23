@@ -1,0 +1,70 @@
+{
+  "variant": "suiteviagem-parallel-arena-v3.1-booking-headful",
+  "requested": {
+    "flight_origin": "RIO",
+    "flight_dest": "SAO",
+    "hotel_city": "Petrópolis",
+    "car_location": "Sao Paulo Guarulhos Airport (GRU), Sao Paulo, Brazil",
+    "event_city": "São Paulo",
+    "start": "2026-09-20",
+    "end": "2026-09-21",
+    "limit": 5
+  },
+  "user_query_wall_seconds": 25.738,
+  "results": {
+    "cars": {
+      "module": "cars",
+      "ok": true,
+      "seconds": 5.314,
+      "count": 5,
+      "timings": {
+        "driver_seconds": 0.0,
+        "fast_path_seconds": 1.4027,
+        "fast_path_used": 1,
+        "navigation_seconds": 1.4027,
+        "results_wait_seconds": 3.5113,
+        "sorting_seconds": 0.207,
+        "first_batch_seconds": 5.2703,
+        "collection_seconds": 0.0,
+        "export_seconds": 0.0211,
+        "cleanup_seconds": 0.0,
+        "total_seconds": 5.2915
+      },
+      "logs_tail": [
+        "Fiat Mobi | Foco | R$ 183,03",
+        "Peugeot 208 | Foco | R$ 187,86",
+        "Volkswagen Polo | Foco | R$ 187,91",
+        "Hyundai HB20S | Foco | R$ 193,95",
+        "Exportadas: 5 | Limite solicitado: 5 | Cobertura: Não incluída"
+      ]
+    },
+    "events": {
+      "module": "events",
+      "ok": true,
+      "seconds": 6.308,
+      "count": 0,
+      "results": []
+    },
+    "flights": {
+      "module": "flights",
+      "ok": false,
+      "seconds": 20.308,
+      "error": "RuntimeError: GetShoppingResults válido não apareceu em até 15 s."
+    },
+    "hotels": {
+      "module": "hotels",
+      "ok": true,
+      "seconds": 25.736,
+      "count": 25,
+      "timings": {
+        "driver_seconds": 0.002,
+        "driver_reused": true,
+        "navigation_seconds": 24.806,
+        "cards_seconds": 0.927,
+        "finalize_seconds": 0.0,
+        "export_seconds": 0.0,
+        "total_seconds": 25.736
+      }
+    }
+  }
+}

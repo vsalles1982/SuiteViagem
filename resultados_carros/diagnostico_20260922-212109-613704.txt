@@ -1,0 +1,204 @@
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 47, in _browser_json_request
+    result = driver.execute_async_script(
+        r"""
+    ...<43 lines>...
+        int(timeout * 1000),
+    )
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 633, in execute_async_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=152.0.7977.82); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x55bfbfa4859f <unknown>
+#1 0x55bfbf39b108 <unknown>
+#2 0x55bfbf3813fc <unknown>
+#3 0x55bfbf3aadf3 <unknown>
+#4 0x55bfbf423724 <unknown>
+#5 0x55bfbf43d890 <unknown>
+#6 0x55bfbf3e43f7 <unknown>
+#7 0x55bfbf3e5162 <unknown>
+#8 0x55bfbfa0e4f3 <unknown>
+#9 0x55bfbfa0cd8d <unknown>
+#10 0x55bfbfa0c6fc <unknown>
+#11 0x55bfbf9fb608 <unknown>
+#12 0x55bfbfa0d600 <unknown>
+#13 0x55bfbf9e5f98 <unknown>
+#14 0x55bfbfa32ad7 <unknown>
+#15 0x55bfbfa32d04 <unknown>
+#16 0x55bfbfa46fcc <unknown>
+#17 0x7fcc0bc980a2 <unknown>
+#18 0x7fcc0bd2080c <unknown>
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20g.py", line 122, in coletar_ofertas_direct
+    url, consulta, local_selecionado = self.engine.criar_busca_direta(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        destino.strip(), retirada, devolucao, log
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=152.0.7977.82); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidses
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 46, in _browser_json_request
+    driver.set_script_timeout(timeout + 3)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 829, in set_script_timeout
+    self.execute(Command.SET_TIMEOUTS, {"script": int(float(time_to_wait) * 1000)})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x55bfbfa4859f <unknown>
+#1 0x55bfbf39af67 <unknown>
+#2 0x55bfbf3e3ce8 <unknown>
+#3 0x55bfbf41989a <unknown>
+#4 0x55bfbf413abe <unknown>
+#5 0x55bfbf41316d <unknown>
+#6 0x55bfbf361019 <unknown>
+#7 0x55bfbf36188c <unknown>
+#8 0x55bfbf361e82 <unknown>
+#9 0x55bfbfa0e4f3 <unknown>
+#10 0x55bfbfa0cd8d <unknown>
+#11 0x55bfbfa0c6fc <unknown>
+#12 0x55bfbf9fb608 <unknown>
+#13 0x55bfbfa0d600 <unknown>
+#14 0x55bfbf9e5f98 <unknown>
+#15 0x55bfbf35f875 <unknown>
+#16 0x55bfbf35ee4a <unknown>
+#17 0x7fcc0bc27781 <unknown>
+#18 0x7fcc0bc278b9 __libc_start_main
+#19 0x55bfbf27bb65 _start
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20e.py", line 311, in coletar_ofertas_api
+    url, consulta, local_selecionado = self.engine.criar_busca_direta(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        destino.strip(), retirada, devolucao, log
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: InvalidSessionIdException: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x55bfbfa4859f <unknown>
+#1 0x55bfbf39af67 <unknown>
+#2 0x55bfbf3e3ce8 <unknown>
+#3 0x55bfbf41989a <unknown>
+#4
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 844, in set_page_load_timeout
+    self.execute(Command.SET_TIMEOUTS, {"pageLoad": int(float(time_to_wait) * 1000)})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x55bfbfa4859f <unknown>
+#1 0x55bfbf39af67 <unknown>
+#2 0x55bfbf3e3ce8 <unknown>
+#3 0x55bfbf41989a <unknown>
+#4 0x55bfbf413abe <unknown>
+#5 0x55bfbf41316d <unknown>
+#6 0x55bfbf361019 <unknown>
+#7 0x55bfbf36188c <unknown>
+#8 0x55bfbf361e82 <unknown>
+#9 0x55bfbfa0e4f3 <unknown>
+#10 0x55bfbfa0cd8d <unknown>
+#11 0x55bfbfa0c6fc <unknown>
+#12 0x55bfbf9fb608 <unknown>
+#13 0x55bfbfa0d600 <unknown>
+#14 0x55bfbf9e5f98 <unknown>
+#15 0x55bfbf35f875 <unknown>
+#16 0x55bfbf35ee4a <unknown>
+#17 0x7fcc0bc27781 <unknown>
+#18 0x7fcc0bc278b9 __libc_start_main
+#19 0x55bfbf27bb65 _start
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 714, in coletar_ofertas
+    driver.set_page_load_timeout(60)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 846, in set_page_load_timeout
+    self.execute(
+    ~~~~~~~~~~~~^
+        Command.SET_TIMEOUTS,
+        ^^^^^^^^^^^^^^^^^^^^^
+        {"ms": float(time_to_wait) * 1000, "type": "page load"},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x55bfbfa4859f <unknown>
+#1 0x55bfbf39af67 <unknown>
+#2 0x55bfbf3e3ce8 <unknown>
+#3 0x55bfbf41989a <unknown>
+#4 0x55bfbf413abe <unknown>
+#5 0x55bfbf41316d <unknown>
+#6 0x55bfbf361019 <unknown>
+#7 0x55bfbf36188c <unknown>
+#8 0x55bfbf361e82 <unknown>
+#9 0x55bfbfa0e4f3 <unknown>
+#10 0x55bfbfa0cd8d <unknown>
+#11 0x55bfbfa0c6fc <unknown>
+#12 0x55bfbf9fb608 <unknown>
+#13 0x55bfbfa0d600 <unknown>
+#14 0x55bfbf9e5f98 <unknown>
+#15 0x55bfbf35f875 <unknown>
+#16 0x55bfbf35ee4a <unknown>
+#17 0x7fcc0bc27781 <unknown>
+#18 0x7fcc0bc278b9 __libc_start_main
+#19 0x55bfbf27bb65 _start
+

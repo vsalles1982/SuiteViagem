@@ -1,0 +1,47 @@
+{
+  "variant": "googleflights-rpc-fastpath-v5-lean",
+  "requested": {
+    "origem": "RIO",
+    "destino": "SAO",
+    "data": "2026-09-20",
+    "currency": "BRL"
+  },
+  "rounds": [
+    {
+      "origem": "RIO",
+      "destino": "SAO",
+      "data": "2026-09-20",
+      "price_count": 154,
+      "min_price_brl": 879.0,
+      "top5_prices_brl": [
+        879.0,
+        879.0,
+        879.0,
+        879.0,
+        879.0
+      ],
+      "rpc_seconds": 5.983,
+      "total_seconds": 5.983,
+      "response_chars": 239382,
+      "status": 200
+    },
+    {
+      "origem": "RIO",
+      "destino": "SAO",
+      "data": "2026-09-20",
+      "price_count": 154,
+      "min_price_brl": 879.0,
+      "top5_prices_brl": [
+        879.0,
+        879.0,
+        879.0,
+        879.0,
+        879.0
+      ],
+      "rpc_seconds": 5.828,
+      "total_seconds": 5.828,
+      "response_chars": 239382,
+      "status": 200
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 430, in coletar_ofertas
+    url, consulta, local_selecionado = abrir_busca_por_local(
+                                       ~~~~~~~~~~~~~~~~~~~~~^
+        driver, destino.strip(), retirada, devolucao, log, tempos)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 261, in abrir_busca_por_local
+    rotulo = escolher_rotulo(destino, opcoes)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 160, in escolher_rotulo
+    raise LocalAmbiguo(rotulo for rotulo, _ in opcoes)
+suiteviagem_discovercars_engine.LocalAmbiguo: Escolha o local de retirada: Florianopolis Airport (FLN), Florianopolis, Brazil | Florianopolis (all locations), Brazil | Florianopolis Henrique Valgas Road, Florianopolis, Brazil | Florianopolis West, Florianopolis, Brazil | Florianopolis North, Florianopolis, Brazil | Florianopolis Downtown, Florianopolis, Brazil | Florianopolis Praia dos Ingleses, Florianopolis, Brazil | Florianopolis East, Florianopolis, Brazil | Florianopolis Canasvieiras, Florianopolis, Brazil | Florianopolis Paulo Fontes Avenue, Florianopolis, Brazil

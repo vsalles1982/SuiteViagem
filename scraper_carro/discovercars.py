@@ -286,11 +286,19 @@ def _select_location_candidate(destino, candidates):
     if len(exact) == 1:
         return exact[0]
 
-    # 2. Código IATA explícito: (GIG), GIG, GRU etc.
+    # 2. Código IATA explícito: aceita "(GRU)", "GRU Terminal 2",
+    #    "Airport GRU" etc., mas somente quando a correspondência é única.
     codes = re.findall(r'(?<![A-Z])([A-Z]{3})(?![A-Z])', destino.upper())
     if codes:
-        by_code = [x for x in candidates if any(
-            re.search(r'\(' + re.escape(code) + r'\)', x.get('place', ''), re.I) for code in codes)]
+        by_code = []
+        for item in candidates:
+            haystack = ' '.join([
+                str(item.get('place', '')),
+                str(item.get('label', '')),
+            ]).upper()
+            if any(re.search(r'(?<![A-Z])' + re.escape(code) + r'(?![A-Z])', haystack)
+                   for code in codes):
+                by_code.append(item)
         if len(by_code) == 1:
             return by_code[0]
 
@@ -316,7 +324,7 @@ def _select_location_candidate(destino, candidates):
 
 
 def resolver_local_api(destino, timeout=20):
-    """Resolve IDs pelo autocomplete real; falha fechada para fallback v12.1."""
+    """Resolve IDs pelo autocomplete real com fallback IATA antes do DOM."""
     alvo = normalizar_local(destino)
     cache = _load_location_cache()
     cached = [x for x in cache if isinstance(x, dict) and alvo in {
@@ -326,20 +334,43 @@ def resolver_local_api(destino, timeout=20):
         if all(_as_int(item.get(k)) for k in ('location_id', 'city_id', 'country_id')):
             return item
 
-    query = urlencode({'location': texto_busca_local(destino)})
-    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
-    candidates = []
-    seen = set()
-    for row in _walk_dicts(data):
-        item = _candidate_from_dict(row)
-        if not item:
-            continue
-        key = (item['location_id'], item['city_id'], item['country_id'])
-        if key not in seen:
-            candidates.append(item)
-            seen.add(key)
+    # Mantém a busca atual como primeira tentativa. Se o endpoint devolver zero
+    # candidatos e houver IATA explícito, tenta o próprio código (GRU, GIG, FLN...).
+    attempts = [texto_busca_local(destino)]
+    codes = re.findall(r'(?<![A-Z])([A-Z]{3})(?![A-Z])', destino.upper())
+    for code in codes:
+        if code not in attempts:
+            attempts.append(code)
 
-    selected = _select_location_candidate(destino, candidates)
+    last_candidates = []
+    for search_text in attempts:
+        query = urlencode({'location': search_text})
+        data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+        candidates = []
+        seen = set()
+        for row in _walk_dicts(data):
+            item = _candidate_from_dict(row)
+            if not item:
+                continue
+            key = (item['location_id'], item['city_id'], item['country_id'])
+            if key not in seen:
+                candidates.append(item)
+                seen.add(key)
+
+        if candidates:
+            last_candidates = candidates
+            try:
+                selected = _select_location_candidate(destino, candidates)
+            except LocalAmbiguo:
+                # Não adivinha: só segue para outra consulta IATA quando ainda há
+                # uma tentativa disponível. Na última, preserva a ambiguidade.
+                if search_text != attempts[-1]:
+                    continue
+                raise
+            _save_runtime_location(selected)
+            return selected
+
+    selected = _select_location_candidate(destino, last_candidates)
     _save_runtime_location(selected)
     return selected
 

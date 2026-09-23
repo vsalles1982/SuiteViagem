@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 376, in coletar_ofertas
+    url, consulta, local_selecionado = abrir_busca_por_local(
+                                       ~~~~~~~~~~~~~~~~~~~~~^
+        driver, destino.strip(), retirada, devolucao, log)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 229, in abrir_busca_por_local
+    rotulo = escolher_rotulo(destino, opcoes)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 154, in escolher_rotulo
+    raise ValueError('Local ambíguo ou não identificado. Digite uma opção específica: ' +
+                     ' | '.join(dict.fromkeys(rotulo for rotulo, _ in opcoes))[:1000])
+ValueError: Local ambíguo ou não identificado. Digite uma opção específica: Florianopolis Airport (FLN), Florianopolis, Brazil | Florianopolis (all locations), Brazil | Florianopolis Henrique Valgas Road, Florianopolis, Brazil | Florianopolis West, Florianopolis, Brazil | Florianopolis North, Florianopolis, Brazil | Florianopolis Downtown, Florianopolis, Brazil | Florianopolis Praia dos Ingleses, Florianopolis, Brazil | Florianopolis East, Florianopolis, Brazil | Florianopolis Canasvieiras, Florianopolis, Brazil | Florianopolis Paulo Fontes Avenue, Florianopolis, Brazil

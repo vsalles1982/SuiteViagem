@@ -1,0 +1,44 @@
+import ast,json,shutil,subprocess,unittest
+from pathlib import Path
+from types import SimpleNamespace
+
+class FastLocationTests(unittest.TestCase):
+    def function(self,name):
+        tree=ast.parse((Path(__file__).resolve().parents[1]/'scraper_carro/discovercars.py').read_text())
+        fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==name)
+        ns={};exec(compile(ast.Module(body=[fn],type_ignores=[]),'location','exec'),ns)
+        return ns[name]
+    def test_native_keys_replace_without_control_leak(self):
+        keys=SimpleNamespace(CONTROL='\ue009',NULL='\ue000',BACKSPACE='\ue003')
+        state={'value':'Outro aeroporto','control':False,'selected':False,'calls':0}
+        def send(sequence):
+            state['calls']+=1
+            for char in sequence:
+                if char==keys.CONTROL:state['control']=True
+                elif char==keys.NULL:state['control']=False
+                elif char=='a' and state['control']:state['selected']=True
+                elif char==keys.BACKSPACE:
+                    state['value']='' if state['selected'] else state['value'][:-1]
+                    state['selected']=False
+                else:
+                    self.assertFalse(state['control'],'Control deve ser solto antes de digitar o destino')
+                    state['value']+=char
+        self.function('preencher_local_inicial')(SimpleNamespace(send_keys=send),'Florianópolis Airport (FLN)',keys)
+        self.assertEqual(state['value'],'Florianópolis Airport (FLN)')
+        self.assertFalse(state['control']);self.assertEqual(state['calls'],1)
+    @unittest.skipUnless(shutil.which('node'),'Node necessário para conferir os filtros JS')
+    def test_hidden_fields_and_inactive_modal_excluded(self):
+        calls=[]
+        self.function('elementos_local_visiveis')(SimpleNamespace(execute_script=lambda *args:calls.append(args)), 'input[name="PickupLocation"]')
+        self.assertEqual(len(calls),1)
+        script,selector=calls[0]
+        setup='''
+function el(id,opts={}) {return {id,parentElement:opts.parent||null,style:opts.style||{},getClientRects:()=>opts.empty?[]:[1],getAttribute:k=>k==='aria-hidden'&&opts.hidden?'true':null,classList:{contains:c=>(opts.classes||[]).includes(c)}};}
+const active=el('modal',{classes:['Modal-Container','Modal-Container_isActive']});
+const inactive=el('modal',{classes:['Modal-Container']});
+const elements=[el('desktop'),el('mobile',{parent:active}),el('inactive',{parent:inactive}),el('aria',{parent:el('parent',{hidden:true})}),el('display',{style:{display:'none'}}),el('visibility',{parent:el('parent',{style:{visibility:'hidden'}})}),el('opacity',{style:{opacity:'0'}}),el('collapse',{style:{visibility:'collapse'}}),el('empty',{empty:true})];
+global.getComputedStyle=e=>({display:'block',visibility:'visible',opacity:'1',...e.style});
+global.document={querySelectorAll:s=>{if(s!==%s)throw Error('wrong selector');return elements;}};
+''' % json.dumps(selector)
+        code=setup+'console.log(JSON.stringify((new Function('+json.dumps(script)+'))('+json.dumps(selector)+').map(e=>e.id)));'
+        self.assertEqual(json.loads(subprocess.check_output(['node','-e',code],text=True)),['desktop','mobile'])

@@ -1,0 +1,385 @@
+{
+  "cidade": "Sao Paulo",
+  "data_inicial": "2026-09-12",
+  "data_final": "2026-09-13",
+  "coletado_em": "2026-09-07T21:37:19.402294-03:00",
+  "cobertura": {
+    "paginas_lidas": 15,
+    "fim_agenda": "limite de páginas",
+    "falhas_agenda": [],
+    "links_localizados": 218,
+    "links_analisados": 32,
+    "sem_dados": 0,
+    "fora_periodo": 27,
+    "falhas_eventos": [],
+    "limite_solicitado": 5,
+    "limite_atingido": true,
+    "eventos_retornados": 5,
+    "links_nao_analisados": 186,
+    "escopo": "Eventos encontrados nos links analisados; ordenados por data. Não representa todos os eventos da cidade nem um ranking dos mais baratos."
+  },
+  "eventos": [
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicEvent",
+      "name": "Pool Do Lulu · 4ª Edição",
+      "url": "https://shotgun.live/en/events/pool-do-lulu-4-edicao",
+      "image": "https://res.cloudinary.com/shotgun/image/upload/c_limit,w_1200,h_630/f_jpg/q_auto/c_limit,f_auto,fl_lossy,q_auto,w_1920/v1785524183/production/artworks/PDL_26_-_Shotgun_WEB2_t40ifb",
+      "startDate": "2026-09-12T18:00:00.000Z",
+      "doorTime": "2026-09-12T18:00:00.000Z",
+      "endDate": "2026-09-13T08:00:00.000Z",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Mansão locação, eventos",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Doutor Oscar de Almeida, 312 - Fazenda Morumbi, São Paulo - SP, 05656-000, Brasil",
+          "addressLocality": "Fazenda Morumbi",
+          "postalCode": "05656-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.6128608,
+          "longitude": -46.7194099
+        }
+      },
+      "description": "VEM AÍ A QUARTA EDIÇÃO DA POOL DO LULU! 💦🌴\n\nE dessa vez, vamos te levar pro fundo do mar pra comemorar mais um bday do lulu 🪼🫧\n\n🗓 Data: 12.09.26\n⏳14 horas de festa \n🎧 Line-up confirmado:\n\n• Karol Figueiredo\n• Má Rodrigues\n• Mara Borges\n• Lipe Lourenço\n• Adham\n• Di Carvalho\n• Nathalia Lopes\n• Giiba b2b Ramon Jefferson\n          \n🍹 Open Bar\n🍔 Open Food\n🩲 * Sunga exclusiva da festa inclusa no ingresso * — escolha seu ingresso pelo tamanho da sunga",
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "POOL DO LULU",
+        "url": "https://shotgun.live/en/venues/pool-do-lulu"
+      },
+      "performer": [],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Lote 3 - Tamanho P",
+          "price": 300,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-06T21:25:08.000Z",
+          "url": "https://shotgun.live/en/events/pool-do-lulu-4-edicao"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Lote 3 - Tamanho M",
+          "price": 300,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-06T21:25:08.000Z",
+          "url": "https://shotgun.live/en/events/pool-do-lulu-4-edicao"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Lote 3 - Tamanho G",
+          "price": 300,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-06T21:25:08.000Z",
+          "url": "https://shotgun.live/en/events/pool-do-lulu-4-edicao"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Lote 3 - Tamanho GG",
+          "price": 300,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-06T21:25:08.000Z",
+          "url": "https://shotgun.live/en/events/pool-do-lulu-4-edicao"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicEvent",
+      "name": "Trato Convida Rara Djs Na Casinha",
+      "url": "https://shotgun.live/en/events/casinha-trato-rara-djs",
+      "image": "https://res.cloudinary.com/shotgun/image/upload/c_limit,w_1200,h_630/f_jpg/q_auto/production/artworks/CASINHA_SHOTGUN_SET26_grhoim.png",
+      "startDate": "2026-09-12T23:00:00.000Z",
+      "doorTime": "2026-09-12T23:00:00.000Z",
+      "endDate": "2026-09-13T06:00:00.000Z",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Rua Jorge Rizzo, 63 - Pinheiros, São Paulo - SP, 05424-060, Brazil",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Jorge Rizzo, 63 - Pinheiros, São Paulo - SP, 05424-060, Brazil",
+          "addressLocality": "São Paulo",
+          "postalCode": "05424-060",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5705233,
+          "longitude": -46.6975358
+        }
+      },
+      "description": "~ TRATO convida RARA DJs na casinha ~\n\n🪩 LINEUP:\nTRATO Soundsystem\nLeo Janeiro (RJ)\nBernardo Campos (RJ)\n\n🗓️ Data: 12/09\n⏰ Horário: 20h-03h\n📍 Local: Casinha - São Paulo\n\nsó entra com ingresso, não existe lista. a casa tem uma lotação restrita, garanta seus ingressos ;)",
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "casinha.cc",
+        "url": "https://shotgun.live/en/venues/casinha-cc"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "tratosp",
+          "url": "https://shotgun.live/en/artists/tratosp"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Bernardo Campos",
+          "url": "https://shotgun.live/en/artists/djbernardocampos"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Leo Janeiro",
+          "url": "https://shotgun.live/en/artists/leojaneiro"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "early birds ( entrada gratuita até as 22h )",
+          "price": 0,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-02T13:00:00.000Z",
+          "url": "https://shotgun.live/en/events/casinha-trato-rara-djs"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "ingresso antecipado",
+          "price": 30,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-02T13:00:00.000Z",
+          "url": "https://shotgun.live/en/events/casinha-trato-rara-djs"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicEvent",
+      "name": "12/9 - Chamego No Mundo Pensante",
+      "url": "https://shotgun.live/en/events/12-9-chamego-no-mundo-pensante",
+      "image": "https://res.cloudinary.com/shotgun/image/upload/c_limit,w_1200,h_630/f_jpg/q_auto/production/artworks/SHOTGUN_1_m9voee.png",
+      "startDate": "2026-09-13T00:00:00.000Z",
+      "doorTime": "2026-09-13T00:00:00.000Z",
+      "endDate": "2026-09-13T08:00:00.000Z",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Mundo Pensante",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Treze de Maio, 830 - Bela Vista, São Paulo - SP, 01327-000, Brasil",
+          "addressLocality": "São Paulo",
+          "postalCode": "01327-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5606118,
+          "longitude": -46.646284
+        }
+      },
+      "description": "O bailinho mais dengoso de SP já tem nova data pra acontecer!\n\nA festa Chamego tem a pista quente, assim como a paixão. O som é diverso que nem o Brasil. Tem forró, pop, pisero, funk, aqueles clássicos que mexem com a gente.\n\nSomos também a festa com mais sorrisos abertos e número de gente boa e da paz por metro quadrado. Nosso Chamego é pra todo mundo.\n\n\n--\nIngresso Mezanino — Chamego no Mundo Pensante\n\nQuer viver a Chamego com mais conforto e algumas facilidades?\n\nCom o Ingresso Mezanino, você garante:\n\n- Acesso ao mezanino do Mundo Pensante, com bar e banheiro exclusivos\n- Um espaço mais tranquilo pra sentar, conversar ou pausar entre uma dança e outra\n- Entrada pela fila VIP \n\nIdeal pra quem gosta da pista, mas também quer um cantinho especial pra descansar, bater papo ou tomar um drink com mais tranquilidade.\n\n--\n\nAbertura da casa: 21h\n\nIngressos antecipados:\n\n.:: Pista: R$ 45 \n\n.:: Mezanino: R$ 70\n\nNa Porta:\n\n.:: Pista: R$ 60\n.:: Mezanino: R$ 100\n\n\n* A venda de ingressos antecipados encerra 1h antes do início do evento\n* Os ingressos combo não dão acesso ao mezanino\n\n<< ATENÇÃO ANIVERSARIANTE >>\nAniversariantes do mês entram VIP até as 23h.\n\n.:: Este evento faz captação de imagens para redes sociais\n.:: Proibida a entrada de menores de 18 anos ::.\n..:: Aceitamos cartão de crédito e débito ::..\n*No dia do evento é necessário apresentar RG na porta.",
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Mundo Pensante",
+        "url": "https://shotgun.live/en/venues/mundo-pensante"
+      },
+      "performer": [],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Pista",
+          "price": 45,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T20:32:31.000Z",
+          "url": "https://shotgun.live/en/events/12-9-chamego-no-mundo-pensante"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Mezanino",
+          "price": 70,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T20:32:31.000Z",
+          "url": "https://shotgun.live/en/events/12-9-chamego-no-mundo-pensante"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicEvent",
+      "name": "Apto1205 - 13 Edição",
+      "url": "https://shotgun.live/en/events/apto-1205-13-edicao",
+      "image": "https://res.cloudinary.com/shotgun/image/upload/c_limit,w_1200,h_630/f_jpg/q_auto/production/artworks/APTO1205_12-9_shotgun.jpg_osid4s.jpg",
+      "startDate": "2026-09-13T02:00:00.000Z",
+      "doorTime": "2026-09-13T02:00:00.000Z",
+      "endDate": "2026-09-13T10:00:00.000Z",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Rua Achilles Orlando Curtolo, 649 - Barra Funda, SP, 01144-010, Brasil",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Achilles Orlando Curtolo, 649 - Barra Funda, SP, 01144-010, Brasil",
+          "addressLocality": "Barra Funda",
+          "postalCode": "01144-010",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.523686,
+          "longitude": -46.6754198
+        }
+      },
+      "description": "SÁBADO, 12.09, temos nosso próximo porta aberta na Apartamento 1205\n\nDaremos o pontapé em mais um ano de festa com muita liberdade, música, arte e conexão! \n\nO line up tá sendo preparado pra ser T!r0, p0rra4d4 e b0mb4! Confia que vamos entregar muito! 🔥\n\nEXTRAS: \n\nChapelaria - @roxacaotica e Equipe\nPREP E PREVENÇÃO na porta da festa \nHostess - @laputadivadrag \nVerniSAGI - @riscanuds \n\n######################################################\n\n\\CO - Rua Achilles Orlando Curtolo, 649\n23h - 7h\n\nSiga Apto1205 no instagram e saiba mais sobre a festa: @o_apto1205\nAcesse: www.apto1205.com\n\nNÃO É NÃO! Não será tolerado nenhum tipo de abuso e opressão. \nCONSENTIMENTO SEMPRE!\n\nSE HIDRATE! Faça sua redução de danos corretíssima para não estragar sua festa e a do coleguinha. SE HIDRATE!\n\nO evento é para o público +18\n\nANIVERSARIANTES:\nOs aniversariantes DA SEMANA do evento (ATÉ O DIA DO EVENTO)  têm entrada free – mediante à comprovação por meio de documento com foto na entrada. \n\nLISTA TNB\nSiga instagram.com/o_apto1205 e mande sua solicitação pela DM ATÉ 48h antes do evento. Nossa musa Rosa é que cuidará dessa lista com carinho.\n\nPOLÍTICA DE CANCELAMENTO: \nO cancelamento é feito em até sete dias depois da compra, desde que o pedido de cancelamento seja feito antes das 48 horas que antecedem o início do evento – previsto no Artigo 49 do Código de Defesa do Consumidor. Não há devolução de ingressos para eventos encerrados. \n\nPara ingressos onde a revenda é permitida, a própria shotgun dispõe de ferramentas para que você realize sua revenda.",
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "APARTAMENTO1205",
+        "url": "https://shotgun.live/en/venues/apartamento-1205"
+      },
+      "performer": [],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "APTO1205 - LOTE 1",
+          "price": 45,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-28T20:59:57.000Z",
+          "url": "https://shotgun.live/en/events/apto-1205-13-edicao"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "APTO1205 - LOTE 2",
+          "price": 60,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-28T20:59:57.000Z",
+          "url": "https://shotgun.live/en/events/apto-1205-13-edicao"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "APTO1205 - LOTE 3",
+          "price": 75,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-28T20:59:57.000Z",
+          "url": "https://shotgun.live/en/events/apto-1205-13-edicao"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "APTO1205 - INGRESSO DUPLO",
+          "price": 110,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-28T20:59:57.000Z",
+          "url": "https://shotgun.live/en/events/apto-1205-13-edicao"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicEvent",
+      "name": "Refuge",
+      "url": "https://shotgun.live/en/events/refuge-12-09-2026",
+      "image": "https://res.cloudinary.com/shotgun/image/upload/c_limit,w_1200,h_630/f_jpg/q_auto/production/artworks/REFUGE_-_KEY_VISUAL_-_SHOTGUN_h6yhfl.png",
+      "startDate": "2026-09-13T02:00:00.000Z",
+      "doorTime": "2026-09-13T02:00:00.000Z",
+      "endDate": "2026-09-13T11:00:00.000Z",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "CRONØ CLUB",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Quinze de Novembro, 317 - Centro Histórico, São Paulo - SP, 01013-000, Brasil",
+          "addressLocality": "Centro Histórico",
+          "postalCode": "01013-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5461788,
+          "longitude": -46.6344885
+        }
+      },
+      "description": "Estamos de volta ao CRONØ Club.\n\nDepois de uma parceria de muito sucesso com a VOLT, voltamos ao club para uma nova edição da REFUGE, dessa vez trazendo uma proposta diferente para a pista.\n\nQueremos resgatar algo que, hoje em dia, é cada vez mais difícil de encontrar: sets longos, construídos com calma e desenvolvidos ao longo de horas. Serão 3 apresentações de 3 horas, criando espaço para cada artista desenvolver sua pesquisa e conduzir a pista sem pressa.\n\nSerão 9 horas de música, das 23h às 8h.\n\nUm lugar onde a música é o ponto de encontro, cercado de respeito, positividade e boas experiências. Um espaço livre de intolerância, julgamentos, racismo, homofobia, transfobia ou qualquer forma de discriminação.\n\nLineup A-Z:\nAndre Luki\nBetriza\nBllack Rose\nCioffi\nVitørraww\n\nRefúgio, lugar que serve de amparo e proteção.\n\nCRONØ Club\nRua Quinze de Novembro, 317\nCentro Histórico, São Paulo/SP",
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Refuge",
+        "url": "https://shotgun.live/en/venues/refuge"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "Betriza",
+          "url": "https://shotgun.live/en/artists/betrizamusic"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Bllack Rose",
+          "url": "https://shotgun.live/en/artists/nblackrose"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "CIOFFI",
+          "url": "https://shotgun.live/en/artists/ricardo-cioffi"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Andre Luki",
+          "url": "https://shotgun.live/en/artists/andre-luki"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "VITORRAWW",
+          "url": "https://shotgun.live/en/artists/vitor-araujo-498096410"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "Early Bird",
+          "price": 35,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-18T22:01:13.000Z",
+          "url": "https://shotgun.live/en/events/refuge-12-09-2026"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/LimitedAvailability",
+          "name": "1º Lote",
+          "price": 45,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-18T22:01:13.000Z",
+          "url": "https://shotgun.live/en/events/refuge-12-09-2026"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Duplo de Feriado",
+          "price": 60,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-05T03:00:00.000Z",
+          "url": "https://shotgun.live/en/events/refuge-12-09-2026"
+        }
+      ]
+    }
+  ]
+}

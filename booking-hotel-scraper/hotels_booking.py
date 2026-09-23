@@ -58,6 +58,13 @@ def create_driver(headless=False):
     # Chromium no Arch
     options.binary_location = "/usr/bin/chromium"
 
+    # v3.8.3 — perfil isolado por processo (evita lock compartilhado com
+    # o worker Cars, que causava NoSuchWindow/InvalidSessionId em idle)
+    import os
+    _profile = os.path.expanduser(f"~/.cache/suiteviagem/chrome_hotel_{os.getpid()}")
+    os.makedirs(_profile, exist_ok=True)
+    options.add_argument(f"--user-data-dir={_profile}")
+
     if headless:
         options.add_argument("--headless=new")
     options.page_load_strategy = "eager"
@@ -71,6 +78,10 @@ def create_driver(headless=False):
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_argument("--window-size=1920,1080")
+    # v3.8.3 — anti-idle (mesmas flags do worker Cars)
+    options.add_argument("--disable-background-timer-throttling")
+    options.add_argument("--disable-backgrounding-occluded-windows")
+    options.add_argument("--disable-renderer-backgrounding")
 
     service = ChromeService(resolve_chromedriver())
     return webdriver.Chrome(service=service, options=options)
@@ -201,7 +212,7 @@ def stable_batch(rows, seen, now, stable_seconds=3):
     return stable
 
 
-def extract_fast_batch(driver, on_progress=None, confirm=None):
+def _extract_fast_batch_legacy(driver, on_progress=None, confirm=None):
     import json
     began = time.monotonic()
     seen, first, last_signature = {}, None, None
@@ -233,6 +244,109 @@ def extract_fast_batch(driver, on_progress=None, confirm=None):
             print('Coleta encerrada com ' + str(len(stable)) + ' ofertas estáveis; cobertura parcial.', flush=True)
             return stable
         time.sleep(.5)
+
+
+# BOOKING_FASTPATH_V5
+def extract_fast_batch(driver, on_progress=None, confirm=None):
+    """
+    Fast path v5:
+    - usa somente o lote inicial já renderizado pelo Booking;
+    - não faz scroll;
+    - lê todos os cards em uma chamada JS;
+    - valida total BRL;
+    - ordena localmente pelo total confirmado;
+    - cai no coletor legado se o lote inicial não ficar utilizável.
+    """
+    from urllib.parse import urlsplit
+
+    began = time.monotonic()
+    best_count = 0
+    last_growth = began
+    first_seen = None
+
+    while time.monotonic() - began < 12:
+        rows, current_url = read_cards_batch(driver)
+
+        if confirm and not confirm(current_url):
+            raise RuntimeError('Consulta mudou durante a coleta; ofertas não confirmadas.')
+
+        now = time.monotonic()
+        count = len(rows)
+
+        if count and first_seen is None:
+            first_seen = now
+
+        if count > best_count:
+            best_count = count
+            last_growth = now
+            print('Hotéis carregados no lote inicial: ' + str(best_count), flush=True)
+
+        if best_count >= 20 and now - last_growth >= 0.6:
+            break
+
+        time.sleep(0.10)
+
+    rows, current_url = read_cards_batch(driver)
+
+    if confirm and not confirm(current_url):
+        raise RuntimeError('Consulta mudou durante a coleta; ofertas não confirmadas.')
+
+    usable = []
+    for row in rows:
+        u = urlsplit(row.get('Hotel URL', ''))
+
+        if (
+            u.scheme != 'https'
+            or u.hostname not in ('www.booking.com', 'booking.com')
+            or not row.get('Hotel Name')
+            or row.get('Price') is None
+        ):
+            continue
+
+        additional, total, status = price_with_taxes(
+            row.get('Price'),
+            row.get('Currency'),
+            row.get('Taxes Text', ''),
+        )
+
+        if total is None:
+            continue
+
+        row['Additional Taxes (BRL)'] = additional
+        row['Total Displayed (BRL)'] = total
+        row['Total Status'] = status
+        usable.append(row)
+
+    if usable:
+        usable.sort(
+            key=lambda row: (
+                row['Total Displayed (BRL)'],
+                row.get('Price') if row.get('Price') is not None else float('inf'),
+                row.get('Hotel Name', ''),
+            )
+        )
+
+        elapsed = round(time.monotonic() - began, 2)
+        print(
+            'Fast path SSR: '
+            + str(len(usable))
+            + ' ofertas com total BRL confirmado em '
+            + str(elapsed)
+            + ' s; sem scroll.',
+            flush=True,
+        )
+
+        if on_progress:
+            on_progress(usable)
+
+        return usable
+
+    print('Fast path SSR sem lote utilizável; ativando fallback legado.', flush=True)
+    return _extract_fast_batch_legacy(
+        driver,
+        on_progress=on_progress,
+        confirm=confirm,
+    )
 
 
 def extract_hotels(driver, fast=False, on_progress=None, confirm=None):
@@ -520,6 +634,159 @@ def write_hotels_excel(path, rows, engine=None):
     return engine
 
 
+
+# BOOKING_FASTPATH_V5_1C
+_FAST_BOOKING_DRIVERS = {}
+
+def _get_fast_booking_driver(headless=False):
+    key = bool(headless)
+    driver = _FAST_BOOKING_DRIVERS.get(key)
+
+    if driver is not None:
+        try:
+            _ = driver.current_window_handle
+            return driver, False
+        except Exception:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+            _FAST_BOOKING_DRIVERS.pop(key, None)
+
+    driver = create_driver(headless=headless)
+    driver.set_page_load_timeout(60)
+    _FAST_BOOKING_DRIVERS[key] = driver
+    return driver, True
+
+
+def close_fast_booking_drivers():
+    for driver in list(_FAST_BOOKING_DRIVERS.values()):
+        try:
+            driver.quit()
+        except Exception:
+            pass
+    _FAST_BOOKING_DRIVERS.clear()
+
+
+def run_fast_search(destination, checkin, checkout, *, headless=False, on_progress=None):
+    from datetime import datetime
+    from urllib.parse import urlencode
+
+    began = time.monotonic()
+    destination = destination.strip()
+    nights = validate_search(destination, checkin, checkout)
+
+    params = dict(
+        ss=destination,
+        checkin=checkin,
+        checkout=checkout,
+        group_adults=2,
+        no_rooms=1,
+        group_children=0,
+        selected_currency='BRL',
+        order='price',
+    )
+
+    url = 'https://www.booking.com/searchresults.pt-br.html?' + urlencode(params)
+
+    driver_started = time.monotonic()
+    driver, created = _get_fast_booking_driver(headless=headless)
+    driver_seconds = time.monotonic() - driver_started
+
+    navigation_started = time.monotonic()
+    open_confirmed_search(driver, url, params)
+    navigation_seconds = time.monotonic() - navigation_started
+
+    cards_started = time.monotonic()
+    hotels = extract_hotels(
+        driver,
+        fast=True,
+        on_progress=on_progress,
+        confirm=lambda current_url: query_matches(current_url, params),
+    )
+    cards_seconds = time.monotonic() - cards_started
+
+    # BOOKING_FASTPATH_V5_2
+    # extract_fast_batch já confirma a URL durante a coleta e imediatamente
+    # antes de retornar. Evitamos consultar driver.current_url novamente aqui,
+    # pois essa leitura pode bloquear enquanto o Chromium finaliza recursos.
+    finalize_started = time.monotonic()
+
+    stamp = datetime.now().astimezone().isoformat(timespec='seconds')
+    prepared = []
+
+    for hotel in hotels:
+        additional, total, status = price_with_taxes(
+            hotel.get('Price'),
+            hotel.get('Currency'),
+            hotel.get('Taxes Text', ''),
+        )
+
+        if total is None:
+            continue
+
+        prepared.append({
+            **hotel,
+            'Destination': destination,
+            'Check-in': checkin,
+            'Check-out': checkout,
+            'Nights': nights,
+            'Adults': 2,
+            'Children': 0,
+            'Rooms': 1,
+            'Requested Currency': 'BRL',
+            'Additional Taxes (BRL)': additional,
+            'Total Displayed (BRL)': total,
+            'Total Status': status,
+            'Price Basis': 'Total BRL confirmado no cartão do Booking',
+            'Latitude': None,
+            'Longitude': None,
+            'Address': NOT_INFORMED,
+            'Details Status': 'Detalhes não consultados: busca rápida',
+            'Details Error': '',
+            'Collected At': stamp,
+        })
+
+    prepared.sort(
+        key=lambda row: (
+            row['Total Displayed (BRL)'],
+            row.get('Price') if row.get('Price') is not None else float('inf'),
+            row.get('Hotel Name', ''),
+        )
+    )
+
+    total_seconds = time.monotonic() - began
+    finalize_seconds = time.monotonic() - finalize_started
+
+    timings = {
+        'driver_seconds': round(driver_seconds, 3),
+        'driver_reused': not created,
+        'navigation_seconds': round(navigation_seconds, 3),
+        'cards_seconds': round(cards_seconds, 3),
+        'finalize_seconds': round(finalize_seconds, 3),
+        'export_seconds': 0.0,
+        'total_seconds': round(total_seconds, 3),
+    }
+
+    print(
+        'FAST SEARCH concluída: '
+        + str(len(prepared))
+        + ' ofertas | total '
+        + str(round(total_seconds, 3))
+        + ' s | driver_reused='
+        + str(not created),
+        flush=True,
+    )
+
+    return {
+        'records': prepared,
+        'excel': None,
+        'search_url': url,
+        'fast': True,
+        'headless': headless,
+        'timings': timings,
+    }
+
 def run_scraping(destination, checkin, checkout, *, return_records=False, fast=False, headless=False, on_progress=None):
     from datetime import datetime
     from pathlib import Path
@@ -532,7 +799,7 @@ def run_scraping(destination, checkin, checkout, *, return_records=False, fast=F
     reference = REFERENCE_COORDS if is_petropolis(destination) else None
     params = dict(ss=destination, checkin=checkin, checkout=checkout,
                   group_adults=2, no_rooms=1, group_children=0,
-                  nflt='ht_id=204', selected_currency='BRL')
+                  nflt='ht_id=204', selected_currency='BRL', order='price')
     url = 'https://www.booking.com/searchresults.pt-br.html?' + urlencode(params)
     began = time.monotonic()
     timings = {}

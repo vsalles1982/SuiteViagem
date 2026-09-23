@@ -48,7 +48,7 @@ class ProgressTests(unittest.TestCase):
                 q=new_query('hotels',{});qid=h.create(q);h.start(qid)
             first={'query_id':qid,'module':'hotels','results':[normalize(copy.deepcopy(ROW),qid,'2026-09-12','2026-09-13')]}
             second={**first,'results':[]}
-            j=Jobs(db);j.job={'query_id':qid,'status':'cancelling','logs':deque(),'first_preview':None,'preview_version':0}
+            j=Jobs(db);j.job={'module':'hotels','query_id':qid,'status':'cancelling','logs':deque(),'first_preview':None,'preview_version':0}
             j.process=NS(stdout=io.StringIO('SUITE_PREVIEW:'+json.dumps(first)+'\nSUITE_PREVIEW:'+json.dumps(second)+'\n'),wait=lambda:130)
             j._read()
             self.assertEqual(j.job['preview']['results'],[])

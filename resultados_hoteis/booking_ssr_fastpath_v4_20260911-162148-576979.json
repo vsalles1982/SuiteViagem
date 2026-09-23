@@ -1,0 +1,100 @@
+{
+  "variant": "booking-ssr-fastpath-v4",
+  "requested": {
+    "ss": "Petrópolis",
+    "checkin": "2026-09-13",
+    "checkout": "2026-09-14",
+    "group_adults": 2,
+    "no_rooms": 1,
+    "group_children": 0,
+    "selected_currency": "BRL",
+    "lang": "pt-br",
+    "order": "price"
+  },
+  "timings": {
+    "driver_get_seconds": 1.435,
+    "initial_cards_ready_seconds": 6.273,
+    "batch_read_seconds": 0.084,
+    "total_seconds": 6.356
+  },
+  "property_cards_seen": 25,
+  "rows_read": 25,
+  "confirmed_total_rows": 25,
+  "rejected_total_rows": 0,
+  "current_url_confirmed": true,
+  "sort_strategy": "local_confirmed_total_brl",
+  "scroll_used": false,
+  "results": [
+    {
+      "Hotel Name": "Casa Colona - Guesthouse",
+      "Hotel URL": "https://www.booking.com/hotel/br/cama-cafe-guest-house.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCyKmR1QbAAgHSAiRlNjQ0MGVhMS1lMDM3LTQ0ODEtOWY4MS1hYWI5NGZhYzM2NDXYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=price&srpvid=7d4a8824818e0613&srepoch=1789154505&all_sr_blocks=28718019_343176016_2_2_0&highlighted_blocks=28718019_343176016_2_2_0&matching_block_id=28718019_343176016_2_2_0&sr_pri_blocks=28718019_343176016_2_2_0__9500&from=searchresults",
+      "Currency": "BRL",
+      "Price Text": "R$ 95",
+      "Taxes Text": "Impostos e taxas incluídos",
+      "Stay Text": "1 diária, 2 adultos",
+      "Room Text": "",
+      "Review Score (/10)": 8.2,
+      "base_price": 95.0,
+      "taxes_extra": 0.0,
+      "total_brl": 95.0,
+      "total_status": "Taxas incluídas no preço exibido"
+    },
+    {
+      "Hotel Name": "Sítio em Petrópolis",
+      "Hotel URL": "https://www.booking.com/hotel/br/casa-historica-20-pessoas-piscina-e-cafe-da-manha.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCyKmR1QbAAgHSAiRlNjQ0MGVhMS1lMDM3LTQ0ODEtOWY4MS1hYWI5NGZhYzM2NDXYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=2&hapos=2&sr_order=price&srpvid=7d4a8824818e0613&srepoch=1789154505&all_sr_blocks=1473887732_418744574_2_1_0&highlighted_blocks=1473887732_418744574_2_1_0&matching_block_id=1473887732_418744574_2_1_0&sr_pri_blocks=1473887732_418744574_2_1_0__10801&from=searchresults",
+      "Currency": "BRL",
+      "Price Text": "R$ 108",
+      "Taxes Text": "Impostos e taxas incluídos",
+      "Stay Text": "1 diária, 2 adultos",
+      "Room Text": "",
+      "Review Score (/10)": 7.7,
+      "base_price": 108.0,
+      "taxes_extra": 0.0,
+      "total_brl": 108.0,
+      "total_status": "Taxas incluídas no preço exibido"
+    },
+    {
+      "Hotel Name": "Suite Espaçosa",
+      "Hotel URL": "https://www.booking.com/hotel/br/suite-espacosa-petropolis.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCyKmR1QbAAgHSAiRlNjQ0MGVhMS1lMDM3LTQ0ODEtOWY4MS1hYWI5NGZhYzM2NDXYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=3&hapos=3&sr_order=price&srpvid=7d4a8824818e0613&srepoch=1789154505&all_sr_blocks=1683741701_440102375_2_0_0&highlighted_blocks=1683741701_440102375_2_0_0&matching_block_id=1683741701_440102375_2_0_0&sr_pri_blocks=1683741701_440102375_2_0_0__15930&from=searchresults",
+      "Currency": "BRL",
+      "Price Text": "R$ 159",
+      "Taxes Text": "Impostos e taxas incluídos",
+      "Stay Text": "1 diária, 2 adultos",
+      "Room Text": "",
+      "Review Score (/10)": 6.0,
+      "base_price": 159.0,
+      "taxes_extra": 0.0,
+      "total_brl": 159.0,
+      "total_status": "Taxas incluídas no preço exibido"
+    },
+    {
+      "Hotel Name": "Apartamento Rua Teresa",
+      "Hotel URL": "https://www.booking.com/hotel/br/apartamento-rua-teresa.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCyKmR1QbAAgHSAiRlNjQ0MGVhMS1lMDM3LTQ0ODEtOWY4MS1hYWI5NGZhYzM2NDXYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=4&hapos=4&sr_order=price&srpvid=7d4a8824818e0613&srepoch=1789154505&all_sr_blocks=1020500701_422742847_3_0_0&highlighted_blocks=1020500701_422742847_3_0_0&matching_block_id=1020500701_422742847_3_0_0&sr_pri_blocks=1020500701_422742847_3_0_0__16000&from=searchresults",
+      "Currency": "BRL",
+      "Price Text": "R$ 160",
+      "Taxes Text": "Impostos e taxas incluídos",
+      "Stay Text": "1 diária, 2 adultos",
+      "Room Text": "",
+      "Review Score (/10)": 8.1,
+      "base_price": 160.0,
+      "taxes_extra": 0.0,
+      "total_brl": 160.0,
+      "total_status": "Taxas incluídas no preço exibido"
+    },
+    {
+      "Hotel Name": "Recanto Ávila",
+      "Hotel URL": "https://www.booking.com/hotel/br/casa-compartilhada-petropolis.pt-br.html?aid=304142&label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgCyKmR1QbAAgHSAiRlNjQ0MGVhMS1lMDM3LTQ0ODEtOWY4MS1hYWI5NGZhYzM2NDXYAgHgAgE&ucfs=1&arphpl=1&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=6&hapos=6&sr_order=price&srpvid=7d4a8824818e0613&srepoch=1789154505&all_sr_blocks=574326002_438933282_2_0_0&highlighted_blocks=574326002_438933282_2_0_0&matching_block_id=574326002_438933282_2_0_0&sr_pri_blocks=574326002_438933282_2_0_0__17000&from=searchresults",
+      "Currency": "BRL",
+      "Price Text": "R$ 170",
+      "Taxes Text": "Impostos e taxas incluídos",
+      "Stay Text": "1 diária, 2 adultos",
+      "Room Text": "",
+      "Review Score (/10)": 8.0,
+      "base_price": 170.0,
+      "taxes_extra": 0.0,
+      "total_brl": 170.0,
+      "total_status": "Taxas incluídas no preço exibido"
+    }
+  ],
+  "rejected_sample": []
+}

@@ -1,0 +1,22 @@
+{
+  "variant": "googleflights-rpc-replay-v3",
+  "requested": {
+    "origem": "RIO",
+    "destino": "SAO",
+    "data": "2026-09-20",
+    "currency": "BRL",
+    "lang": "pt-BR"
+  },
+  "original_rpc_at_seconds": 5.84,
+  "replay": {
+    "seconds": 0.246,
+    "status": 200,
+    "body_chars": 131,
+    "valid_flight_payload": false
+  },
+  "captured_request": {
+    "url": "https://www.google.com/_/FlightsFrontendUi/data/travel.frontend.flights.FlightsFrontendService/GetShoppingResults?f.sid=-7945477663907554334&bl=boq_travel-frontend-flights-ui_20260909.02_p1&hl=pt-BR&soc-app=162&soc-platform=1&soc-device=1&_reqid=62057&rt=c",
+    "post_data_chars": 486
+  },
+  "total_seconds": 6.091
+}

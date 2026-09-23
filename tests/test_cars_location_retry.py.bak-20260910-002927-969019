@@ -1,0 +1,40 @@
+import ast,unittest
+from pathlib import Path
+from types import SimpleNamespace
+class LocationRetryTests(unittest.TestCase):
+    def run_case(self,losses,empty=False):
+        tree=ast.parse((Path(__file__).resolve().parents[1]/'scraper_carro/discovercars.py').read_text())
+        nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in {'normalizar_local','aguardar_sugestoes_confirmadas'}]
+        clock=[0];typed=[];reads=[0];state={'value':'Airport'}
+        def value(attr):
+            reads[0]+=1
+            if reads[0]<=losses:state['value']=''
+            return state['value']
+        def send(text):
+            if text=='Airport':typed.append(text);state['value']=text
+        field=SimpleNamespace(get_attribute=value,click=lambda:None,send_keys=send)
+        class Wait:
+            def until(self,fn,message=''):
+                for _ in range(12):
+                    result=fn(None)
+                    if result:return result
+                    clock[0]+=.5
+                raise TimeoutError(message)
+        ns={'ler_sugestoes_em_lote':lambda d:[] if empty else [['Airport','Airport']]}
+        exec(compile(ast.Module(body=nodes,type_ignores=[]),'motor','exec'),ns)
+        try:
+            result=ns['aguardar_sugestoes_confirmadas'](None,lambda:field,'Airport',Wait(),lambda m:None,SimpleNamespace(CONTROL='ctrl',BACKSPACE='back'),clock=lambda:clock[0])
+            return result,typed,clock[0]
+        except Exception as e:
+            e.typed=typed;raise
+    def test_lost_text_retyped_and_stable(self):
+        result,typed,elapsed=self.run_case(1)
+        self.assertEqual(typed,['Airport']);self.assertEqual(result,[['Airport','Airport']]);self.assertGreaterEqual(elapsed,2.5)
+    def test_stable_text_not_retyped(self):
+        self.assertEqual(self.run_case(0)[1],[])
+    def test_persistent_loss_is_bounded(self):
+        with self.assertRaises(ValueError) as error:self.run_case(20)
+        self.assertEqual(len(error.exception.typed),2)
+    def test_no_options_does_not_retype_correct_text(self):
+        with self.assertRaises(TimeoutError) as error:self.run_case(0,empty=True)
+        self.assertEqual(error.exception.typed,[])

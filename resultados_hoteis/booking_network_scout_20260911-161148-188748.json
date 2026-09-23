@@ -1,0 +1,1126 @@
+{
+  "schema_version": 1,
+  "variant": "booking-network-scout-v1",
+  "requested": {
+    "destination": "Petrópolis",
+    "checkin": "2026-09-13",
+    "checkout": "2026-09-14",
+    "adults": 2,
+    "rooms": 1,
+    "currency": "BRL"
+  },
+  "elapsed_seconds": 21.523,
+  "captured_candidate_count": 21,
+  "note": "Somente respostas XHR/fetch Booking; sem headers/cookies/tokens/request bodies.",
+  "candidates": [
+    {
+      "request_id": "1687360.341",
+      "url": "https://www.booking.com/dml/graphql?ss=Petr%C3%B3polis&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&no_rooms=1&group_children=0&selected_currency=BRL&lang=pt-br&chal_t=1789153886987&force_referer=",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 444,
+      "score": 13,
+      "json_shape": {
+        "data": {
+          "signedGoogleMapsUrlBff": {
+            "__typename": "str",
+            "url": "str"
+          }
+        },
+        "extensions": {
+          "latency_insights": {
+            "staticGoogleMapUrlBff": "dict"
+          }
+        }
+      },
+      "json": {
+        "data": {
+          "signedGoogleMapsUrlBff": {
+            "__typename": "SignedGoogleMapsUrlResponse",
+            "url": "https://maps.googleapis.com/maps/api/staticmap?size=264x150&map_id=&center=-22.4815668104018,-43.1657106761093&channel=sr-www&scale=2&zoom=13&key=AIzaSyBvCIFR6EVwbjtPk5pxiNDf96xSg2CKwr4&signature=HtQ9sEbUEVcZHSrJ7ytM0mJz8Ig="
+          }
+        },
+        "extensions": {
+          "latency_insights": {
+            "staticGoogleMapUrlBff": {
+              "start_time": 1789153899520,
+              "duration_ms": 14,
+              "end_time": 1789153899534
+            }
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.342",
+      "url": "https://www.booking.com/dml/graphql?ss=Petr%C3%B3polis&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&no_rooms=1&group_children=0&selected_currency=BRL&lang=pt-br&chal_t=1789153886987&force_referer=",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 287,
+      "score": 13,
+      "json_shape": {
+        "extensions": {
+          "latency_insights": {
+            "wishlistsDetailForWishlistWidget": "dict"
+          }
+        },
+        "data": {
+          "wishlistService": {
+            "__typename": "str",
+            "userWishlist": "dict"
+          }
+        }
+      },
+      "json": {
+        "extensions": {
+          "latency_insights": {
+            "wishlistsDetailForWishlistWidget": {
+              "end_time": 1789153899537,
+              "duration_ms": 18,
+              "start_time": 1789153899519
+            }
+          }
+        },
+        "data": {
+          "wishlistService": {
+            "__typename": "WishlistServiceQueries",
+            "userWishlist": {
+              "__typename": "WishlistMultipleSuccessOutput",
+              "wishlists": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.343",
+      "url": "https://www.booking.com/dml/graphql?ss=Petr%C3%B3polis&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&no_rooms=1&group_children=0&selected_currency=BRL&lang=pt-br&chal_t=1789153886987&force_referer=",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 186,
+      "score": 13,
+      "json_shape": {
+        "data": {
+          "getXMSurveyCampaignByRegionId": "NoneType"
+        },
+        "extensions": {
+          "latency_insights": {
+            "GetXMSurveyCampaignByRegionId": "dict"
+          }
+        }
+      },
+      "json": {
+        "data": {
+          "getXMSurveyCampaignByRegionId": null
+        },
+        "extensions": {
+          "latency_insights": {
+            "GetXMSurveyCampaignByRegionId": {
+              "duration_ms": 10,
+              "end_time": 1789153899555,
+              "start_time": 1789153899545
+            }
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.344",
+      "url": "https://www.booking.com/dml/graphql?ss=Petr%C3%B3polis&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&no_rooms=1&group_children=0&selected_currency=BRL&lang=pt-br&chal_t=1789153886987&force_referer=",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 306,
+      "score": 13,
+      "json_shape": {
+        "extensions": {
+          "latency_insights": {
+            "DismissGeniusSignInSheet": "dict"
+          }
+        },
+        "data": {
+          "geniusGuestMutation": {
+            "dismissSignInBottomSheet": "dict",
+            "__typename": "str"
+          }
+        }
+      },
+      "json": {
+        "extensions": {
+          "latency_insights": {
+            "DismissGeniusSignInSheet": {
+              "start_time": 1789153900067,
+              "end_time": 1789153900078,
+              "duration_ms": 11
+            }
+          }
+        },
+        "data": {
+          "geniusGuestMutation": {
+            "dismissSignInBottomSheet": {
+              "isSuccess": true,
+              "errorMessage": null,
+              "__typename": "GeniusMutationOutput"
+            },
+            "__typename": "GeniusGuestMutations"
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.392",
+      "url": "https://www.booking.com/dml/graphql?ss=Petr%C3%B3polis&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&no_rooms=1&group_children=0&selected_currency=BRL&lang=pt-br&chal_t=1789153886987&force_referer=",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 333,
+      "score": 13,
+      "json_shape": {
+        "extensions": {
+          "latency_insights": {
+            "CrossProductRecommendedSearches": "dict"
+          }
+        },
+        "data": {
+          "recommendationPlatform": {
+            "crossProductRecommendedSearches": "dict",
+            "__typename": "str"
+          }
+        }
+      },
+      "json": {
+        "extensions": {
+          "latency_insights": {
+            "CrossProductRecommendedSearches": {
+              "start_time": 1789153901862,
+              "duration_ms": 13,
+              "end_time": 1789153901875
+            }
+          }
+        },
+        "data": {
+          "recommendationPlatform": {
+            "crossProductRecommendedSearches": {
+              "__typename": "CrossProductRecommendedSearchesOutput",
+              "recommendations": []
+            },
+            "__typename": "RecommendationPlatformQueries"
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.455",
+      "url": "https://secure.booking.com/xps/dist",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 20021,
+      "score": 13,
+      "json_shape": {
+        "client_name": "str",
+        "placements": {
+          "_type": "list",
+          "_count": 1,
+          "_sample": {
+            "shelves": "list",
+            "client_id": "str",
+            "exposure_id": "str"
+          }
+        },
+        "distribution_id": "str"
+      },
+      "json": {
+        "client_name": "exposure",
+        "placements": [
+          {
+            "shelves": [
+              {
+                "cta": {
+                  "layout": "TEXT_INLINE",
+                  "action": {
+                    "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9wZXRyb3BvbGlzLnB0LWJyLmh0bWw_ZW5kX2RhdGU9MjAyNi0wOS0xNCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RXJhZTNoZ3Y3aUNvT1ZLWkhMdmplS3ZpUGpDV2FYdVpna2owZzJubUpoRVE3dURYd3hacnMzWkx5YUhadXlKRlhmU0ZJYWJNbW5KLS0wQ1g1QXFqc0NrMVVQamJnTDVFdiZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjE0NTcmc29ydF9ieT0mbGFiZWw9Z2VuMTczbnItMTBDQVFvZ2dKQ0VuTmxZWEpqYUY5d1pYUnl3N053YjJ4cGMwZ3RXQVJvSUlnQkFaZ0JNN2dCR2NnQkROZ0JBLWdCQWZnQkFZZ0NBYWdDQWJnQzRxU1IxUWJBQWdIU0FpUTFNakJqTURoak5pMWhabU15TFRSa1lXWXRZalJrTVMweFkyRm1Oak5qTldNM01EVFlBZ0hnQWdFJmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=VklFV19BTEw=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAIaQCkHaQJsUkZHqfiExuh+u5Jni3sGPCRdEVFgw/xw3Y8EDGJZpKAuqiNvrClhnjNrr2mOrVlDBRq2bmmZTTE9WAY=",
+                    "type": "WEB_BLANK"
+                  },
+                  "position": "RIGHT",
+                  "title": "Ver todos"
+                },
+                "title": "Petrópolis: o que fazer",
+                "components": [
+                  {
+                    "type": "ATTRACTION_CARD",
+                    "section_formatted_price": "‎R$ 119,03‏",
+                    "section_title": "Atrações",
+                    "elements": [
+                      {
+                        "cta": {
+                          "action": {
+                            "type": "WEB_BLANK",
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RUxYOHVEcWRHZ1FScHZJS1RKdWU5bjdKNlQ0M1FSQ2c3RFhfVDlHMUFmV1VFaF9sMXNKMTNFeTZqdmlhT0xOc0pNSUZmVVJGQ3dzZUFTUVZFUjhmajdubnJCQlRJaDVZVCZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFJNdVZZUm5ORDBIJmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUk11VllSbk5EMEg=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAMaQOb1xTeVFlknHmJSQfopfOs95ASV+r1quB4S1dtLv3au9AOiXVBZH7TiMl0zG+AHujExc9inqAYHjXBsdW/OhQI="
+                          },
+                          "layout": "PRIMARY_BUTTON"
+                        },
+                        "vertical_rank": 1,
+                        "rating_description": "Nota 4.22 – com base em 457 avaliações",
+                        "product_rank": 1,
+                        "title": "Passagem de Entrada para Cristo o Redentor",
+                        "vertical_rank_from_top_k": 1,
+                        "price": {
+                          "currency": "BRL",
+                          "value": 234.2
+                        },
+                        "product_image_url": "https://q-xx.bstatic.com/xdata/images/xphoto/900x600/142000785.jpg?k=6ada579072c91c7aea60e74b5a00d29f8963b866df17e6158f3b02f0dc654e24&o=",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "vertical": "ATTRACTION",
+                        "price_note": "Ingressos a partir de",
+                        "exposure_product_id": "PRMuVYRnND0H",
+                        "unique_selling_points": [
+                          {
+                            "icon": {
+                              "type": "STAR"
+                            },
+                            "type": "RATING",
+                            "title": "4.22 (457 avaliações)"
+                          }
+                        ],
+                        "formatted_price": "‎R$ 234,20‏"
+                      },
+                      {
+                        "cta": {
+                          "layout": "PRIMARY_BUTTON",
+                          "action": {
+                            "type": "WEB_BLANK",
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RWd3XzhvemgxLUNnODd2aFFRbU8wODdEekI1R1h1aUpySzFDQTRxV09sNlI1ZG1XNDhoV0FYMzN1THludk4wTlA2TFVJcFd1OWNfWjhSVEk5Z09ReUsxT1dKbnpzSjdvdiZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFJZaUtablFjWDFoJmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUllpS1puUWNYMWg=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAMaQN2FXzwyuLes36hD+5Okka5JRjqchTDQZkvmcEIPomwKNfTWtIz14Iz6wXp3rVkh5XyTb71Lxdv1B0k80FfWmwE="
+                          }
+                        },
+                        "rating_description": "Nota 4.5 – com base em 60 avaliações",
+                        "vertical_rank": 1,
+                        "product_rank": 2,
+                        "title": "Ingresso AquaRio Rio de Janeiro Somente Ingressos",
+                        "vertical_rank_from_top_k": 1,
+                        "price": {
+                          "currency": "BRL",
+                          "value": 152.56
+                        },
+                        "price_note": "Ingressos a partir de",
+                        "unique_selling_points": [
+                          {
+                            "icon": {
+                              "type": "STAR"
+                            },
+                            "title": "4.5 (60 avaliações)",
+                            "type": "RATING"
+                          },
+                          {
+                            "title": "Cancelamento grátis disponível",
+                            "type": "FREE_CANCELLATION"
+                          }
+                        ],
+                        "exposure_product_id": "PRYiKZnQcX1h",
+                        "formatted_price": "‎R$ 152,56‏",
+                        "product_image_url": "https://q-xx.bstatic.com/xdata/images/xphoto/900x600/495496242.jpg?k=be5751a05ab663ce6f66152c5a07990f19aeca6393f8ab0b2719a565536ec965&o=",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "vertical": "ATTRACTION"
+                      },
+                      {
+                        "vertical_rank_from_top_k": 1,
+                        "price": {
+                          "currency": "BRL",
+                          "value": 168.38
+                        },
+                        "cta": {
+                          "action": {
+                            "type": "WEB_BLANK",
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RVhOQ3JJV1JqUGo4UDJVZUM0cjhsRlpiODA1R2Focm5iQmdrMDh0RHhGeUttZFJqNEZ1ajM1RmtTWjRVM21rZWtTNUotRml3TUp1dllFeVpZeXhkMjBkdXNFSDB1OUF3eSZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFJBQXE2TUN2ak40JmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUkFBcTZNQ3ZqTjQ=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAIaQGi1l0qohJqW4EkI3/biZcHKhAGi8ydGmtCQzPXnmrAG0sa4OkAyWVF0OQYI6IyUnhJ/jOazh+C26znznNXm9gY="
+                          },
+                          "layout": "PRIMARY_BUTTON"
+                        },
+                        "vertical_rank": 1,
+                        "rating_description": "Nota 4.44 – com base em 371 avaliações",
+                        "product_rank": 3,
+                        "title": "Tour da Favela no Rio de Janeiro",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "vertical": "ATTRACTION",
+                        "product_image_url": "https://r-xx.bstatic.com/xdata/images/xphoto/900x600/146238813.jpg?k=403cca2590cbac5e48c8128e90aa7ca7844d9c6b7c5408b3c984d18677dea930&o=",
+                        "price_note": "Ingressos a partir de",
+                        "exposure_product_id": "PRAAq6MCvjN4",
+                        "unique_selling_points": [
+                          {
+                            "title": "4.44 (371 avaliações)",
+                            "type": "RATING",
+                            "icon": {
+                              "type": "STAR"
+                            }
+                          },
+                          {
+                            "title": "Cancelamento grátis disponível",
+                            "type": "FREE_CANCELLATION"
+                          }
+                        ],
+                        "formatted_price": "‎R$ 168,38‏"
+                      },
+                      {
+                        "cta": {
+                          "action": {
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RTFpbktkZUdnb3NvRWdaRlh4VUk3Y3ROZlowYUtRbnFWX1lqR2gwOXhPbWJVTm52TC1NUkdOZURFRENOMldCNUFNWjFBd2g1enQ1bkwzcWZad2FQRVpvTmRSV1ZvX1pINSZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFI2ZTdIV1R2NTNGJmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUjZlN0hXVHY1M0Y=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAIaQDep7Eb8g9X3IaY88k03aqWs92OXV5tSyb4PRybHEf7uKsauCKPf93PBJCskPoZrevBX7B8BG9I4bIrpPgO/tgY=",
+                            "type": "WEB_BLANK"
+                          },
+                          "layout": "PRIMARY_BUTTON"
+                        },
+                        "rating_description": "Nota 4.77 – com base em 445 avaliações",
+                        "vertical_rank": 1,
+                        "product_rank": 4,
+                        "title": "Rio : Tijuca Rainforest Hike, Vida Silvestre, Cataratas e Cavernas",
+                        "vertical_rank_from_top_k": 1,
+                        "price": {
+                          "currency": "BRL",
+                          "value": 400.25
+                        },
+                        "price_note": "Ingressos a partir de",
+                        "exposure_product_id": "PR6e7HWTv53F",
+                        "unique_selling_points": [
+                          {
+                            "title": "4.77 (445 avaliações)",
+                            "type": "RATING",
+                            "icon": {
+                              "type": "STAR"
+                            }
+                          },
+                          {
+                            "title": "Cancelamento grátis disponível",
+                            "type": "FREE_CANCELLATION"
+                          }
+                        ],
+                        "formatted_price": "‎R$ 400,25‏",
+                        "product_image_url": "https://q-xx.bstatic.com/xdata/images/xphoto/900x600/378038550.jpg?k=0526ef5a2c1420860eaba5a65d3c9a395200cd93e1354651e56993bdebf44e52&o=",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "vertical": "ATTRACTION"
+                      },
+                      {
+                        "rating_description": "Nota 4.59 – com base em 54 avaliações",
+                        "vertical_rank": 1,
+                        "cta": {
+                          "layout": "PRIMARY_BUTTON",
+                          "action": {
+                            "type": "WEB_BLANK",
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RXRLT1pTREJBOWxHbGh4NDJrdjdHNGJEMmNQRjVjT3hLbF9xZmlJUHVPemxCeDBPZkRPQ1Y4cWNxZm84R1F4TlNUUC1wZzh1MGRBeHlBZlBmbE52M0pRSTFBMXNBekJlRCZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFJZZVp6M1ZxQWVrJmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUlllWnozVnFBZWs=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAIaQOGu/0PYsf0jM47UHuer7hA5KNjK8nsGuM0g5mL5C7uk1h+vcwY4JuDch3W7SbD7iBsIYxkEqAJC5cLq/sQUGQk="
+                          }
+                        },
+                        "title": "Bilhete sem filas para o Estádio do Maracanã",
+                        "product_rank": 5,
+                        "price": {
+                          "value": 119.03,
+                          "currency": "BRL"
+                        },
+                        "vertical_rank_from_top_k": 1,
+                        "unique_selling_points": [
+                          {
+                            "type": "RATING",
+                            "title": "4.59 (54 avaliações)",
+                            "icon": {
+                              "type": "STAR"
+                            }
+                          },
+                          {
+                            "title": "Cancelamento grátis disponível",
+                            "type": "FREE_CANCELLATION"
+                          }
+                        ],
+                        "exposure_product_id": "PRYeZz3VqAek",
+                        "price_note": "Ingressos a partir de",
+                        "formatted_price": "‎R$ 119,03‏",
+                        "product_image_url": "https://q-xx.bstatic.com/xdata/images/xphoto/900x600/369887557.jpg?k=f6052e7ca016f20e0e3b4297e7b2522494170c36f89af1a17f5107802c5982a2&o=",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "vertical": "ATTRACTION"
+                      },
+                      {
+                        "title": "Passeio de veleiro Brunch & Sunset com Capirinha no Rio",
+                        "product_rank": 6,
+                        "rating_description": "Nota 4.84 – com base em 57 avaliações",
+                        "vertical_rank": 1,
+                        "cta": {
+                          "layout": "PRIMARY_BUTTON",
+                          "action": {
+                            "type": "WEB_BLANK",
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RUh6N2hGdm81c3IzU21pMjd3a1ItVDAtaVhBOHFseExpYnRZY0NxTXQ5Wm1VdlRtbFlKdERQczFjVkNYUHpUR3JETUJVRE1nRGdWb2U3OFRiNkxtV3FZUVc2S3FtR0pGViZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFJpYnRFTEx4SzViJmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUmlidEVMTHhLNWI=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAMaQEW4jIXfuhhH6ly6ZL8ozMoJR73Rvc5/vBU+YGncnEqKWoAWWByk5YmqF1ZnDJqEClhLWFi+yvhhhNIRhMO/0go="
+                          }
+                        },
+                        "price": {
+                          "currency": "BRL",
+                          "value": 331.66
+                        },
+                        "vertical_rank_from_top_k": 1,
+                        "product_image_url": "https://r-xx.bstatic.com/xdata/images/xphoto/900x600/562636016.jpg?k=f2b1c9caec00cd060b89fcb39dfd39c12d43afaccc8033b3c622fe2340b834e7&o=",
+                        "vertical": "ATTRACTION",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "formatted_price": "‎R$ 331,66‏",
+                        "exposure_product_id": "PRibtELLxK5b",
+                        "unique_selling_points": [
+                          {
+                            "title": "4.84 (57 avaliações)",
+                            "type": "RATING",
+                            "icon": {
+                              "type": "STAR"
+                            }
+                          },
+                          {
+                            "type": "FREE_CANCELLATION",
+                            "title": "Cancelamento grátis disponível"
+                          }
+                        ],
+                        "price_note": "Ingressos a partir de"
+                      },
+                      {
+                        "price_note": "Ingressos a partir de",
+                        "exposure_product_id": "PRWTE0hFQ9CR",
+                        "unique_selling_points": [
+                          {
+                            "icon": {
+                              "type": "STAR"
+                            },
+                            "title": "5.0 (6 avaliações)",
+                            "type": "RATING"
+                          },
+                          {
+                            "title": "Cancelamento grátis disponível",
+                            "type": "FREE_CANCELLATION"
+                          }
+                        ],
+                        "formatted_price": "‎R$ 229,61‏",
+                        "product_image_url": "https://r-xx.bstatic.com/xdata/images/xphoto/900x600/738022885.jpg?k=34b463a5b387c039a9188be937fed0d570a9069d778a2ab64252ccfaf4f5d12e&o=",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "vertical": "ATTRACTION",
+                        "cta": {
+                          "layout": "PRIMARY_BUTTON",
+                          "action": {
+                            "type": "WEB_BLANK",
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RWFxLVd6SDdINVlHWkVQa1dLY2lhTEdDSTJqWDlIREx1ZjVSR1VwNU1ZVVVtTGdrWlNyUDR0UzgyaUVEM3lON09OX01YU3JiUVY2QnZzR1VKLU00bWItMFpxcnl0V0I0QyZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFJXVEUwaEZROUNSJmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUldURTBoRlE5Q1I=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAIaQA16Q7RMiQYOcnrOCfxr59xmhF4HCQlYEy3iFtAG2o+OHbMkqyLWJvN3gTdSRnYwh6yLtAIPW3L584AC9tmCuQ8="
+                          }
+                        },
+                        "rating_description": "Nota 5.0 – com base em 6 avaliações",
+                        "vertical_rank": 1,
+                        "product_rank": 7,
+                        "title": "Transporte de Rio de Janeiro para Ilha Grande (ou vice-versa)",
+                        "vertical_rank_from_top_k": 1,
+                        "price": {
+                          "currency": "BRL",
+                          "value": 229.61
+                        }
+                      },
+                      {
+                        "vertical_rank_from_top_k": 1,
+                        "price": {
+                          "value": 322.83,
+                          "currency": "BRL"
+                        },
+                        "cta": {
+                          "action": {
+                            "type": "WEB_BLANK",
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RURGZ0o4YTNBZXRLVFRBV3B0S2xYbFBEZzBBMlFzMzA5Y013TTlLU3FlNVZQSGI1VHRfeHdDQ0NsQVlEbXVWZ1pkZmM1ZnZkR1AxUVo5Rl95ZVlqVkpHT012NWpIcC1kYyZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFJsakppaXZmSlk5JmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUmxqSmlpdmZKWTk=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAIaQBHIF/bStk38OxAQHhEGFj88USdX6YDbQXvnaxxKgGqUm6oWd+vIZh/cFl01UXmEbzlUBEzVLloAdq+up9LyzQ8="
+                          },
+                          "layout": "PRIMARY_BUTTON"
+                        },
+                        "vertical_rank": 1,
+                        "rating_description": "Nota 3.98 – com base em 83 avaliações",
+                        "product_rank": 8,
+                        "title": "Explorando Angra Dos Reis e Ilha Grande em um dia",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "vertical": "ATTRACTION",
+                        "product_image_url": "https://q-xx.bstatic.com/xdata/images/xphoto/900x600/229773427.jpg?k=ef2f65d4abc6b5089d3c880fb29aea233411f04c889b63b37d73bc1aaa6bdd8e&o=",
+                        "price_note": "Ingressos a partir de",
+                        "exposure_product_id": "PRljJiivfJY9",
+                        "unique_selling_points": [
+                          {
+                            "title": "3.98 (83 avaliações)",
+                            "type": "RATING",
+                            "icon": {
+                              "type": "STAR"
+                            }
+                          },
+                          {
+                            "title": "Cancelamento grátis disponível",
+                            "type": "FREE_CANCELLATION"
+                          }
+                        ],
+                        "formatted_price": "‎R$ 322,83‏"
+                      },
+                      {
+                        "cta": {
+                          "layout": "PRIMARY_BUTTON",
+                          "action": {
+                            "target": "https://ch.booking.com/c?target=aHR0cHM6Ly93d3cuYm9va2luZy5jb20vYXR0cmFjdGlvbnMvc2VhcmNocmVzdWx0cy9ici9yaW8tZGUtamFuZWlyby5wdC1ici5odG1sP2VuZF9kYXRlPTIwMjYtMDktMTQmZGF0ZT0yMDI2LTA5LTEzJnNlbGVjdGVkX2N1cnJlbmN5PUJSTCZzZWxlY3RlZF9jdXJyZW5jeT1CUkwmZXRTdGF0ZUJsb2I9RVN4dDF6MksycmZYUWdDZnEyMG9zbll6T05ERkhEZ0lXRmNReVdsU25odklQdlIyLW9vejZXS1RySHJhMElld1g2UHhuMHVkR2xJeC00WEI0TGdvVWEtYTBxQy1LaDQtVCZhZHBsYXQ9d3d3LUFDQ09NTU9EQVRJT05fU0VBUkNIX1JFU1VMVFMtSU5fRkVFRF9BVFRSQUNUSU9OX0JBTk5FUi1hdHRyYWN0aW9uLW1pc3NpbmdfY3JlYXRpdmUtNVduWm00VVpIbllNQmdZRjgyVHFKTCZkZXN0X2lkPS02NjY2MTAmc29ydF9ieT10cmVuZGluZyZsYWJlbD1nZW4xNzNuci0xMENBUW9nZ0pDRW5ObFlYSmphRjl3WlhSeXc3TndiMnhwYzBndFdBUm9JSWdCQVpnQk03Z0JHY2dCRE5nQkEtZ0JBZmdCQVlnQ0FhZ0NBYmdDNHFTUjFRYkFBZ0hTQWlRMU1qQmpNRGhqTmkxaFptTXlMVFJrWVdZdFlqUmtNUzB4WTJGbU5qTmpOV00zTURUWUFnSGdBZ0UmcGlubmVkX3Byb2R1Y3Q9UFJGV09yWFVXUkxlJmRpc3RyaWJ1dGlvbl9pZD01V25abTRVWkhuWU1CZ1lGODJUcUpMJmFpZD0zMDQxNDImY2xpZW50X25hbWU9ZXhwb3N1cmUmc3RhcnRfZGF0ZT0yMDI2LTA5LTEz&st=QVRUUkFDVElPTg==&lt=UFJPRFVDVDpQUkZXT3JYVVdSTGU=&rid=b678a733-3c39-4168-8b37-d49ba0421e58&si=ChZiLXBhbmRhLXRvcC1rLXNlbGVjdG9yEAMaQBccaTf/1ZqlMST7Gsfc2EKr21lDJcGCxGD9+RycLQton02/aiL1SLe+sFSuiJn/yo51qUyGVAdWQzgKHMVNqAc=",
+                            "type": "WEB_BLANK"
+                          }
+                        },
+                        "rating_description": "Nota 4.48 – com base em 119 avaliações",
+                        "vertical_rank": 1,
+                        "product_rank": 9,
+                        "title": "Rio: Passeio nos bastidores do Carnaval na Cidade do Samba com drink de boas-vindas (Carnaval Experience)",
+                        "vertical_rank_from_top_k": 1,
+                        "price": {
+                          "value": 153.92,
+                          "currency": "BRL"
+                        },
+                        "price_note": "Ingressos a partir de",
+                        "exposure_product_id": "PRFWOrXUWRLe",
+                        "unique_selling_points": [
+                          {
+                            "icon": {
+                              "type": "STAR"
+                            },
+                            "title": "4.48 (119 avaliações)",
+                            "type": "RATING"
+                          },
+                          {
+                            "type": "FREE_CANCELLATION",
+                            "title": "Cancelamento grátis disponível"
+                          }
+                        ],
+                        "formatted_price": "‎R$ 153,92‏",
+                        "product_image_url": "https://q-xx.bstatic.com/xdata/images/xphoto/900x600/369795582.jpg?k=5a5ce2eb75421d0e12015db20f5906f15e69fa12fe90d0640cb76d5a1a884d14&o=",
+                        "request_id": "b678a733-3c39-4168-8b37-d49ba0421e58",
+                        "vertical": "ATTRACTION"
+                      }
+                    ],
+                    "variant": "CARD_LARGE",
+                    "layout": "CAROUSEL"
+                  }
+                ],
+                "header_ctas": [
+                  {
+                    "position": "INLINE",
+                    "layout": "ICON",
+                    "icon": {
+                      "type": "INFORMATION"
+                    },
+                    "action": {
+                      "tooltip_message": "Os preços exibidos são uma estimativa. O valor final será mostrado logo antes de você concluir a reserva. A política de cancelamento grátis pode mudar com base nas datas da reserva que você selecionar.",
+                      "type": "WEB_TOOLTIP"
+                    }
+                  }
+                ],
+                "layout": "LIST"
+              }
+            ],
+            "client_id": "ep-in_feed_attraction_banner-3118",
+            "exposure_id": "39oXeABxuTsxlbtm11Y78I"
+          }
+        ],
+        "distribution_id": "5WnZm4UZHnYMBgYF82TqJL"
+      }
+    },
+    {
+      "request_id": "1687360.236",
+      "url": "https://accommodations.booking.com/orca/chunk-metadata?chunk=8eb41777&mfe=b-search-web-searchresults&lang=pt-br&namespace=YTMJGfHK",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 1207,
+      "score": 10,
+      "json_shape": {
+        "chunks": {
+          "_type": "list",
+          "_count": 1,
+          "_sample": "str"
+        },
+        "experimentTags": {
+          "HOReeYGMMWRTCJZeEGDJNQQdOBfHbCRVSdPYSbC": "int",
+          "HOReeYGMMWRTCJZeEECAUNZJCDSQdOBfHbCRVSdPYSbC": "int",
+          "HOReeYGDJNLUdJGGKBdTUKUWbdOBPGLT": "int",
+          "HOReeYGDJNQQDQZLebHSMSeXeaQFDSEQGO": "int"
+        },
+        "etClientsidePayload": "str",
+        "featureNames": {
+          "HZUfDHCOLZVfDaFBdcEUWQIOQWBOILT": "bool",
+          "HZUaYYfPYWMdIPPSfDcMLaUFAHYGWe": "bool",
+          "HVLDTLUeIeWcMWBaBBYdaWNIHcUeLT": "bool",
+          "VaQTSJMUJMeQUedKfVfVSZPVRPCTURLHWIJMeIMUJMNHWSHWVWIOJfXNKfVaNIVMaJATSJVGaJRJaVWVWVRRe": "bool",
+          "VaQTSJMUJMeQUeIVWVaEWSUVdNVdeVfXfVVfVIaJGbNHJaVWSWTSJfKJMeNKfC": "bool",
+          "HOReeYGDJNQPQeHOcAdLNZAGWe": "bool"
+        },
+        "seoExperimentTags": {},
+        "copyTags": {},
+        "onViewTrackingReferenceByCopyTag": {}
+      },
+      "json": {
+        "chunks": [
+          "8eb41777"
+        ],
+        "experimentTags": {
+          "HOReeYGMMWRTCJZeEGDJNQQdOBfHbCRVSdPYSbC": 0,
+          "HOReeYGMMWRTCJZeEECAUNZJCDSQdOBfHbCRVSdPYSbC": 0,
+          "HOReeYGDJNLUdJGGKBdTUKUWbdOBPGLT": 0,
+          "HOReeYGDJNQQDQZLebHSMSeXeaQFDSEQGO": 0
+        },
+        "etClientsidePayload": "1.{\"state_blob\":\"Eo6AjeEzjTQW8NZ_wNFK5vQZpmjPuJRqoVgWO0GJls4aonkJE-Q5ot_3pz_sjEoQ8KFoNAGWQ2iFtaderN2UCKQ\",\"experiments\":{\"EUXPNMZNaSQFUUWe\":0,\"HOReeYGMMWRTCJZeEGDJNQQdOBfHbCRVSdPYSbC\":0,\"HOReeYGDJNLUdJGGKBdTUKUWbdOBPGLT\":0,\"HOReeYGMMWRTCJZeEECAUNZJCDSQdOBfHbCRVSdPYSbC\":0,\"GDIcdSZcHCSIURSBVSGfZVFRURURHe\":1,\"HVLDTLUedKNKNKHcVdaWMaBQOHT\":0,\"EJKaEceGANdSSLT\":0,\"HVQeYFRURURYTfUOeOAJZbVPLDFFMPCC\":1,\"HOReeYGDJNQQDQZLebHSMSeXeaQFDSEQGO\":0,\"NAFQOPeYWbKdPSKYaFBddQSBLdaRO\":0,\"NAFQOPeYWPRFYZRUVbOMFcZSGMLaC\":0,\"GDIcdSZcHCSCGVfOMTXEUDdeOYC\":1}}",
+        "featureNames": {
+          "HZUfDHCOLZVfDaFBdcEUWQIOQWBOILT": true,
+          "HZUaYYfPYWMdIPPSfDcMLaUFAHYGWe": true,
+          "HVLDTLUeIeWcMWBaBBYdaWNIHcUeLT": true,
+          "VaQTSJMUJMeQUedKfVfVSZPVRPCTURLHWIJMeIMUJMNHWSHWVWIOJfXNKfVaNIVMaJATSJVGaJRJaVWVWVRRe": true,
+          "VaQTSJMUJMeQUeIVWVaEWSUVdNVdeVfXfVVfVIaJGbNHJaVWSWTSJfKJMeNKfC": false,
+          "HOReeYGDJNQPQeHOcAdLNZAGWe": true
+        },
+        "seoExperimentTags": {},
+        "copyTags": {},
+        "onViewTrackingReferenceByCopyTag": {}
+      }
+    },
+    {
+      "request_id": "1687360.259",
+      "url": "https://accommodations.booking.com/orca/chunk-metadata?chunk=dc173871&mfe=b-search-web-searchresults&lang=pt-br&namespace=ZWJQLJOM",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 1003,
+      "score": 10,
+      "json_shape": {
+        "chunks": {
+          "_type": "list",
+          "_count": 1,
+          "_sample": "str"
+        },
+        "experimentTags": {
+          "HOReeYGMMWRTCJZeEGDJNQQdOBfHbCRVSdPYSbC": "int",
+          "HOReeYGMMWRTCJZeEECAUNZJCDSQdOBfHbCRVSdPYSbC": "int",
+          "HOReeYGDJNLUdJGGKBdTUKUWbdOBPGLT": "int",
+          "HOReeYGDJNQQDQZLebHSMSeXeaQFDSEQGO": "int"
+        },
+        "etClientsidePayload": "str",
+        "featureNames": {
+          "eDadRVdcSQTCRGHRDOeOCYEIFKYOeUO": "bool",
+          "VaQTSJMUJMeQUedKfVfVSZPVRPCTURLHWIJMeIMUJMNHWSHWVWIOJfXNKfVaNIVMaJATSJVGaJRJaVWVWVRRe": "bool",
+          "VaQTSJMUJMeQUeIVWVaEWSUVdNVdeVfXfVVfVIaJGbNHJaVWSWTSJfKJMeNKfC": "bool",
+          "HOReeYGDJNQPQeHOcAdLNZAGWe": "bool"
+        },
+        "seoExperimentTags": {},
+        "copyTags": {},
+        "onViewTrackingReferenceByCopyTag": {}
+      },
+      "json": {
+        "chunks": [
+          "dc173871"
+        ],
+        "experimentTags": {
+          "HOReeYGMMWRTCJZeEGDJNQQdOBfHbCRVSdPYSbC": 0,
+          "HOReeYGMMWRTCJZeEECAUNZJCDSQdOBfHbCRVSdPYSbC": 0,
+          "HOReeYGDJNLUdJGGKBdTUKUWbdOBPGLT": 0,
+          "HOReeYGDJNQQDQZLebHSMSeXeaQFDSEQGO": 0
+        },
+        "etClientsidePayload": "1.{\"state_blob\":\"EeNqYtkzEge6vWrmyXwITl7NXxcciP3z8J8QWevqakqlI8ZfHM4t_GsaGVFa5A47QOekxMXQPrIhMr4EsCwPQOQ\",\"experiments\":{\"HOReeYGDJNLUdJGGKBdTUKUWbdOBPGLT\":0,\"HOReeYGMMWRTCJZeEECAUNZJCDSQdOBfHbCRVSdPYSbC\":0,\"GfCDATBfGTJJbICdWBTCeOSbZYXXSC\":0,\"GfCDATBbbObSARVVRGHSOC\":1,\"HOReeYGDJNQQDQZLebHSMSeXeaQFDSEQGO\":0,\"HOReeYGMMWRTCJZeEGDJNQQdOBfHbCRVSdPYSbC\":0,\"eWfCDOeWUVJJaYPbZJYTET\":0,\"GfCDATBbIeNAcaRZEbDHePNcUeXXAHe\":0}}",
+        "featureNames": {
+          "eDadRVdcSQTCRGHRDOeOCYEIFKYOeUO": true,
+          "VaQTSJMUJMeQUedKfVfVSZPVRPCTURLHWIJMeIMUJMNHWSHWVWIOJfXNKfVaNIVMaJATSJVGaJRJaVWVWVRRe": true,
+          "VaQTSJMUJMeQUeIVWVaEWSUVdNVdeVfXfVVfVIaJGbNHJaVWSWTSJfKJMeNKfC": false,
+          "HOReeYGDJNQPQeHOcAdLNZAGWe": true
+        },
+        "seoExperimentTags": {},
+        "copyTags": {},
+        "onViewTrackingReferenceByCopyTag": {}
+      }
+    },
+    {
+      "request_id": "1687360.238",
+      "url": "https://www.booking.com/c360-api/v1/purposes?bundle_id=web&_=1789153894335",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 43637,
+      "score": 5,
+      "json_shape": {
+        "bundleId": "str",
+        "policy": "NoneType",
+        "purposes": {
+          "7c0fcae1f30fcda92ace4d2e9b09eec4": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "593cb85a5ea29e2fc497648743a28da9": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "ac30b71b52297f3ea1b3e13a2f69cd49": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "df9cf1061c1eb81a9bf9a007f0946aed": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "122be2667cd510baf9ec964f3694bf07": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "78bfa2d6815324d80158238e68ba055d": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "56009c1b4fd48ed3bc09e3c57a5e54f3": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "33c5dadac940c0c059285689c97c8617": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "b10baa34c0808b3d80cef78df6b869ad": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "6f1ec4a52012bb84bfd9c3cc3c5eaa8c": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "0adc57a923d1bf4cde9ada8798ced142": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "16193a4e9fa0c3f13ef687bc972f0920": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "9fbc5a595a69d5b96418635be0860367": {
+            "_type": "list",
+            "_count": 0,
+            "_sample": null
+          },
+          "e3a410f6d3c7cc6a664663f0319a4e35": {
+            "_type": "list",
+            "_count": 0,
+            "_sample": null
+          },
+          "65a6203e5f276dd22e43b3bd7d51a8a3": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "6e0423fedf34152235fafff31608a682": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "825a612066e23dbba1c633f0fdc0ddf5": {
+            "_type": "list",
+            "_count": 0,
+            "_sample": null
+          },
+          "0bbf1b09170d83f8184b7107a9aba2e2": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "83831d0621daf3eb07c472f8c8c8079a": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "e1f73110aef62075f959f8ca66046425": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "cda15872b2036e2ea6b5b9e5096559aa": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "c7e521146a46e64736db3d34996faa5c": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "8876a80daaa4156c838c7267670dcd89": {
+            "_type": "list",
+            "_count": 0,
+            "_sample": null
+          },
+          "1881935732f50e68da4d18340c711b8a": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "7010c494cbbad72022f2203cbcfa06bc": {
+            "_type": "list",
+            "_count": 3,
+            "_sample": "int"
+          },
+          "1209a236a53400adf212d0345a603510": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "93d41b8fcb38646efa0d47f79995741a": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "bdd9d0c51a88b29fb580b26c46dc3b4b": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "ee9af907f5bddab6331b9706253052df": {
+            "_type": "list",
+            "_count": 0,
+            "_sample": null
+          },
+          "6f7838d5e5ae9eb9f93637609d8b4c79": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "6e25d7f49a4b7fc877204cd6e03d2b17": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "f7d5af624b14f0b5d9d84c1c48a1151e": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "2cbfb2bba630015bf76286dbd469bf61": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "a660ecf75b793ba95ac79c6f182ad67a": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "3b940cab11ab8cdb640c350b15bb1066": {
+            "_type": "list",
+            "_count": 2,
+            "_sample": "int"
+          },
+          "8f775039d0fa158c4a5593a0773797ce": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "ef0f3ef59cce44b50167b99c7596c59e": {
+            "_type": "list",
+            "_count": 0,
+            "_sample": null
+          },
+          "671f4539fe5458222dec737ceb3b48eb": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "6348774d0efe21047b15ecf9942458f4": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          },
+          "87be9840318799af1f4101dab47a8542": {
+            "_type": "list",
+            "_count": 1,
+            "_sample": "int"
+          }
+        },
+        "last_updated": "int",
+        "purpose_definitions": {
+          "_type": "list",
+          "_count": 3,
+          "_sample": {
+            "id": "int",
+            "name": "str",
+            "description": "str"
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.240",
+      "url": "https://www.booking.com/c360/v1/track",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 61,
+      "score": 5,
+      "json_shape": {
+        "_type": "list",
+        "_count": 2,
+        "_sample": {
+          "content": "str",
+          "status": "int"
+        }
+      }
+    },
+    {
+      "request_id": "1687360.235",
+      "url": "https://account.booking.com/privacy-consents/implicit",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 64,
+      "score": 5,
+      "json_shape": {
+        "errors": "int",
+        "consent_id": "str"
+      }
+    },
+    {
+      "request_id": "1687360.262",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 18,
+      "score": 5,
+      "json_shape": {
+        "status": "str"
+      }
+    },
+    {
+      "request_id": "1687360.393",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 18,
+      "score": 5,
+      "json_shape": {
+        "status": "str"
+      }
+    },
+    {
+      "request_id": "1687360.395",
+      "url": "https://c360.booking.com/v1/c360/multitrack/",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 89,
+      "score": 5,
+      "json_shape": {
+        "responses": {
+          "_type": "list",
+          "_count": 2,
+          "_sample": {
+            "status": "int",
+            "code": "int",
+            "content": "NoneType"
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.401",
+      "url": "https://c360.booking.com/v1/c360/multitrack/",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 52,
+      "score": 5,
+      "json_shape": {
+        "responses": {
+          "_type": "list",
+          "_count": 1,
+          "_sample": {
+            "status": "int",
+            "code": "int",
+            "content": "NoneType"
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.402",
+      "url": "https://c360.booking.com/v1/c360/multitrack/",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 52,
+      "score": 5,
+      "json_shape": {
+        "responses": {
+          "_type": "list",
+          "_count": 1,
+          "_sample": {
+            "status": "int",
+            "code": "int",
+            "content": "NoneType"
+          }
+        }
+      }
+    },
+    {
+      "request_id": "1687360.406",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 18,
+      "score": 5,
+      "json_shape": {
+        "status": "str"
+      }
+    },
+    {
+      "request_id": "1687360.425",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 18,
+      "score": 5,
+      "json_shape": {
+        "status": "str"
+      }
+    },
+    {
+      "request_id": "1687360.439",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 18,
+      "score": 5,
+      "json_shape": {
+        "status": "str"
+      }
+    },
+    {
+      "request_id": "1687360.479",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "resource_type": "XHR",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 18,
+      "score": 5,
+      "json_shape": {
+        "status": "str"
+      }
+    },
+    {
+      "request_id": "1687360.459",
+      "url": "https://www.booking.com/c360/v1/track",
+      "resource_type": "Fetch",
+      "mime_type": "application/json",
+      "status": 200,
+      "body_chars": 21,
+      "score": 5,
+      "json_shape": {
+        "status": "int",
+        "code": "int"
+      }
+    }
+  ]
+}

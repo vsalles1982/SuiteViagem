@@ -1,0 +1,128 @@
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 46, in _browser_json_request
+    driver.set_script_timeout(timeout + 3)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'set_script_timeout'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20g.py", line 122, in coletar_ofertas_direct
+    url, consulta, local_selecionado = self.engine.criar_busca_direta(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        destino.strip(), retirada, devolucao, log
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: AttributeError: 'NoneType' object has no attribute 'set_script_timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 46, in _browser_json_request
+    driver.set_script_timeout(timeout + 3)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'set_script_timeout'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20e.py", line 311, in coletar_ofertas_api
+    url, consulta, local_selecionado = self.engine.criar_busca_direta(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        destino.strip(), retirada, devolucao, log
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: AttributeError: 'NoneType' object has no attribute 'set_script_timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 46, in _browser_json_request
+    driver.set_script_timeout(timeout + 3)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'set_script_timeout'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 723, in coletar_ofertas
+    url, consulta, local_selecionado = criar_busca_direta(destino.strip(), retirada, devolucao, log)
+                                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: AttributeError: 'NoneType' object has no attribute 'set_script_timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 730, in coletar_ofertas
+    url, consulta, local_selecionado = abrir_busca_por_local(
+                                       ~~~~~~~~~~~~~~~~~~~~~^
+        driver, destino.strip(), retirada, devolucao, log, tempos)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 525, in abrir_busca_por_local
+    wait.until(lambda d: visiveis('form.SearchModifier-Form input[name="PickupLocation"]') or False)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/support/wait.py", line 112, in until
+    value = method(self._driver)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 525, in <lambda>
+    wait.until(lambda d: visiveis('form.SearchModifier-Form input[name="PickupLocation"]') or False)
+                         ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 486, in visiveis
+    for e in driver.find_elements(By.CSS_SELECTOR, css):
+             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 942, in find_elements
+    return self.execute(Command.FIND_ELEMENTS, {"using": by, "value": value})["value"] or []
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=152.0.7977.82)
+Stacktrace:
+#0 0x55f46275159f <unknown>
+#1 0x55f4620a4108 <unknown>
+#2 0x55f4620785ab <unknown>
+#3 0x55f46212c588 <unknown>
+#4 0x55f462146890 <unknown>
+#5 0x55f4620ed3f7 <unknown>
+#6 0x55f4620ee162 <unknown>
+#7 0x55f4627174f3 <unknown>
+#8 0x55f462715d8d <unknown>
+#9 0x55f4627156fc <unknown>
+#10 0x55f462704608 <unknown>
+#11 0x55f462716600 <unknown>
+#12 0x55f4626eef98 <unknown>
+#13 0x55f46273bad7 <unknown>
+#14 0x55f46273bd04 <unknown>
+#15 0x55f46274ffcc <unknown>
+#16 0x7f3721c980a2 <unknown>
+#17 0x7f3721d2080c <unknown>
+

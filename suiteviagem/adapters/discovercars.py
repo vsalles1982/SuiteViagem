@@ -42,7 +42,7 @@ def normalize(row, query_id, engine, requested):
                 'residence_country':row['Residencia'],'driver_age':row['Idade'],'source_record':raw},
             'warnings':['Total anunciado para a locação; composição das taxas não confirmada.', 'Fuso dos horários locais não fornecido pela consulta.']}
 
-def search(history, location, start, end, limit=5, *, engine=None, log=print):
+def search(history, location, start, end, limit=5, *, engine=None, log=print, on_progress=None):
     if not location.strip() or type(limit) is not int or not 1<=limit<=100:
         raise ValueError('Informe local e limite de 1 a 100.')
     for value in (start,end):
@@ -55,9 +55,31 @@ def search(history, location, start, end, limit=5, *, engine=None, log=print):
     results,errors,warnings=[],[],[]
     effective,version,report={},None,{}
     status='succeeded'
+    first_batch=[]
+    first_effective={}
+    def preview(payload):
+        nonlocal first_batch,first_effective
+        import copy
+        actual=payload['consulta']
+        if actual['PickupDateTime'][:10]!=start or actual['DropOffDateTime'][:10]!=end:
+            raise ValueError('Prévia de datas diferentes das solicitadas.')
+        batch=[normalize(row,qid,engine,actual) for row in payload['resultados']]
+        batch=sorted(batch,key=lambda r:r['price']['amount_minor'])[:limit]
+        if batch and not first_batch:
+            first_batch=copy.deepcopy(batch)
+            first_effective=copy.deepcopy(actual)
+        doc=copy.deepcopy(query)
+        doc.update(status='running',effective=copy.deepcopy(actual),results=batch,
+                   coverage={'status':'partial','scope':'Ofertas conferidas até agora; coleta em andamento.','metrics':[], 'stop_reason':None,'limitations':['Outras ofertas podem aparecer.']})
+        on_progress(doc)
     try:
         if engine is None:engine,version=load_engine()
-        report=engine.coletar_ofertas(location,start,end,limit,log)
+        import inspect
+        supports_progress = 'on_progress' in inspect.signature(engine.coletar_ofertas).parameters
+        if on_progress is None or not supports_progress:
+            report=engine.coletar_ofertas(location,start,end,limit,log)
+        else:
+            report=engine.coletar_ofertas(location,start,end,limit,log,on_progress=preview)
         effective=report['consulta']
         if date.fromisoformat(effective['PickupDateTime'][:10])!=date.fromisoformat(start) or date.fromisoformat(effective['DropOffDateTime'][:10])!=date.fromisoformat(end):
             raise ValueError('Datas efetivas diferentes das solicitadas.')
@@ -68,9 +90,13 @@ def search(history, location, start, end, limit=5, *, engine=None, log=print):
     except KeyboardInterrupt as exc:
         report['timings']=getattr(exc,'car_timings',report.get('timings',{}))
         status='cancelled'
+        results=first_batch
+        effective=first_effective
+        if first_batch:warnings.append('Primeiro lote conferido preservado após cancelamento.')
     except Exception as exc:
         report['timings']=getattr(exc,'car_timings',report.get('timings',{}))
         status='failed'
+        results=[]
         errors.append({'code':'cars_error','stage':'collection_or_normalization','message':str(exc)[:2000]})
         options=getattr(exc,'location_options',None)
         if isinstance(options,list) and options and all(isinstance(x,str) for x in options):
@@ -84,5 +110,7 @@ def search(history, location, start, end, limit=5, *, engine=None, log=print):
     for name,value in report.get('timings',{}).items():
         if isinstance(name,str) and name.endswith('_seconds') and type(value) in (int,float) and value>=0:
             coverage['metrics'].append({'name':name.removesuffix('_seconds')+'_milliseconds','unit':'milliseconds','value':round(value*1000)})
+        elif name == 'location_redigits' and type(value) is int and 0 <= value <= 2:
+            coverage['metrics'].append({'name':name,'unit':'count','value':value})
     return history.finish(qid,status=status,results=results,coverage=coverage,effective=effective,
                           errors=errors,warnings=warnings,collector_version=version)

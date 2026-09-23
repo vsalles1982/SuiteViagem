@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 381, in coletar_ofertas
+    url, consulta, local_selecionado = abrir_busca_por_local(
+                                       ~~~~~~~~~~~~~~~~~~~~~^
+        driver, destino.strip(), retirada, devolucao, log)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 262, in abrir_busca_por_local
+    raise ValueError('Calendário não iniciou na retirada. Feche a consulta e tente novamente.')
+ValueError: Calendário não iniciou na retirada. Feche a consulta e tente novamente.

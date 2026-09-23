@@ -1,0 +1,94 @@
+import copy,io,json,tempfile,unittest
+from decimal import Decimal
+from pathlib import Path
+from types import SimpleNamespace
+from collections import deque
+from suiteviagem.adapters.discovercars import search,normalize
+from suiteviagem.history import History
+from suiteviagem.core.models import new_query
+from suiteviagem.web.server import Jobs,command
+from test_cars_adapter import engine,DATA
+
+class CarProgressTests(unittest.TestCase):
+    def test_first_preserved_on_cancel_and_final_replaces(self):
+        for outcome in ('cancel','success','failure'):
+            e,row=engine();events=[];original=e.coletar_ofertas
+            def run(*args,on_progress):
+                on_progress({'consulta':DATA,'resultados':[row]})
+                row['TotalBRL']=Decimal('200.00')
+                on_progress({'consulta':DATA,'resultados':[row]})
+                if outcome=='cancel':raise KeyboardInterrupt()
+                if outcome=='failure':raise ValueError('Consulta mudou')
+                return original(*args)
+            e.coletar_ofertas=run
+            with History(':memory:') as h:
+                r=search(h,'Ibiza Airport','2026-09-12','2026-09-13',engine=e,log=lambda m:None,on_progress=events.append)
+                self.assertEqual(len(events),2)
+                self.assertEqual(events[0]['results'][0]['price']['amount_minor'],18967)
+                self.assertEqual(r,h.get(r['query_id']))
+                if outcome=='failure':self.assertEqual(r['results'],[]);self.assertEqual(r['status'],'failed')
+                else:self.assertEqual(r['results'][0]['price']['amount_minor'],18967 if outcome=='cancel' else 20000)
+    def test_bad_dates_never_emit(self):
+        e,row=engine();events=[]
+        def run(*args,on_progress):on_progress({'consulta':{**DATA,'PickupDateTime':'2026-09-11T11:00:00'},'resultados':[row]})
+        e.coletar_ofertas=run
+        with History(':memory:') as h:
+            r=search(h,'Airport','2026-09-12','2026-09-13',engine=e,log=lambda m:None,on_progress=events.append)
+            self.assertEqual(events,[]);self.assertEqual(r['status'],'failed')
+    def test_server_accepts_cars_and_recovers_first_only(self):
+        e,row=engine()
+        with tempfile.TemporaryDirectory() as td:
+            db=Path(td)/'history.sqlite3'
+            with History(db) as h:
+                q=new_query('cars',{});qid=h.create(q);h.start(qid)
+            first={'query_id':qid,'module':'cars','effective':DATA,'results':[normalize(row,qid,e,DATA)]}
+            wrong={**first,'module':'hotels','results':[]}
+            j=Jobs(db);j.job={'module':'cars','query_id':qid,'status':'cancelling','logs':deque(),'first_preview':None,'preview_version':0}
+            j.process=SimpleNamespace(stdout=io.StringIO('\n'.join('SUITE_PREVIEW:'+json.dumps(x) for x in (first,wrong))),wait=lambda:130)
+            j._read()
+            self.assertEqual(j.job['preview_version'],1)
+            with History(db) as h:
+                saved=h.get(qid);self.assertEqual(saved['status'],'cancelled');self.assertEqual(saved['results'],first['results']);self.assertEqual(saved['effective'],DATA)
+    def test_web_enables_progress(self):
+        args=command(dict(module='cars',destination='Airport',start='2026-09-12',end='2026-09-13',limit=5),Path('/tmp/test.sqlite3'))
+        self.assertIn('--progressivo',args)
+    def test_engine_emits_before_csv_and_cleanup(self):
+        import ast,os,csv,shutil
+        from datetime import datetime
+        from urllib.parse import urlparse
+        from unittest.mock import patch
+        e,row=engine();clock=[0.0];events=[];scroll=[False];closed=[False]
+        class Options:
+            def add_argument(self,*args):pass
+        class Driver:
+            current_url=row['Link'].replace('/offer/','/search/')
+            page_source='test'
+            def set_page_load_timeout(self,*a):pass
+            def get(self,*a):pass
+            def find_elements(self,by,selector):return [1] if selector=='.SearchList-Card' else []
+            def execute_script(self,script):
+                if script.startswith('window.scrollBy'):scroll[0]=True
+                return True
+            def quit(self):closed[0]=True
+        d=Driver()
+        class Wait:
+            def __init__(self,*a):pass
+            def until(self,fn):
+                result=fn(d)
+                if not result:raise AssertionError('unexpected wait')
+                return result
+        root=SimpleNamespace(all=lambda:[],select=lambda name:[1,2] if scroll[0] else [1])
+        tree=ast.parse((Path(__file__).resolve().parents[1]/'scraper_carro/discovercars.py').read_text())
+        nodes=[n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.ClassDef)) and n.name in {'TemposCarros','coletar_ofertas'}]
+        def extract(card,*args):
+            result=copy.deepcopy(row);result['Link']+=('&card=2' if card==2 else '');return result
+        ns={'time':SimpleNamespace(monotonic=lambda:clock[0],sleep=lambda s:clock.__setitem__(0,clock[0]+s)), 'datetime':datetime,'Path':Path,'urlparse':urlparse,'shutil':SimpleNamespace(which=lambda name:'/test/chromium'),'webdriver':SimpleNamespace(ChromeOptions=Options,Chrome=lambda **kw:d),'WebDriverWait':Wait,'By':SimpleNamespace(CSS_SELECTOR='css'),'Document':lambda html:SimpleNamespace(root=root),'ler_consulta':e.ler_consulta,'extrair_card':extract,'csv':csv,'formatar_preco':str}
+        exec(compile(ast.Module(body=nodes,type_ignores=[]),'motor','exec'),ns)
+        with tempfile.TemporaryDirectory() as td,patch.object(Path,'cwd',return_value=Path(td)):
+            def preview(payload):
+                self.assertFalse(closed[0]);self.assertFalse(list(Path(td).rglob('*.csv')))
+                events.append(copy.deepcopy(payload))
+            result=ns['coletar_ofertas'](d.current_url,'2026-09-12','2026-09-13',2,lambda m:None,on_progress=preview)
+            self.assertEqual([len(x['resultados']) for x in events],[1,2])
+            self.assertTrue(closed[0]);self.assertTrue(Path(result['csv']).exists())
+            self.assertGreaterEqual(result['timings']['first_batch_seconds'],3)

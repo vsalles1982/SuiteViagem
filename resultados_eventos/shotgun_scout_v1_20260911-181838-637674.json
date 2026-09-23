@@ -1,0 +1,149 @@
+{
+  "variant": "shotgun-scout-v1",
+  "city": "São Paulo",
+  "slug": "sao-paulo",
+  "url": "https://shotgun.live/en/cities/sao-paulo",
+  "city_request_seconds": 1.081,
+  "city_html_chars": 363528,
+  "event_link_count": 15,
+  "first_event_links": [
+    "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar",
+    "https://shotgun.live/en/events/11-de-setembro",
+    "https://shotgun.live/en/events/baile-da-disk-cybernight",
+    "https://shotgun.live/en/events/met-rala-3-anos",
+    "https://shotgun.live/en/events/heartbreak-party-open-bar-11-09",
+    "https://shotgun.live/en/events/rush-das-primas",
+    "https://shotgun.live/en/events/garupa-dr-banana-all-night-long",
+    "https://shotgun.live/en/events/minhoqueens-theeraofpop-1109-sexta",
+    "https://shotgun.live/en/events/uma-noite-de-charli-xcx-madonna-sexta-11-9",
+    "https://shotgun.live/en/events/unladies-no-cr-1-a",
+    "https://shotgun.live/en/events/rec-no-valentina-bar",
+    "https://shotgun.live/en/events/pista-0800-set",
+    "https://shotgun.live/en/events/inferninho-real-gg-matias-bamboloki-2026-09-11",
+    "https://shotgun.live/en/events/latinobregarave-na-casinha-2",
+    "https://shotgun.live/en/events/classic-nights-com-a-banda-k-7-os-valvulados"
+  ],
+  "city_jsonld": [
+    {
+      "type": "Brand",
+      "name": "Shotgun",
+      "startDate": null,
+      "url": "https://shotgun.live/en",
+      "has_offers": false,
+      "keys": [
+        "@context",
+        "@type",
+        "description",
+        "logo",
+        "name",
+        "sameAs",
+        "url"
+      ]
+    },
+    {
+      "type": "WebSite",
+      "name": null,
+      "startDate": null,
+      "url": "https://shotgun.live/en",
+      "has_offers": false,
+      "keys": [
+        "@context",
+        "@type",
+        "potentialAction",
+        "url"
+      ]
+    },
+    {
+      "type": "BreadcrumbList",
+      "name": null,
+      "startDate": null,
+      "url": null,
+      "has_offers": false,
+      "keys": [
+        "@context",
+        "@type",
+        "itemListElement"
+      ]
+    }
+  ],
+  "signals": {
+    "contains_MusicEvent": false,
+    "contains_startDate": false,
+    "contains_offers": false,
+    "contains_next_data": false,
+    "contains_apollo": false,
+    "contains_react_query": false
+  },
+  "detail_probe": {
+    "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar",
+    "seconds": 0.91,
+    "html_chars": 290904,
+    "jsonld": [
+      {
+        "type": "Brand",
+        "name": "Shotgun",
+        "startDate": null,
+        "url": "https://shotgun.live/en",
+        "has_offers": false,
+        "keys": [
+          "@context",
+          "@type",
+          "description",
+          "logo",
+          "name",
+          "sameAs",
+          "url"
+        ]
+      },
+      {
+        "type": "WebSite",
+        "name": null,
+        "startDate": null,
+        "url": "https://shotgun.live/en",
+        "has_offers": false,
+        "keys": [
+          "@context",
+          "@type",
+          "potentialAction",
+          "url"
+        ]
+      },
+      {
+        "type": "MusicEvent",
+        "name": "Bailão Otaku - 14 Edição No Submundo - Halloween - Open Bar",
+        "startDate": "2026-10-25T01:00:00.000Z",
+        "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar",
+        "has_offers": true,
+        "keys": [
+          "@context",
+          "@type",
+          "description",
+          "doorTime",
+          "endDate",
+          "eventAttendanceMode",
+          "eventStatus",
+          "image",
+          "location",
+          "name",
+          "offers",
+          "organizer",
+          "performer",
+          "startDate",
+          "url"
+        ]
+      },
+      {
+        "type": "BreadcrumbList",
+        "name": null,
+        "startDate": null,
+        "url": null,
+        "has_offers": false,
+        "keys": [
+          "@context",
+          "@type",
+          "itemListElement"
+        ]
+      }
+    ]
+  }
+}

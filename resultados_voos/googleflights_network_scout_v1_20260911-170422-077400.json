@@ -1,0 +1,344 @@
+{
+  "variant": "googleflights-network-scout-v1",
+  "requested": {
+    "origem": "RIO",
+    "destino": "SAO",
+    "data": "2026-09-20",
+    "currency": "BRL",
+    "lang": "pt-BR"
+  },
+  "timings": {
+    "first_cards_seconds": 30.547,
+    "cheapest_click_seconds": 31.638,
+    "total_seconds": 39.992
+  },
+  "initial_cards": [
+    {
+      "price": 917.0,
+      "text": "15:45\n – \n16:55\nAzul\n1h 10 min\nSDU–CGH\nSem escalas\n69 kg CO2e\n11% mais emissões\nR$ 917"
+    },
+    {
+      "price": 948.0,
+      "text": "10:00\n – \n11:05\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n71 kg CO2e\n15% mais emissões\nR$ 948"
+    },
+    {
+      "price": 979.0,
+      "text": "17:00\n – \n18:15\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 979.0,
+      "text": "20:40\n – \n21:55\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 879.0,
+      "text": "06:00\n – \n11:05\nLATAMOperado por Latam Airlines Brasil, Latam Airlines Brasil\n5h 5 min\nSDU–VCP\n1 parada\n1h 35 min BSB\n190 kg CO2e\n206% mais emissões\nR$ 879"
+    },
+    {
+      "price": 879.0,
+      "text": "12:15\n – \n22:15\nLATAMOperado por Latam Airlines Brasil, Latam Airlines Brasil\n10h\nSDU–VCP\n1 parada\n6h 40 min BSB\n190 kg CO2e\n206% mais emissões\nR$ 879"
+    },
+    {
+      "price": 944.0,
+      "text": "08:20\n – \n09:35\nGol\n1h 15 min\nGIG–VCP\nSem escalas\n59 kg CO2e\nMédia de emissões\nR$ 944"
+    },
+    {
+      "price": 944.0,
+      "text": "22:35\n – \n23:55\nGol\n1h 20 min\nGIG–VCP\nSem escalas\n51 kg CO2e\n18% menos emissões\nR$ 944"
+    },
+    {
+      "price": 948.0,
+      "text": "06:30\n – \n07:35\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n71 kg CO2e\n15% mais emissões\nR$ 948"
+    },
+    {
+      "price": 948.0,
+      "text": "06:55\n – \n08:00\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 948"
+    },
+    {
+      "price": 979.0,
+      "text": "05:45\n – \n07:00\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 979.0,
+      "text": "09:40\n – \n10:55\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 979.0,
+      "text": "13:20\n – \n14:35\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 1435.0,
+      "text": "11:30\n – \n12:35\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "13:30\n – \n14:35\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n71 kg CO2e\n15% mais emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "14:00\n – \n15:05\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "16:35\n – \n17:40\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "20:00\n – \n21:05\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "20:35\n – \n21:35\nGol\n1h\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1484.0,
+      "text": "10:15\n – \n11:30\nGol\n1h 15 min\nGIG–CGH\nSem escalas\n72 kg CO2e\n16% mais emissões\nR$ 1.484"
+    },
+    {
+      "price": 1484.0,
+      "text": "11:25\n – \n12:30\nGol\n1h 5 min\nGIG–CGH\nSem escalas\n60 kg CO2e\nMédia de emissões\nR$ 1.484"
+    },
+    {
+      "price": 1512.0,
+      "text": "06:50\n – \n08:00\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "07:35\n – \n08:45\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "08:55\n – \n10:05\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "09:45\n – \n10:55\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "12:35\n – \n13:45\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "13:35\n – \n14:45\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "14:55\n – \n16:05\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "17:00\n – \n18:05\nLATAMOperado por Latam Airlines Brasil\n1h 5 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "21:15\n – \n22:20\nLATAMOperado por Latam Airlines Brasil\n1h 5 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    }
+  ],
+  "cheapest_cards": [
+    {
+      "price": 917.0,
+      "text": "15:45\n – \n16:55\nAzul\n1h 10 min\nSDU–CGH\nSem escalas\n69 kg CO2e\n11% mais emissões\nR$ 917"
+    },
+    {
+      "price": 948.0,
+      "text": "09:10\n – \n10:15\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 948"
+    },
+    {
+      "price": 948.0,
+      "text": "10:00\n – \n11:05\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n71 kg CO2e\n15% mais emissões\nR$ 948"
+    },
+    {
+      "price": 979.0,
+      "text": "17:00\n – \n18:15\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 979.0,
+      "text": "20:40\n – \n21:55\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 879.0,
+      "text": "06:00\n – \n11:05\nLATAMOperado por Latam Airlines Brasil, Latam Airlines Brasil\n5h 5 min\nSDU–VCP\n1 parada\n1h 35 min BSB\n190 kg CO2e\n206% mais emissões\nR$ 879"
+    },
+    {
+      "price": 879.0,
+      "text": "12:15\n – \n22:15\nLATAMOperado por Latam Airlines Brasil, Latam Airlines Brasil\n10h\nSDU–VCP\n1 parada\n6h 40 min BSB\n190 kg CO2e\n206% mais emissões\nR$ 879"
+    },
+    {
+      "price": 944.0,
+      "text": "08:20\n – \n09:35\nGol\n1h 15 min\nGIG–VCP\nSem escalas\n59 kg CO2e\nMédia de emissões\nR$ 944"
+    },
+    {
+      "price": 944.0,
+      "text": "22:35\n – \n23:55\nGol\n1h 20 min\nGIG–VCP\nSem escalas\n51 kg CO2e\n18% menos emissões\nR$ 944"
+    },
+    {
+      "price": 948.0,
+      "text": "06:30\n – \n07:35\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n71 kg CO2e\n15% mais emissões\nR$ 948"
+    },
+    {
+      "price": 948.0,
+      "text": "06:55\n – \n08:00\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 948"
+    },
+    {
+      "price": 979.0,
+      "text": "05:45\n – \n07:00\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 979.0,
+      "text": "09:40\n – \n10:55\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 979.0,
+      "text": "13:20\n – \n14:35\nAzul\n1h 15 min\nGIG–VCP\nSem escalas\n62 kg CO2e\nMédia de emissões\nR$ 979"
+    },
+    {
+      "price": 1435.0,
+      "text": "11:30\n – \n12:35\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "13:30\n – \n14:35\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n71 kg CO2e\n15% mais emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "14:00\n – \n15:05\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "15:00\n – \n16:05\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "15:55\n – \n17:00\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n71 kg CO2e\n15% mais emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "16:35\n – \n17:40\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "20:00\n – \n21:05\nGol\n1h 5 min\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1435.0,
+      "text": "20:35\n – \n21:35\nGol\n1h\nSDU–CGH\nSem escalas\n56 kg CO2e\n10% menos emissões\nR$ 1.435"
+    },
+    {
+      "price": 1484.0,
+      "text": "10:15\n – \n11:30\nGol\n1h 15 min\nGIG–CGH\nSem escalas\n72 kg CO2e\n16% mais emissões\nR$ 1.484"
+    },
+    {
+      "price": 1484.0,
+      "text": "11:25\n – \n12:30\nGol\n1h 5 min\nGIG–CGH\nSem escalas\n60 kg CO2e\nMédia de emissões\nR$ 1.484"
+    },
+    {
+      "price": 1512.0,
+      "text": "06:50\n – \n08:00\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "07:35\n – \n08:45\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "08:55\n – \n10:05\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "09:45\n – \n10:55\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "12:35\n – \n13:45\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    },
+    {
+      "price": 1512.0,
+      "text": "13:35\n – \n14:45\nLATAMOperado por Latam Airlines Brasil\n1h 10 min\nSDU–CGH\nSem escalas\n64 kg CO2e\nMédia de emissões\nR$ 1.512"
+    }
+  ],
+  "network_candidates": [
+    {
+      "method": "GET",
+      "resource_type": "document",
+      "status": 200,
+      "url": "https://www.google.com/travel/flights?q=Flights%20from%20RIO%20to%20SAO%20on%202026-09-20%20oneway&curr=BRL&hl=pt-BR",
+      "content_type": "text/html; charset=utf-8",
+      "content_length": null,
+      "post_data_chars": 0,
+      "signals": [
+        "travel",
+        "flight"
+      ],
+      "body_chars": 4309823
+    },
+    {
+      "method": "GET",
+      "resource_type": "document",
+      "status": 200,
+      "url": "https://www.google.com/_/FlightsFrontendUi/bscframe",
+      "content_type": "text/html; charset=utf-8",
+      "content_length": null,
+      "post_data_chars": 0,
+      "signals": [
+        "flight"
+      ],
+      "body_error": "TypeError"
+    },
+    {
+      "method": "POST",
+      "resource_type": "xhr",
+      "status": 200,
+      "url": "https://ogads-pa.clients6.google.com/$rpc/google.internal.onegoogle.asyncdata.v1.AsyncDataService/GetAsyncData",
+      "content_type": "application/json+protobuf; charset=UTF-8",
+      "content_length": "30",
+      "post_data_chars": 1566,
+      "signals": []
+    },
+    {
+      "method": "POST",
+      "resource_type": "xhr",
+      "status": 200,
+      "url": "https://www.google.com/_/FlightsFrontendUi/browserinfo?f.sid=-2782775564608320117&bl=boq_travel-frontend-flights-ui_20260909.02_p1&hl=pt-BR&soc-app=162&soc-platform=1&soc-device=1&_reqid=161446&rt=j",
+      "content_type": "application/json; charset=utf-8",
+      "content_length": null,
+      "post_data_chars": 117,
+      "signals": [
+        "travel",
+        "flight"
+      ],
+      "body_chars": 91,
+      "body_prefix": ")]}'\n\n[[[\"f.mt\"],[\"di\",27],[\"af.httprm\",26,\"8456532812168634834\",12],[\"e\",4,null,null,91]]]"
+    },
+    {
+      "method": "POST",
+      "resource_type": "xhr",
+      "status": 200,
+      "url": "https://www.google.com/_/FlightsFrontendUi/data/travel.frontend.flights.FlightsFrontendService/GetShoppingResults?f.sid=-2782775564608320117&bl=boq_travel-frontend-flights-ui_20260909.02_p1&hl=pt-BR&soc-app=162&soc-platform=1&soc-device=1&_reqid=61446&rt=c",
+      "content_type": "application/json; charset=utf-8",
+      "content_length": null,
+      "post_data_chars": 486,
+      "signals": [
+        "travel",
+        "flight"
+      ],
+      "body_chars": 239321,
+      "body_prefix": ")]}'\n\n141138\n[[\"wrb.fr\",null,\"[[null,[[1789157047318814,107053070,3591519634],null,null,null,null,[[1]]],0,\\\"t16kat66E46AhuMPkvvIsA0\\\",\\\"Hh0h4tXVXkTYAEa_kwBG--------cgblp15AAAAAGqkXrcFD3O-A\\\"],[[[[[\\\"/m/06gmr\\\",4],\\\"Rio de Janeiro\\\",[\\\"/m/06gmr\\\",\\\"Rio de Janeiro\\\",[[\\\"https://encrypted-tbn3.gstatic.com/images?q\\\\u003dtbn:ANd9GcTJH2VOE_wpSKiJHcyknpXIdTof6XBD0txz2n8GlfXvuRt2Fx4AU83INbZOx2vSTQWBAxkfG05Kog0XNA9ebOwWqKTfKFS0KGEzfeclVqQ\\\"],[\\\"https://encrypted-tbn3.gstatic.com/images?q\\\\u003dtbn:ANd9GcRDd6Ze9MtuIeTJBVWMwK9OotPAbvk-9a44rM24ml7yiZ_v6rwcAZxrUdq4f6mo1KXY0MlYhFX1seKzUQ\\\"]],\\\"Copacabana, Pão de Açúcar e Carnaval\\\",\\\"Cidade brasileira com a praia de Copacabana, o Pão de Açúcar, o Carnaval e a estátua do Cristo Redentor.\\\",\\\"RIO\\\"],[-22.9068467,-43.1728965],\\\"BR\\\",null,\\\"Brasil\\\"]],[[[\\\"/m/022pfm\\\",4],\\\"São Paulo\\\",[\\\"/m/022pfm\\\",\\\"São Paulo\\\",[[\\\"https://encrypted-tbn2.gstatic.com/images?q\\\\u003dtbn:ANd9GcQ4D5SB4Yfugl7neBSWCiZ5gRiYxGRSSCYavaGuPsXj1q6Hk3Gv5C78US7ZqeotwTy5BX6xGe9CpXQkvQM45Mjnol7egb_CdoPyBoVeqB8\\\"],[\\\"https://encrypted-tbn2.gstatic.com/images?q\\\\u003dtbn:ANd9GcTkx9athZsBRDrcQSs15lBM_on9PkrTwz-ySvt8J6pcJZSuqg14GFxUPDm1FgV3ckvtmLWX0pDDIkRldw\\\"]],\\\"Arquitetura, arte no MASP e compras\\\",\\\"Metrópole brasileira com arquitetura moderna e histórica, museu de arte MASP e lojas no bairro dos Jardins.\\\",\\\"SAO\\\"],[-23.5557714,-46.6395571],\\\"BR\\\",null,\\\"Brasil\\\"]]]],[[[[\\\"AD\\\",[\\\"Azul\\\"],[[null,null,null,\\\"SDU\\\",\\\"Aeroporto Santos Dumont\\\",\\\"Aeroporto de São Paulo/Congonhas–Deputado Freitas Nobre\\\",\\\"CGH\\\",null,[15,45],null,[16,55],70,[null,null,null,null,null,null,null,null,true],1,\\\"79 cm\\\",null,1,\\\"Embraer 195\\\",null,false,[2026,9,20],[2026,9,20],[\\\"AD\\\",\\\"5032\\\",null,\\\"Azul\\\"],null,null,1,null,null,null,null,\\\"79 centímetros\\\",69248,1]],\\\"SDU\\\",[2026,9,20],[15,45],\\\"CGH\\\",[2026,9,20],[16,55],70,null,null,false,null,null,null,null,\\\"XOgZHc\\\",[[1789157047318814,107053070,3591519634],null,null,null,null,[[2]]],1,null,null,[null,null,3,11,null,true,true,69000,62000,null,62000,3,false,null,null,1,null,3],[1],[[\\\"AD\\\",\\\"Azul\\\",\\\"https://www.voeazul.com.br/br/pt/ajuda/assistencia-especial.html\\\"]]],[[null,917],\\\"CjRIaDBoNHRYVlhrVFlBRWFfa3dCRy0tLS0tLS0tY2dibHAxNUFBQUFBR3FrWHJjRkQzTy1BEgZBRDUwMzIaCwiPzAUQAhoDQlJMOBxw4IsB\\\"],null,true,[null,null,null,null,1,null,[null,1]],[false,false,false],false,[],\\\"[\\\\\\\"CAISA0JSTBoECI/MBSJxCl0KWwoDU0RVEhkyMDI2LTA5LTIwVDE1OjQ1OjAwLTAzOjAwGgNDR0giGTIwMjYtMDktMjBUMTY6NTU6MDAtMDM6MDAqAkFEMgQ1MDMyOgJBREIENTAzMkgBUgNFOTUSBAgDEAEYASgAMgYKBEF6dWw\\\\\\\\u003d\\\\\\\"]\\\",[[2]],false],[[\\\"G3\\\",[\\\"Gol\\\"],[[null,null,null,\\\"SDU\\\",\\\"Aeroporto Santos Dumont\\\",\\\"Aeroporto de São Paulo/Congonhas–Deputado Freitas Nobre\\\",\\\"CGH\\\",null,[9,10],null,[10,15],65,[null,null,null,null,null,true,null,null,null,null,true,3],1,\\\"76 cm\\\",null,1,\\\"Boeing 737\\\",null,false,[2026,9,20],[2026,9,20],[\\\"G3\\\",\\\"1050\\\",null,\\\"Gol\\\"],null,null,1,null,null,null,null,\\\"76 centímetros\\\",56078,1]],\\\"SDU\\\",[2026,9,20],[9,10],\\\"CGH\\\",[2026,9,20],[10,15],65,null,null,false,null,null,null,null,\\\"lKaPnc\\\",[[1789157047318814,107053070,3591519634],null,null,null,null,[[3]]],1,null,null,[null,null,1,-10,null,true,true,56000,62000,[null,true],62000,1,false,null,null,1,null,1],[1],[[\\\"G3\\\",\\\"Gol\\\",\\\"https://www.voegol.com.br/informacoes/assistencia-especial\\\"]]],[[null,948],\\\"CjRIaDBoNHRYVlhrVFlBRWFfa3dCRy0tLS0tLS0tY2dibHAxNUFBQUFBR3FrWHJjRkQzTy1BEgZHMzEwNTAaCwjx4wUQAhoDQlJMOBxwspAB\\\"],null,false,[null,null,null,null,1,null,[null,1]],[false,false,false],false,[],\\\"[\\\\\\\"CAISA0JSTBoECPHjBSJwCl0KWwoDU0RVEhkyMDI2LTA5LTIwVDA5OjEwOjAwLTAzOjAwGgNDR0giGTIwMjYtMDktMjBUMTA6MTU6MDAtMDM6MDAqAkczMgQxMDUwOgJHM0IEMTA1MEgBUgM3MzgSBAgDEAEYASgAMgUKA0dvbA\\\\\\\\u003d\\\\\\\\u003d\\\\\\\"]\\\",[[1]],false],[[\\\"G3\\\",[\\\"Gol\\\"],[[null,null,null,\\\"SDU\\\",\\\"Aeroporto Santos Dumont\\\",\\\"Aeroporto de São Paulo/Congonhas–Deputado Freitas Nobre\\\",\\\"CGH\\\",null,[10],null,[11,5],65,[null,true,null,null,null,null,null,null,null,null,true,3],1,\\\"76 cm\\\",null,1,\\\"Boeing 737\\\",null,false,[2026,9,20],[2026,9,20],[\\\"G3\\\",\\\"1013\\\",null,\\\"Gol\\\"],null,null,1,null,null,null,null,\\\"76 centímetros\\\",71195,1]],\\\"SDU\\\",[2026,9,20],[10],\\\"CGH\\\",[2026,9,20],[11,5],65,null,null,false,null,null,null,null,\\\"iuCRrb\\\",[[1789157047318814,107053070,3591519634],null,null,null,null,[[4]]],1,null,null,[null,null,3,15,null,true,true,71000,62000,null,62000,3,false,null,null,1,null,3],[1],[[\\\"G3\\\",\\\"Gol\\\",\\\"https://www.voegol.com.br/informacoes/assistencia-especial\\\"]]],[[null,948],\\\"CjRIaDBoNHRYVlhrVFlBRWFfa3dCRy0tLS0tLS0tY2dibHAxNUFBQUFBR3FrWHJjRkQzTy1BEgZHMzEwMTMaCwjx4wUQAhoDQlJMOBxwspAB\\\"],null,false,[null,null,null,null,1,null,[null,1]],[false,false,false],false,[],\\\"[\\\\\\\"CAISA0JSTBoECPHjBSJwCl0KWwoDU0RVEhkyMDI2LTA5LTIwVDEwOjAwOjAwLTAzOjAwGgNDR0giGTIwMjYtMDktMjBUMTE6MDU6MDAtMDM6MDAqAkczMgQxMDEzOgJHM0IEMTAxM0gBUgM3M0cSBAgDEAEYASgAMgUKA0dvbA\\\\\\\\u003d\\\\\\\\u003d\\\\\\\"]\\\",[[2]],false],[[\\\"AD\\\",[\\\"Azul\\\"],[[null,null,null,\\\"GIG\\\",\\\"Aeroporto Internacional do Rio de Janeiro - Galeão – Antonio Carlos Jobim\\\",\\"
+    },
+    {
+      "method": "POST",
+      "resource_type": "xhr",
+      "status": 200,
+      "url": "https://www.google.com/_/FlightsFrontendUi/data/travel.frontend.flights.FlightsFrontendService/GetShoppingResults?f.sid=-2782775564608320117&bl=boq_travel-frontend-flights-ui_20260909.02_p1&hl=pt-BR&soc-app=162&soc-platform=1&soc-device=1&_reqid=261446&rt=c",
+      "content_type": "application/json; charset=utf-8",
+      "content_length": null,
+      "post_data_chars": 401,
+      "signals": [
+        "travel",
+        "flight"
+      ],
+      "body_chars": 235878,
+      "body_prefix": ")]}'\n\n139417\n[[\"wrb.fr\",null,\"[[null,[[1789157053846548,112790031,3039949794],null,null,null,null,[[1]]],0,\\\"vV6katTVM4-U5OUP4ufHqQs\\\",\\\"HOuWB1EILhpAADMEUwBG---------cgbkx6AAAAAGqkXr0Mu4Z6A\\\"],[[[[[\\\"/m/06gmr\\\",4],\\\"Rio de Janeiro\\\",[\\\"/m/06gmr\\\",\\\"Rio de Janeiro\\\",[[\\\"https://encrypted-tbn3.gstatic.com/images?q\\\\u003dtbn:ANd9GcTJH2VOE_wpSKiJHcyknpXIdTof6XBD0txz2n8GlfXvuRt2Fx4AU83INbZOx2vSTQWBAxkfG05Kog0XNA9ebOwWqKTfKFS0KGEzfeclVqQ\\\"],[\\\"https://encrypted-tbn3.gstatic.com/images?q\\\\u003dtbn:ANd9GcRDd6Ze9MtuIeTJBVWMwK9OotPAbvk-9a44rM24ml7yiZ_v6rwcAZxrUdq4f6mo1KXY0MlYhFX1seKzUQ\\\"]],\\\"Copacabana, Pão de Açúcar e Carnaval\\\",\\\"Cidade brasileira com a praia de Copacabana, o Pão de Açúcar, o Carnaval e a estátua do Cristo Redentor.\\\",\\\"RIO\\\"],[-22.9068467,-43.1728965],\\\"BR\\\",null,\\\"Brasil\\\"]],[[[\\\"/m/022pfm\\\",4],\\\"São Paulo\\\",[\\\"/m/022pfm\\\",\\\"São Paulo\\\",[[\\\"https://encrypted-tbn2.gstatic.com/images?q\\\\u003dtbn:ANd9GcQ4D5SB4Yfugl7neBSWCiZ5gRiYxGRSSCYavaGuPsXj1q6Hk3Gv5C78US7ZqeotwTy5BX6xGe9CpXQkvQM45Mjnol7egb_CdoPyBoVeqB8\\\"],[\\\"https://encrypted-tbn2.gstatic.com/images?q\\\\u003dtbn:ANd9GcTkx9athZsBRDrcQSs15lBM_on9PkrTwz-ySvt8J6pcJZSuqg14GFxUPDm1FgV3ckvtmLWX0pDDIkRldw\\\"]],\\\"Arquitetura, arte no MASP e compras\\\",\\\"Metrópole brasileira com arquitetura moderna e histórica, museu de arte MASP e lojas no bairro dos Jardins.\\\",\\\"SAO\\\"],[-23.5557714,-46.6395571],\\\"BR\\\",null,\\\"Brasil\\\"]]]],[[[[\\\"AD\\\",[\\\"Azul\\\"],[[null,null,null,\\\"SDU\\\",\\\"Aeroporto Santos Dumont\\\",\\\"Aeroporto de São Paulo/Congonhas–Deputado Freitas Nobre\\\",\\\"CGH\\\",null,[15,45],null,[16,55],70,[null,null,null,null,null,null,null,null,true],1,\\\"79 cm\\\",null,1,\\\"Embraer 195\\\",null,false,[2026,9,20],[2026,9,20],[\\\"AD\\\",\\\"5032\\\",null,\\\"Azul\\\"],null,null,1,null,null,null,null,\\\"79 centímetros\\\",69248,1]],\\\"SDU\\\",[2026,9,20],[15,45],\\\"CGH\\\",[2026,9,20],[16,55],70,null,null,false,null,null,null,null,\\\"XOgZHc\\\",[[1789157053846548,112790031,3039949794],null,null,null,null,[[2]]],1,null,null,[null,null,3,11,null,true,true,69000,62000,null,62000,3,false,null,null,1,null,3],[1],[[\\\"AD\\\",\\\"Azul\\\",\\\"https://www.voeazul.com.br/br/pt/ajuda/assistencia-especial.html\\\"]]],[[null,917],\\\"CjRIT3VXQjFFSUxocEFBRE1FVXdCRy0tLS0tLS0tLWNnYmt4NkFBQUFBR3FrWHIwTXU0WjZBEgZBRDUwMzIaCwiPzAUQAhoDQlJMOBxw4IsB\\\"],null,true,[null,null,null,null,1,null,[null,1]],[false,false,false],false,[],\\\"[\\\\\\\"CAISA0JSTBoECI/MBSJxCl0KWwoDU0RVEhkyMDI2LTA5LTIwVDE1OjQ1OjAwLTAzOjAwGgNDR0giGTIwMjYtMDktMjBUMTY6NTU6MDAtMDM6MDAqAkFEMgQ1MDMyOgJBREIENTAzMkgBUgNFOTUSBAgDEAEYASgAMgYKBEF6dWw\\\\\\\\u003d\\\\\\\"]\\\",[[2]],false],[[\\\"G3\\\",[\\\"Gol\\\"],[[null,null,null,\\\"SDU\\\",\\\"Aeroporto Santos Dumont\\\",\\\"Aeroporto de São Paulo/Congonhas–Deputado Freitas Nobre\\\",\\\"CGH\\\",null,[9,10],null,[10,15],65,[null,null,null,null,null,true,null,null,null,null,true,3],1,\\\"76 cm\\\",null,1,\\\"Boeing 737\\\",null,false,[2026,9,20],[2026,9,20],[\\\"G3\\\",\\\"1050\\\",null,\\\"Gol\\\"],null,null,1,null,null,null,null,\\\"76 centímetros\\\",56078,1]],\\\"SDU\\\",[2026,9,20],[9,10],\\\"CGH\\\",[2026,9,20],[10,15],65,null,null,false,null,null,null,null,\\\"lKaPnc\\\",[[1789157053846548,112790031,3039949794],null,null,null,null,[[3]]],1,null,null,[null,null,1,-10,null,true,true,56000,62000,[null,true],62000,1,false,null,null,1,null,1],[1],[[\\\"G3\\\",\\\"Gol\\\",\\\"https://www.voegol.com.br/informacoes/assistencia-especial\\\"]]],[[null,948],\\\"CjRIT3VXQjFFSUxocEFBRE1FVXdCRy0tLS0tLS0tLWNnYmt4NkFBQUFBR3FrWHIwTXU0WjZBEgZHMzEwNTAaCwjx4wUQAhoDQlJMOBxwspAB\\\"],null,false,[null,null,null,null,1,null,[null,1]],[false,false,false],false,[],\\\"[\\\\\\\"CAISA0JSTBoECPHjBSJwCl0KWwoDU0RVEhkyMDI2LTA5LTIwVDA5OjEwOjAwLTAzOjAwGgNDR0giGTIwMjYtMDktMjBUMTA6MTU6MDAtMDM6MDAqAkczMgQxMDUwOgJHM0IEMTA1MEgBUgM3MzgSBAgDEAEYASgAMgUKA0dvbA\\\\\\\\u003d\\\\\\\\u003d\\\\\\\"]\\\",[[1]],false],[[\\\"G3\\\",[\\\"Gol\\\"],[[null,null,null,\\\"SDU\\\",\\\"Aeroporto Santos Dumont\\\",\\\"Aeroporto de São Paulo/Congonhas–Deputado Freitas Nobre\\\",\\\"CGH\\\",null,[10],null,[11,5],65,[null,true,null,null,null,null,null,null,null,null,true,3],1,\\\"76 cm\\\",null,1,\\\"Boeing 737\\\",null,false,[2026,9,20],[2026,9,20],[\\\"G3\\\",\\\"1013\\\",null,\\\"Gol\\\"],null,null,1,null,null,null,null,\\\"76 centímetros\\\",71195,1]],\\\"SDU\\\",[2026,9,20],[10],\\\"CGH\\\",[2026,9,20],[11,5],65,null,null,false,null,null,null,null,\\\"iuCRrb\\\",[[1789157053846548,112790031,3039949794],null,null,null,null,[[4]]],1,null,null,[null,null,3,15,null,true,true,71000,62000,null,62000,3,false,null,null,1,null,3],[1],[[\\\"G3\\\",\\\"Gol\\\",\\\"https://www.voegol.com.br/informacoes/assistencia-especial\\\"]]],[[null,948],\\\"CjRIT3VXQjFFSUxocEFBRE1FVXdCRy0tLS0tLS0tLWNnYmt4NkFBQUFBR3FrWHIwTXU0WjZBEgZHMzEwMTMaCwjx4wUQAhoDQlJMOBxwspAB\\\"],null,false,[null,null,null,null,1,null,[null,1]],[false,false,false],false,[],\\\"[\\\\\\\"CAISA0JSTBoECPHjBSJwCl0KWwoDU0RVEhkyMDI2LTA5LTIwVDEwOjAwOjAwLTAzOjAwGgNDR0giGTIwMjYtMDktMjBUMTE6MDU6MDAtMDM6MDAqAkczMgQxMDEzOgJHM0IEMTAxM0gBUgM3M0cSBAgDEAEYASgAMgUKA0dvbA\\\\\\\\u003d\\\\\\\\u003d\\\\\\\"]\\\",[[2]],false],[[\\\"AD\\\",[\\\"Azul\\\"],[[null,null,null,\\\"GIG\\\",\\\"Aeroporto Internacional do Rio de Janeiro - Galeão – Antonio Carlos Jobim\\\",\\"
+    }
+  ],
+  "final_url": "https://www.google.com/travel/flights/search?tfs=CBwQAhopEgoyMDI2LTA5LTIwagwIAhIIL20vMDZnbXJyDQgCEgkvbS8wMjJwZm1AAUgBcAGCAQsI____________AZgBAg&tfu=EgoIABAAGAAgAigB&hl=pt-BR&curr=BRL"
+}

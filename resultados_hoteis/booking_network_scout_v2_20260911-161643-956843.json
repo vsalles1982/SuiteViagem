@@ -1,0 +1,688 @@
+{
+  "schema_version": 2,
+  "variant": "booking-network-scout-v2",
+  "requested": {
+    "ss": "Petrópolis",
+    "checkin": "2026-09-13",
+    "checkout": "2026-09-14",
+    "group_adults": 2,
+    "no_rooms": 1,
+    "group_children": 0,
+    "selected_currency": "BRL",
+    "lang": "pt-br"
+  },
+  "html_initial": {
+    "html_chars": 1704317,
+    "interesting_scripts": [
+      {
+        "chars": 438940,
+        "i": 59,
+        "id": "",
+        "prefix": "{\"ROOT_QUERY\":{\"__typename\":\"Query\",\"checkin\":\"2026-09-11\",\"checkout\":\"2026-09-12\",\"bookerExperienceContentWithoutProduct({\\\"trafficContext\\\":{\\\"actionName\\\":\\\"searchresults_irene\\\"}})\":{\"__typename\":\"BookerExperienceUiComponents\",\"loyaltyBannerDesktop\":null,\"loyaltyTermsModal\":null},\"productShell({\\\"input\\\":{\\\"product\\\":\\\"ACCOMMODATIONS\\\"}})\":{\"__typename\":\"ProductShellOutput\",\"products\":[{\"__ref\":\"Link:accommodations\"},{\"__ref\":\"Link:flights\"},{\"__ref\":\"Link:cars\"},{\"__ref\":\"Link:attractions\"},{\"__ref\":\"Link:airport_taxis\"}],\"links\":[{\"__ref\":\"Link:logo\"},{\"__ref\":\"Link:sign_in\"},{\"__ref\":\"Link:register\"},{\"__ref\":\"Link:sign_out\"},{\"__ref\":\"Link:dashboard\"},{\"__ref\":\"Link:settings\"},{\"__ref\":\"Link:bookings\"},{\"__ref\":\"Link:confirmation\"},{\"__ref\":\"Link:manage_your_trips\"},{\"__ref\":\"Link:rewards_wallet\"},{\"__ref\":\"Link:terms_and_conditions\"},{\"__ref\":\"Link:privacy\"},{\"__ref\":\"Link:help_center\"},{\"__ref\":\"Link:travel_articles\"},{\"__ref\":\"Link:travel_communities\"},{\"__ref\":\"Link:about\"},{\"__ref\":\"Link:careers\"},{\"__ref\":\"Link:press_center\"},{\"__ref\":\"Link:legal\"},{\"__ref\":\"Link:trust_and_safety\"},{\"__ref\":\"Link:genius_loyalty\"},{\"__ref\":\"Link:deals_index\"},{\"__ref\":\"Link:booking_business\"},{\"__ref\":\"Link:extranet_login_footer\"},{\"__ref\":\"Link:partner_help_footer\"},{\"__ref\":\"Link:become_affiliate\"},{\"__ref\":\"Link:how_we_work\"},{\"__ref\":\"Link:sustainability\"},{\"__ref\":\"Link:investor_relations\"},{\"__ref\":\"Link:corp_contact\"},{\"__ref\":\"Link:compliance_and_ethics\"},{\"__ref\":\"Link:m",
+        "type": "application/json"
+      },
+      {
+        "chars": 154317,
+        "i": 58,
+        "id": "__CAPLA_CHUNK_METADATA__b-search-web-searchresultsYTMJGfHK__CAPLA_APP_ROOT__",
+        "prefix": "{\"chunks\":[\"81da5f32\",\"dc32f6b7\",\"b9a82cb8\",\"14622549\",\"3c74eed1\",\"a19e7426\",\"09fb2abd\",\"c26a6947\",\"a8319f0d\",\"dd79016c\",\"3fa47388\",\"2ba36118\",\"7e8161ba\",\"5d0aabaf\",\"2c7ad93f\",\"2feb7be9\",\"ab5efd39\",\"1f988e0c\",\"d6995ce5\",\"6d47b49b\",\"fe1f152b\",\"22abda3e\",\"a6a6ac22\",\"d8183d14\",\"a3d9ac13\",\"1d17ac9f\",\"63858f90\",\"a9b2abcb\",\"a4534cfc\",\"a5f879ec\",\"645a969f\",\"9fde530e\",\"264ae28f\",\"5e1bf33f\",\"a0a5c8cd\",\"624f5e99\",\"947b47b7\",\"a4be52fd\",\"25ee83a7\",\"7fe37de8\",\"5f950c3a\",\"a922c109\"],\"experimentTags\":{\"YTTHbXeeVLCBLfPMPSXWe\":1,\"GbLFHNYARBcGKSaT\":1,\"eWeYbYHZcYTLRQJRaXHDEJJKXe\":0,\"YTTHbXeeAScdJOYFVXKLJDC\":1,\"GfCDATBbbObSARVVRGHSOC\":1,\"eWfCDOeWUVJJaYPbZJYTET\":0,\"GfCDATBfGTJJbICdWBTCeOSbZYXXSC\":0,\"GfCDATBbIeNAcaRZEbDHePNcUeXXAHe\":0,\"HKRYZSFYFcCcCcCDRaFZEITOBGXKe\":1,\"HKRYZSFYFHKZYDDVVJAWTWEUOCHT\":0,\"HKRYZSFYFHKZYDDVVJPALCcOCHT\":0,\"HKRYZSFYFcCcCcCDRaFZEITOBGXaWYQRe\":0,\"eWfCDBOSMXJKEGNVCMIQZRO\":0,\"dLYHMRFeRLBBVYUHSCLZVXVLXSUZYEC\":1,\"TWZOPCDWOOJGOGACOLVYcXO\":0,\"HWAJLGbbeLRcVSCZFPZIVFGWfdTURKLQPSHGePNJXYWMDHe\":0,\"YTTHbXeeVJWcFKJPFNJQVVEbMKXe\":2,\"YTTHbXeeVJZMHGYTLRQJRfRXe\":0,\"HKRYZSFYFHKZYDDVVJTHBCIHecbOFHe\":0,\"YTBTRYPACQEbHeFUSeGDPNPZVXOLBXe\":0,\"bLBdISIBTAcMaWJZfHKGYTLRQJRfRAcHe\":0,\"eDadRVYNeJINUFDVCMILYCeXe\":0,\"PPSLYNPXUUBMJUCHOQHUYHXT\":0,\"PPSQQJEcaWQOcEXO\":0,\"BKATYWPHDDZbVeFTcDCVfPFCUC\":1,\"aWQOcaWJHFYNLYNcFWHDVRGCMC\":0,\"NVFVcfTbdNNRSIePfMPSXHUJXRDVMDTae\":1,\"NVFVcfTbdNNRSIePfRdKdeKKe\":0,\"NVFVcfTbdNNSETaUWBZEWaSdEHREbaTaTaBOOIBBO\":1,\"NVFVcfTbdNNSETaUWBZEWaSdEaLGGcCcCcCWPHDDWe\":1,\"NVFVcfTbdNNSETaUWBZ",
+        "type": "application/json"
+      },
+      {
+        "chars": 104178,
+        "i": 52,
+        "id": "",
+        "prefix": "\n(function(B){\nvar jstmpl = B && B.jstmpl,\ntranslations = jstmpl && jstmpl.translations;\ntranslations && translations.set && translations.set({\"flight_class\":{\"3\":{\"name\":\"Executiva\"},\"5\":{\"name_with_class\":\"Qualquer classe\"},\"2\":{\"name\":\"Econômica premium\"},\"4\":{\"name\":\"Primeira classe\"},\"1\":{\"name\":\"Econômica\"}},\"rocketmiles_components\":{\"language_exception_cobrand_default_1_header_sr\":{\"header_sr\":\"{num} acomodação com Ofertas Especiais\"},\"language_exception_cobrand_default_1_badge_cashback\":{\"badge_cashback\":\"Receba {reward_amount} de volta\"},\"cobrand_default\":{\"badge_discount\":\"Economize {reward_amount}%\",\"header_rt\":\"Ofertas Especiais de {start_bold}{fe_program_name}{end_bold}\",\"badge_miles\":\"Ganhe {reward_amount} milhas\",\"badge_cashback\":\"Ganhe {reward_amount} de volta\",\"badge_discount_special_offer\":\"Oferta Especial\",\"header_tooltip_badge\":\"A Booking.com te dá mais opções com as Ofertas Especiais de {fe_program_name}, com quem temos uma parceria de confiança.\",\"header_sr\":\"{num} acomodações com {start_bold}Ofertas Especiais{end_bold}\"},\"language_exception_cobrand_default_1_badge_miles\":{\"badge_miles\":\"Ganhe {reward_amount} milha\"},\"language_exception_cobrand_default_1_header_rt\":{\"header_rt\":\"Ofertas {fe_program_name} em {n_rooms} quarto\"},\"language_exception_cobrand_default_1_badge_discount\":{\"badge_discount\":\"Aproveite uma redução de {reward_amount}%\"}},\"Ski_lifts_types\":{\"1\":{\"name\":\"Teleférico de gôndola\"},\"6\":{\"name\":\"Telesqui J-bar\"},\"9\":{\"name\":\"Funicular\"},\"10",
+        "type": ""
+      },
+      {
+        "chars": 43840,
+        "i": 51,
+        "id": "",
+        "prefix": "\nbooking.jstmpl('compset_below_hotel', (function () { var T = [\"\\n\",\"350\",\"\\n\\u003cdiv class=\\\"sr_compset\\\" id=\\\"compset_\",\"\\\"\\u003e\\n\\u003ch4 class=\\\"sr_compset_title\\\"\\u003e\\n\",\"\\n\\u003c/h4\\u003e\\n\\u003ctable class=\\\"sr_compset_properties_wrap\\\" \",\"style=\\\"width: \",\"px\\\"\",\"\\u003e\\n\\u003ctbody\\u003e\\n\\u003ctr\\u003e\\n\",\"0\",\"1\",\"\",\"\\n\\u003ctd class=\\\"sr_compset_property sr_compset_property_\",\"\\\" \",\"\\u003e\\n\\u003ca\\nclass=\\\"hotel_name_link url\\\"\\nhref=\\\"\",\";track_sr_cs_\",\"_clicked=1#hotelTmpl\\\"\\ntarget=\\\"_blank\\\"\\nrel=\\\"noopener\\\"\\n\\u003e\\n\",\"\\n\\u003cspan class=\\\"sr_compset_photo\\\" style=\\\"width: 110px;\\\"\\u003e\\n\\u003cimg class=\\\"hotel_image\\\" src=\\\"\",\"\\\" width=\\\"100\\\" height=\\\"100\\\" alt=\\\"\\\" /\\u003e\\n\\u003c/span\\u003e\\n\",\"\\n\\u003cspan class=\\\"sr_compset_photo\\\"\\u003e\\n\\u003cimg class=\\\"hotel_image\\\" src=\\\"\",\"\\\" width=\\\"60\\\" height=\\\"60\\\" alt=\\\"\\\" /\\u003e\\n\\u003c/span\\u003e\\n\",\"\\n\\u003cspan class=\\\"sr_compset_info clearfix\\\"\\u003e\\n\\u003ch4 class=\\\"hotel_name \",\"sr_compset_hotel_name_with_distance_info\",\"\\\"\\u003e\",\"\\u003cu\\u003e\",\"\\u003c/u\\u003e \",\"\\u003c/h4\\u003e\\n\\u003cspan class=\\\"sr_compset_review\\\"\\u003e\\n\",\" \",\"/private/review_adj_bad/name\",\"/private/review_adj_very_poor/name\",\"/private/review_adj_poor/name\",\"/private/review_adj_disappointing/name\",\"/private/review_adj_average_passable/name\",\"/private/review_adj_pleasant/name\",\"/private/review_adj_good/name\",\"/private/review_adj_very_good/name\",\"/private/review_adj_fabulous/name\",\"/private/review_adj_superb/name\",\"/privat",
+        "type": ""
+      },
+      {
+        "chars": 43314,
+        "i": 12,
+        "id": "",
+        "prefix": "\n/*\n*/\n(function avoidingXSSviaLocationHash() {\nvar location = window.location,\nhash = location.hash,\nxss = /[<>'\"]/;\nif (\nxss.test( decodeURIComponent( hash ) ) ||\nxss.test( hash )\n) {\nlocation.hash = '';\n}\n})();\ndocument.documentElement.className = document.documentElement.className.replace('noJS', '') + ' hasJS';\nvar b_experiments = {}, WIDTH, B = window.booking = {\n_onfly: [], // \"on the fly\" functions, will be executed as soon as external js files were loaded\ndevTools: {\ntrackedExperiments: []\n},\nuser: {\n},\nenv : {\nisRetina : window.devicePixelRatio > 1,\n\"b_gtt\": 'dLYAeZFVJfNTBBFPbZWFKSCAaJfOfdASOCPLFeHT',\n\"b_action\" : 'searchresults',\n\"b_secure_domain\" : 'https://secure.booking.com',\n\"b_site_type\" : 'www',\n\"b_site_type_id\": '1',\n\"b_agent_is_no_robot\": true,\n\"b_agent_is_robot\": false,\n\"b_query_params_with_lang_no_ext\": '?label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE&sid=eb6bf943086778079618ff2eaeba0c77&srpvid=51ed8783361215a4&',\n\"b_query_params_with_lang_no_ext_enforce_lang_aid_currency\": '?label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE&sid=eb6bf943086778079618ff2eaeba0c77&srpvid=51ed8783361215a4&;lang=pt-br;aid=304142;selected_currency=BRL',\n\"b_travel_comm_url_with_lang\": 'https://community.booking.com/?profile.language=pt-br',\n\"",
+        "type": ""
+      },
+      {
+        "chars": 17714,
+        "i": 41,
+        "id": "",
+        "prefix": "\n;(function (){\nvar maps = booking.maps || booking.atlas;\nif (!maps) {\nreturn;\n}\n/**/ ;(function () { 'use strict'; if (!B.atlas || !B.atlas.define) { return; } B.atlas.define('util-env', function () { var env = { /* jshint ignore:start *//*\n*/ markersOnMapURL: '/markers_on_map?label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE&sid=eb6bf943086778079618ff2eaeba0c77&srpvid=51ed8783361215a4&;aid=304142;dest_id=-661457;dest_type=;sr_id=;ref=searchresults;limit=100;stype=1;lang=pt-br;ssm=1;checkin=2026-09-13;checkout=2026-09-14;sech=1;ngp=1;room1=A,A;maps_opened=1;nsopf=1;nsobf=1;esf=1;sr_countrycode=br;sr_lat=;sr_long=;dba=1;dbc=1;spr=1;currency=BRL;srh=;shws=1 ;huks=1;somp=1;mdimb=1 ;tp=1 ;img_size=270x200 ;avl=1 ;nor=1 ;spc=1 ;rmd=1 ;slpnd=1 ;sbr=1;at=1 ;sat=1 ;ssu=1;srocc=1', markerDetailsURL: '/hotels_onmap_detail?label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE&amp;sid=eb6bf943086778079618ff2eaeba0c77&amp;srpvid=51ed8783361215a4&amp;;lang=pt-br;act=d-searchresults;detail=0;currency=BRL;av=1;c=1;stype=1;cc1=br;aid=304142;dest_id=-661457;dest_type=city;img_size=90;localize_format=1;gfa=1 ;rr=1 ;rp=1;checkin=2026-09-13;checkout=2026-09-14;g=1;room1=A,A;v=1;no_cc=1;tr=1;rpr=1;nn=1;pd=1;blsd=1;ig=1;deals=1;pt=1;shws=1;nbmh=1;srocc=1', googleMapsU",
+        "type": ""
+      },
+      {
+        "chars": 17441,
+        "i": 4,
+        "id": "",
+        "prefix": "\nwindow.PCM = {\nconfig: {\nisBanner: false,\ndomainUUID: '3ea94870-d4b1-483a-b1d2-faf1d982bb31',\nisPCSIntegration: true,\nshareConsentWithin: 'www.booking.com',\nisCrossDomainCookieSharingEnabled: false,\nnonce: 'v8JeTPUM8h6dUCG',\ncountryCode: 'br',\nregionCode: '',\nisUserLoggedIn: false,\n},\npcm_consent_cookie: 'analytical=true&amp;countryCode=BR&amp;consentId=5254a6dd-ae99-4568-a30c-6338ff7b9e5b&amp;consentedAt=2026-09-11T19:16:19.731Z&amp;expiresAt=2027-03-10T19:16:19.731Z&amp;implicit=true&amp;marketing=true&amp;regionCode=RJ&amp;regulation=none&amp;legacyRegulation=none'\n};\n(()=>{let e,h=e=>{let n,t,o=new FormData,i={error:e.message||\"\",message:e.message||\"\",stack:e.stack||\"\",name:\"js_errors\",colno:0,lno:0,url:window.location.hostname+window.location.pathname,pid:(null==(t=null==(n=window.B)?void 0:n.env)?void 0:t.pageview_id)||1,be_running:1,be_column:0,be_line:0,be_stack:e.stack||\"\",be_message:e.message||\"\",be_file:window.location.hostname+window.location.pathname};Object.keys(i).forEach(e=>{o.append(e,i[e])}),window.fetch(\"/js_errors\",{method:\"POST\",body:o}).catch(()=>!1)};window.cookieStore&&window.cookieStore.addEventListener(\"change\",e=>{var n;null!=(n=null==e?void 0:e.changed)&&n.length&&null!=e&&e.changed.forEach(e=>{\"OptanonAlertBoxClosed\"!==e.name||S(e.value)||h(new Error(\"OptanonAlertBoxClosed bad value detected: \"+e.value)),\"OptanonConsent\"!==e.name||M(e.value)||h(new Error(\"OptanonConsent bad value detected: \"+e.value))})});let v;(n=v=v||{}).ANALYTICAL=\"C0002\",n.MA",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 12201,
+        "i": 24,
+        "id": "",
+        "prefix": "\n(function(){\n(function(){\nvar et=function(){\"use strict\";var s,c={level:0},f={experiment:\"e\",stage:\"s\",goal:\"g\",customGoal:\"cg\",goalWithValue:\"gwv\"},r=[],o=function(){var n,r={},o=\"\";function t(){var e,t=o;o=Object.keys(r).join(\",\"),(n||(n=document.getElementById(\"req_info\")))&&(n.innerHTML!==t&&(e=n.innerHTML,r=e.split(\",\").reduce(function(e,t){return e[t]=!0,e},r),o=Object.keys(r).join(\",\")),n.innerHTML=o)}function i(e){r[e]=!0}return{populate:function(e){i(e),\"string\"==typeof e?(i(e),t()):e instanceof Array&&(e.forEach(i),t())}}}(),i=function(){var r,o=!1,i=[],n=[],e=0;function a(){c.level&&c.report(c.events.BEACON_SENT,i),o=!1,e=0,r=null,i.length&&l()}function u(){o=!1,r=null,10<=++e?n=[]:(i=i.concat(n),n=[],r=window.setTimeout(l,100*e))}function l(){c.level&&c.report(c.events.SEND_BEACON,i.slice(0)),o=!0;var e=s+\"&\"+function(e){for(var t,n=[],r=[],o=[],i=[],a=[],u=0,l=e.length;u<l;++u)switch((t=e[u]).what){case f.experiment:n.push(t.hash);break;case f.stage:a.push(t.hash+\"|\"+t.id);break;case f.goal:r.push(t.hash);break;case f.customGoal:o.push(t.hash+\"|\"+t.id);break;case f.goalWithValue:var s=b(t.hash);s&&i.push(s);break;default:c.level&&c.report(c.events.UNABLE_TO_STRINGIFY,t)}return\"ete=\"+n.join(\",\")+\"&etg=\"+r.join(\",\")+\"&etcg=\"+o.join(\",\")+\"&ets=\"+a.join(\",\")+\"&etgwv=\"+i.join(\",\")}(n=i);N.m&&(e+=\"&m=\"+encodeURIComponent(N.m)),i=[];try{!function(e){var t,n=e.url,r=e.complete||function(){},o=e.headers||{},i=XMLHttpRequest.DONE||4,a=new XMLHttpRequest;if(!n)return;if(a.",
+        "type": ""
+      },
+      {
+        "chars": 5306,
+        "i": 122,
+        "id": "",
+        "prefix": "\nbooking.ensureNamespaceExists('env');\nbooking.env.google_analytics_tracking_enabled = 1;\nbooking.env.b_aid = '304142';\nbooking.env.b_label = 'gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE';\nbooking.env.b_availability_checked = '';\nbooking.env.b_multiple_destinations_found = '';\ntry {\n(function(q,u,i,c,k){window['GoogleAnalyticsObject']=q;\nwindow[q]=window[q]||function(){(window[q].q=window[q].q||[]).push(arguments)},\nwindow[q].l=1*new Date();c=i.createElement(u),k=i.getElementsByTagName(u)[0];\nc.async=true;c.src='//www.google-analytics.com/analytics.js';\nk.parentNode.insertBefore(c,k)})('ga','script',document);\nga('create', 'UA-116109-18', {\n'cookieDomain': '.booking.com'\n});\nga('require','ec');\n(function(){\ntry {\nvar gaTracker = B.require('ga-tracker');\n} catch (e) {\nreturn false;\n}\nvar promos = Array.prototype.slice.call(document.querySelectorAll('[data-ga-promo]'));\nvar tracked = {};\nfor (var i = 0; i < promos.length; i++) {\nvar s = promos[i].getAttribute('data-ga-promo');\nif (!s) continue;\nvar r = parsePromo(s);\nvar k = r.id+r.name+r.creative+r.position;\nif (tracked.hasOwnProperty(k)) continue;\ntracked[k] = 1;\n// this event has to be set before pageview is triggered as it is sent together with pageview\ngaTracker.ecommerceAddPromo(r.id, r.name, r.creative, r.position);\n}\nfunction parsePromo(str) {\nvar trackData = str.split('|');\nreturn {\nid: trackData[0],\nn",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 5015,
+        "i": 19,
+        "id": "",
+        "prefix": "\nwindow.utag_data = {\nsite: 'bookings2',\nstypeid: '1',\naction: 'searchresults',\ncrt: '1',\nfbp: '1',\nexp1: '',\nexp2: '0',\nbem: '0',\nbip: '0',\nexp_rmkt_test: 'global_on',\nexp_google_tag_manager: '1',\nns: '1',\nnsc: '0',\nfamem: '-1',\nfamfn: '-1',\nfampn: '-1',\nfampn_e164: '-1',\ngcem: '-1',\ngcpn: '-1',\ngwcur: '-1',\ngwcuc: '-1',\nrb: '0',\ngst: '1',\nfbqs: '',\nsage: '3',\nalev: '0',\natid: '',\natnm: '',\natnm_en: '',\npt_en: '',\nbiz_s: '2',\nbiz_p: '',\nbo: '1',\nbrowser: 'chrome',\nbrowser_ver: '151',\nbstage: '',\nemksho: '1',\nis_subscribed_to_newsletter: '',\ngenis: '',\nglev: '',\nn_b: '',\nsid: 'eb6bf943086778079618ff2eaeba0c77',\nui: '',\nis_aid_mcc_level_tracked: '',\npartner_channel_id: '3',\nttv: '',\nttv_uc: '',\np1: '0',\npreferred_neighborhoods: [],\nhotel_name: '',\nchannel_id: '3',\npartner_id: '1',\nai: '304142',\ntsmp: '1789154182',\nadults: '2',\nbook_window: '2',\nchildren: '0',\ngtm_noc: '0',\ndistrict_name: '-1',\ncity_name: 'Petrópolis',\nregion_name: '-1',\ncountry_name: 'Brasil',\ncurrency: 'BRL',\ndate_in: '2026-09-13',\nrns: '0',\ncul: '0',\nmnns: '0',\ndate_out: '2026-09-14',\ndayofwk: '7',\ndepth: '1',\ndest_type: 'city',\ndest_id: '-661457',\ndest_cc: 'br',\ndest_ufi: '-661457',\ndest_name: 'Petrópolis',\nhotel_count: '0',\nhotel_id: '0',\nhotel_id_list: '',\nhr: '-1',\ni1: '',\ni2: '',\ni3: '',\nisfd: '',\nisnl: '',\nlabel: 'gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE',\nlanguage: 'pt-br',\nlogged_",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 4902,
+        "i": 43,
+        "id": "",
+        "prefix": "\nbooking.jstmpl('lists_hotel_dropdown', (function () { var T = [\"\\n\",\"\\n\\u003cdiv class=\\\"preloader-state-icon\\\"\\u003e\\n\",\"iconset/loading\",\"\\n\\u003c/div\\u003e\\n\",\"\\n\\u003cdiv class=\\\"wl-dropdown-saved-to-message\\\" aria-hidden=\\\"true\\\"\\u003e\\n\",\"/private/cdm_web_sr_compare_checkbox_saved/name\",\"\\n\\u003ca href=\\\"\",\"\\\" class=\\\"js-open-list\\\" target=\\\"_blank\\\"\\u003e\\n\",\"\\n\\u003c/a\\u003e\\n\",\"\\n\\u003cdiv class=\\\"dmw_sr_wl_dd_expand_trigger\\\"\\u003e\\n\\u003ca href=\\\"#0\\\" class=\\\"bui-link bui-link--secondary js-sr-wl-expand-trigger\\\"\\u003eChange\\u003c/a\\u003e\\n\",\"iconset/navarrow_down_bold\",\"smaller\",\"\\n\\u003c/div\\u003e\\n\\u003cdiv class=\\\"dmw_sr_wl_dd_collapsed\\\"\\u003e\\n\",\"\\n\\u003cdiv class=\\\"bui-group\\\" role=\\\"group\\\"\\u003e\\n\",\"\\n\\u003clabel\\nclass=\\\"\\nwl-dropdown-item\\njs-wl-dropdown-item\\n\",\"\\nwl-dropdown-item_shared\\n\",\"\\nbui-checkbox\\n\",\"\\nwl-dropdown-item--added\\n\",\"\\n\\\"\\naria-label=\\\"\",\"/private/a11y_hp_bookmarks_shared/name\",\"\\\"\\n\\u003e\\n\\u003cinput\\ntype=\\\"checkbox\\\"\\ndata-list-id=\\\"\",\"\\\"\\nid=\\\"wl_item_\",\"\\\"\\nclass=\\\"js-wl-dropdown-item-checkbox wl-dropdown-item__checkbox bui-checkbox__input\\\"\\n\",\"checked=\\\"checked\\\"\",\"\\n/\\u003e\\n\\u003cspan id=\\\"wl_checkbox_label_\",\"\\\" class=\\\"bui-checkbox__label\\n\",\"wl-dropdown-item__name--last-used\",\"\\\"\\u003e\\n\",\"\\n\\u003c/span\\u003e\\n\\u003cspan\\nclass=\\\"\\nwl-dropdown-link-wrapper\\n\",\"g-hidden\",\"g-hidden-2\",\"\\n\\\"\\n\\u003e\\n\",\" - \",\"\\n\\u003ca\\nclass=\\\"\",\"wl-dropdown-link js-open-list \",\"\\\"\\ntarget=\\\"_blank\\\"\\nhref=\\\"\",\"\\\"\\naria-describedby=\\\"w",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 3696,
+        "i": 42,
+        "id": "",
+        "prefix": "\nif (window.performance && performance.setResourceTimingBufferSize) {\nperformance.setResourceTimingBufferSize(500);\n}\n;(function nav_timing(w){ 'use strict'; function validMetric(value) { return !isNaN(value) && value >= 0 && value < 150000 || false; } function callback() { var performance = w.performance || w.mozPerformance || w.msPerformance || w.webkitPerformance || {}, navigation = performance.navigation, timing = performance.timing, hasGetEntries = !!performance.getEntriesByType, userTiming = []; if ( typeof timing !== 'object' || typeof navigation !== 'object' || 1 ) { return; } if ( timing.loadEventEnd == 0 ) { setTimeout(callback, 1000); return; } var domain = validMetric(timing.domainLookupEnd - timing.domainLookupStart), connect = validMetric( timing.connectEnd - timing.connectStart), response = validMetric( timing.responseEnd - timing.responseStart), dom = validMetric( timing.domComplete - timing.domLoading), load = validMetric( timing.loadEventEnd - timing.loadEventStart); if ( !domain || !connect || !response || !dom || !load || w._phantom || w.callPhantom || w.__phantomas || window.Buffer || window.emit || window.spawn ) { return false; } if (typeof RUMSpeedIndex === 'function') { var speedIndex; try { speedIndex = Math.round(RUMSpeedIndex()); } catch (e) { B.reportError && B.reportError(e, 'speedindex'); } if (speedIndex) { if (window.ga) { setTimeout(function(){ ga('send', 'timing', 'Performance', 'SpeedIndex', speedIndex, B.env['b_action']); }, 100); } userTi",
+        "type": ""
+      },
+      {
+        "chars": 3187,
+        "i": 57,
+        "id": "",
+        "prefix": "{\"publicPath\":\"https://cf.bstatic.com/psb/capla/\",\"cdnOrigin\":\"https://cf.bstatic.com\",\"bplatformEnvironment\":\"prod\",\"cspNonce\":\"v8JeTPUM8h6dUCG\",\"acceptHeader\":\"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\",\"language\":\"pt-br\",\"basePageUrl\":\"https://www.booking.com/searchresults.html?ss=Petr%C3%B3polis\\u0026checkin=2026-09-13\\u0026checkout=2026-09-14\\u0026group_adults=2\\u0026no_rooms=1\\u0026group_children=0\\u0026selected_currency=BRL\\u0026lang=pt-br\\u0026chal_t=1789154179882\\u0026force_referer=\",\"currency\":\"BRL\",\"visitorIP\":\"152.248.112.128\",\"visitorCountry\":\"br\",\"visitorCountryRegion\":\"rj\",\"visitorTimeZone\":\"America/Sao_Paulo\",\"visitorUfi\":-661457,\"affiliate\":{\"id\":304142,\"isBookingOwned\":true,\"isCobrand\":false,\"isBookingBranded\":false,\"isHybrid\":false,\"label\":\"gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE\",\"isGeniusAffiliate\":true,\"partnerId\":1,\"partnerChannelId\":3,\"partnerCountry\":\"nl\"},\"isInternal\":false,\"isInternalIp\":false,\"isInternalUser\":false,\"userIdentity\":{\"type\":\"customer\",\"isGenius\":false,\"authLevel\":0},\"unpackedGuestAccessToken\":{\"buid\":\"01a091e6-3a93-76dc-b356-f7f180cb5d98\",\"deviceId\":\"03aa5044-7f2c-4c5a-9ad6-f919b8b38beb\",\"authenticatorAssuranceLevel\":1,\"oauthScopes\":[\"address\",\"booking_default\",\"booking_rewards\",\"email\",\"genius\",\"offline_access\",\"openid\",",
+        "type": "application/json"
+      },
+      {
+        "chars": 2066,
+        "i": 44,
+        "id": "",
+        "prefix": "\nbooking.jstmpl('lists_hotel_dropdown_removed', (function () { var T = [\"\\n\",\"\\n\\u003cdiv class=\\\"preloader-state-icon\\\"\\u003e\\n\",\"iconset/loading\",\"\\n\\u003c/div\\u003e\\n\",\"\\n\\u003cdiv class=\\\"wl-dropdown-removed-title bui_font_body\\\"\\u003e\\n\",\"/private/wl_removed_from/name\",\"\\n\\u003ca\\nclass=\\\"bui-link bui-link--primary bui_font_body wl-dropdown-removed-list__link js-open-list\\\"\\ntarget=\\\"_blank\\\"\\nhref=\\\"\",\"\\\"\\n\\u003e\\n\",\"\\n\\u003cspan aria-label=\\\"\",\"\\\"\\u003e\\u003c/span\\u003e\\n\\u003c/a\\u003e\\n\",\"\\n\\u003cspan class=\\\"wl-dropdown-removed-title bui_font_body\\\"\\u003e\\n\",\"\\n\\u003c/span\\u003e\\n\\u003cul class=\\\"bui-list bui-list--unordered wl-dropdown-removed-list\\\"\\u003e\\n\",\"\\n\\u003cli class=\\\"bui-list__item wl-dropdown-removed-list-item\\\"\\u003e\\n\",\"\\n\\u003c/li\\u003e\\n\",\"\\n\\u003c/ul\\u003e\\n\"], V = [\"loading_list\",\"lists\",\"url\",\"list_name\",\"name\"], WV, LV, VA; return function (VS) { var s = '', r = this.fn; function link_block1(s) { s += [ T[6], r.F['html'](r.MB(V[2])), T[7], r.F['js'](r.F['html'](r.MC(V[3]))), T[8], r.F['js'](r.F['html'](r.MB(V[3]))), T[9] ].join( '' ); return s; } s += T[0]; s += T[0]; if (r.MJ(r.MB(V[0]))) { s += [ T[1],             ( VS.unshift({'name': T[2]}), (VA = r.HELPER(\"icon\", VS[0])), VS.shift(), VA ) , T[3] ].join( '' ); } s += T[0]; if (! (r.MD(V[0]))) { s += T[0]; if ((r.MJ( r.array_length(r.MB(V[1]))  ==  1 ))) { s += [ T[4], r.ME(T[5], r.MB, r.MN, null), T[0] ].join( '' ); { var LA= ( r.MC(V[1]) || [] ); VS.unshift(null); for(var LC=1, LM= LA.lengt",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 1421,
+        "i": 93,
+        "id": "b-search-web-searchresultsYTMJGfHK__CAPLA_APP_ROOT____LOADABLE_REQUIRED_CHUNKS___ext",
+        "prefix": "{\"namedChunks\":[\"bSearchWebSearchresults-App\",\"bSearchWebSearchresults-components-GlobalAlerts-GlobalAlerts\",\"bSearchWebSearchresults-components-TripIncentives-LoyaltyBannerDesktopWithContainer\",\"bSearchWebSearchresults-components-PropertiesListMap-PropertiesListMap\",\"bSearchWebSearchresults-withAssetPreloading-SearchResultsDesktop\",\"bPartnershipsRewardsGatingComponentService-LoyaltyBannerDesktop\",\"bNativeDisplayAdsNdisplayAdComponent-GPTScriptLoader\",\"bNativeDisplayAdsNdisplayAdComponent-ID5ScriptLoader\",\"bLxWebComponents-EtTracking__SR\",\"bWebShellComponents-AccommodationFooter\",\"bWebShellComponents-AccommodationHeader\",\"bWebShellComponents-GlobalAlerts\",\"bWishlistWishlistCs-WishlistWidgetSr\",\"bMarketingRewardsUiWebComponentService-RewardsFunnelBannerAndLandSheet\",\"bSearchWebSearchresults-common-bas-BasGptScriptLoadOnView\",\"bSearchWebSearchresults-common-properties-patterns-GeniusSignInBanner-GeniusSignInBannerDesktop\",\"bSearchWebSearchresults-common-bas-BasNDisplayLazyLoadedAd\",\"bSurveyTrackerComponentService-SurveyTrackerV3\",\"bSearchWebSearchresults-BannerCustom-AttractionsCarouselBanner-AttractionsCarouselBanner\",\"bGeniusWebComponentService-GeniusOnboardingSheetSearchResults\",\"bIamFeComponents-GeniusSignInSheetSearchResults\",\"bGeniusVipWebComponentService-GeniusVipVoucherSheet\",\"bGeniusVipWebComponentService-GeniusPlusProgramModeWelcomeSheet\",\"bGeniusVipWebComponentService-GeniusPlusSheetsSR\"]}",
+        "type": "application/json"
+      },
+      {
+        "chars": 1414,
+        "i": 31,
+        "id": "",
+        "prefix": "\n/**/ (function () { 'use strict'; if (!B.define) { return; } B.define('searchresults/env', ['require'], function (require) { var events = require('searchresults/events'); var env; env = { /* jshint ignore:start */\n'b_dest_id': -661457,\n'b_dest_type': \"city\",\n'b_search_config': JSON.parse('{\"b_children_total\":0,\"b_nr_rooms_needed\":1,\"b_children_ages_total\":[],\"b_is_group_search\":0,\"b_adults_total\":2,\"traveller_segment\":\"couple\",\"b_rooms\":[{\"b_children_ages\":[],\"b_adults\":2.0,\"b_room_order\":1,\"b_children\":0}]}' || '{}'),\n'b_destination_fullname': \"Petr\\u00f3polis\",\n'b_current_page_nr': 1,\n'b_selected_nflt_url_param_decoded': false,\n'b_bh_nflt_filters': false,\n'b_total_selected_filters': false,\n'b_nr_hotels_available': 0,\n'b_sr_filter_by_price_enabled': false,\n'b_user_is_business_booker': false,\n'b_sr_is_address_search': 0,\n'b_did_bigger_search': 0,\n'b_did_auto_extend_radius': \"\",\n'b_primary_search_nr_hotels_available': false\n/* jshint ignore:end */ }; function get(item) { return item ? env[item] : undefined; } function keys() { return Object.keys(env); } events.on(events.DATA_ENVIRONMENT_CHANGED, function (data) { events.trigger(events.DATA_ENVIRONMENT_BEFORE_UPDATE, data); if (data) { var keys = Object.keys(data); for (var i = keys.length; --i >= 0;) { env[keys[i]] = data[keys[i]]; } events.trigger(events.DATA_ENVIRONMENT_UPDATED, data); } }); return { get: get, keys: keys }; }); }()); /**/\n",
+        "type": ""
+      }
+    ],
+    "property_cards": 25,
+    "url": "https://www.booking.com/searchresults.html?ss=Petr%C3%B3polis&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&no_rooms=1&group_children=0&selected_currency=BRL&lang=pt-br&chal_t=1789154179882&force_referer="
+  },
+  "html_after_scroll": {
+    "html_chars": 1830275,
+    "interesting_scripts": [
+      {
+        "chars": 438940,
+        "i": 74,
+        "id": "",
+        "prefix": "{\"ROOT_QUERY\":{\"__typename\":\"Query\",\"checkin\":\"2026-09-11\",\"checkout\":\"2026-09-12\",\"bookerExperienceContentWithoutProduct({\\\"trafficContext\\\":{\\\"actionName\\\":\\\"searchresults_irene\\\"}})\":{\"__typename\":\"BookerExperienceUiComponents\",\"loyaltyBannerDesktop\":null,\"loyaltyTermsModal\":null},\"productShell({\\\"input\\\":{\\\"product\\\":\\\"ACCOMMODATIONS\\\"}})\":{\"__typename\":\"ProductShellOutput\",\"products\":[{\"__ref\":\"Link:accommodations\"},{\"__ref\":\"Link:flights\"},{\"__ref\":\"Link:cars\"},{\"__ref\":\"Link:attractions\"},{\"__ref\":\"Link:airport_taxis\"}],\"links\":[{\"__ref\":\"Link:logo\"},{\"__ref\":\"Link:sign_in\"},{\"__ref\":\"Link:register\"},{\"__ref\":\"Link:sign_out\"},{\"__ref\":\"Link:dashboard\"},{\"__ref\":\"Link:settings\"},{\"__ref\":\"Link:bookings\"},{\"__ref\":\"Link:confirmation\"},{\"__ref\":\"Link:manage_your_trips\"},{\"__ref\":\"Link:rewards_wallet\"},{\"__ref\":\"Link:terms_and_conditions\"},{\"__ref\":\"Link:privacy\"},{\"__ref\":\"Link:help_center\"},{\"__ref\":\"Link:travel_articles\"},{\"__ref\":\"Link:travel_communities\"},{\"__ref\":\"Link:about\"},{\"__ref\":\"Link:careers\"},{\"__ref\":\"Link:press_center\"},{\"__ref\":\"Link:legal\"},{\"__ref\":\"Link:trust_and_safety\"},{\"__ref\":\"Link:genius_loyalty\"},{\"__ref\":\"Link:deals_index\"},{\"__ref\":\"Link:booking_business\"},{\"__ref\":\"Link:extranet_login_footer\"},{\"__ref\":\"Link:partner_help_footer\"},{\"__ref\":\"Link:become_affiliate\"},{\"__ref\":\"Link:how_we_work\"},{\"__ref\":\"Link:sustainability\"},{\"__ref\":\"Link:investor_relations\"},{\"__ref\":\"Link:corp_contact\"},{\"__ref\":\"Link:compliance_and_ethics\"},{\"__ref\":\"Link:m",
+        "type": "application/json"
+      },
+      {
+        "chars": 154317,
+        "i": 73,
+        "id": "__CAPLA_CHUNK_METADATA__b-search-web-searchresultsYTMJGfHK__CAPLA_APP_ROOT__",
+        "prefix": "{\"chunks\":[\"81da5f32\",\"dc32f6b7\",\"b9a82cb8\",\"14622549\",\"3c74eed1\",\"a19e7426\",\"09fb2abd\",\"c26a6947\",\"a8319f0d\",\"dd79016c\",\"3fa47388\",\"2ba36118\",\"7e8161ba\",\"5d0aabaf\",\"2c7ad93f\",\"2feb7be9\",\"ab5efd39\",\"1f988e0c\",\"d6995ce5\",\"6d47b49b\",\"fe1f152b\",\"22abda3e\",\"a6a6ac22\",\"d8183d14\",\"a3d9ac13\",\"1d17ac9f\",\"63858f90\",\"a9b2abcb\",\"a4534cfc\",\"a5f879ec\",\"645a969f\",\"9fde530e\",\"264ae28f\",\"5e1bf33f\",\"a0a5c8cd\",\"624f5e99\",\"947b47b7\",\"a4be52fd\",\"25ee83a7\",\"7fe37de8\",\"5f950c3a\",\"a922c109\"],\"experimentTags\":{\"YTTHbXeeVLCBLfPMPSXWe\":1,\"GbLFHNYARBcGKSaT\":1,\"eWeYbYHZcYTLRQJRaXHDEJJKXe\":0,\"YTTHbXeeAScdJOYFVXKLJDC\":1,\"GfCDATBbbObSARVVRGHSOC\":1,\"eWfCDOeWUVJJaYPbZJYTET\":0,\"GfCDATBfGTJJbICdWBTCeOSbZYXXSC\":0,\"GfCDATBbIeNAcaRZEbDHePNcUeXXAHe\":0,\"HKRYZSFYFcCcCcCDRaFZEITOBGXKe\":1,\"HKRYZSFYFHKZYDDVVJAWTWEUOCHT\":0,\"HKRYZSFYFHKZYDDVVJPALCcOCHT\":0,\"HKRYZSFYFcCcCcCDRaFZEITOBGXaWYQRe\":0,\"eWfCDBOSMXJKEGNVCMIQZRO\":0,\"dLYHMRFeRLBBVYUHSCLZVXVLXSUZYEC\":1,\"TWZOPCDWOOJGOGACOLVYcXO\":0,\"HWAJLGbbeLRcVSCZFPZIVFGWfdTURKLQPSHGePNJXYWMDHe\":0,\"YTTHbXeeVJWcFKJPFNJQVVEbMKXe\":2,\"YTTHbXeeVJZMHGYTLRQJRfRXe\":0,\"HKRYZSFYFHKZYDDVVJTHBCIHecbOFHe\":0,\"YTBTRYPACQEbHeFUSeGDPNPZVXOLBXe\":0,\"bLBdISIBTAcMaWJZfHKGYTLRQJRfRAcHe\":0,\"eDadRVYNeJINUFDVCMILYCeXe\":0,\"PPSLYNPXUUBMJUCHOQHUYHXT\":0,\"PPSQQJEcaWQOcEXO\":0,\"BKATYWPHDDZbVeFTcDCVfPFCUC\":1,\"aWQOcaWJHFYNLYNcFWHDVRGCMC\":0,\"NVFVcfTbdNNRSIePfMPSXHUJXRDVMDTae\":1,\"NVFVcfTbdNNRSIePfRdKdeKKe\":0,\"NVFVcfTbdNNSETaUWBZEWaSdEHREbaTaTaBOOIBBO\":1,\"NVFVcfTbdNNSETaUWBZEWaSdEaLGGcCcCcCWPHDDWe\":1,\"NVFVcfTbdNNSETaUWBZ",
+        "type": "application/json"
+      },
+      {
+        "chars": 104178,
+        "i": 68,
+        "id": "",
+        "prefix": "\n(function(B){\nvar jstmpl = B && B.jstmpl,\ntranslations = jstmpl && jstmpl.translations;\ntranslations && translations.set && translations.set({\"flight_class\":{\"3\":{\"name\":\"Executiva\"},\"5\":{\"name_with_class\":\"Qualquer classe\"},\"2\":{\"name\":\"Econômica premium\"},\"4\":{\"name\":\"Primeira classe\"},\"1\":{\"name\":\"Econômica\"}},\"rocketmiles_components\":{\"language_exception_cobrand_default_1_header_sr\":{\"header_sr\":\"{num} acomodação com Ofertas Especiais\"},\"language_exception_cobrand_default_1_badge_cashback\":{\"badge_cashback\":\"Receba {reward_amount} de volta\"},\"cobrand_default\":{\"badge_discount\":\"Economize {reward_amount}%\",\"header_rt\":\"Ofertas Especiais de {start_bold}{fe_program_name}{end_bold}\",\"badge_miles\":\"Ganhe {reward_amount} milhas\",\"badge_cashback\":\"Ganhe {reward_amount} de volta\",\"badge_discount_special_offer\":\"Oferta Especial\",\"header_tooltip_badge\":\"A Booking.com te dá mais opções com as Ofertas Especiais de {fe_program_name}, com quem temos uma parceria de confiança.\",\"header_sr\":\"{num} acomodações com {start_bold}Ofertas Especiais{end_bold}\"},\"language_exception_cobrand_default_1_badge_miles\":{\"badge_miles\":\"Ganhe {reward_amount} milha\"},\"language_exception_cobrand_default_1_header_rt\":{\"header_rt\":\"Ofertas {fe_program_name} em {n_rooms} quarto\"},\"language_exception_cobrand_default_1_badge_discount\":{\"badge_discount\":\"Aproveite uma redução de {reward_amount}%\"}},\"Ski_lifts_types\":{\"1\":{\"name\":\"Teleférico de gôndola\"},\"6\":{\"name\":\"Telesqui J-bar\"},\"9\":{\"name\":\"Funicular\"},\"10",
+        "type": ""
+      },
+      {
+        "chars": 43840,
+        "i": 67,
+        "id": "",
+        "prefix": "\nbooking.jstmpl('compset_below_hotel', (function () { var T = [\"\\n\",\"350\",\"\\n\\u003cdiv class=\\\"sr_compset\\\" id=\\\"compset_\",\"\\\"\\u003e\\n\\u003ch4 class=\\\"sr_compset_title\\\"\\u003e\\n\",\"\\n\\u003c/h4\\u003e\\n\\u003ctable class=\\\"sr_compset_properties_wrap\\\" \",\"style=\\\"width: \",\"px\\\"\",\"\\u003e\\n\\u003ctbody\\u003e\\n\\u003ctr\\u003e\\n\",\"0\",\"1\",\"\",\"\\n\\u003ctd class=\\\"sr_compset_property sr_compset_property_\",\"\\\" \",\"\\u003e\\n\\u003ca\\nclass=\\\"hotel_name_link url\\\"\\nhref=\\\"\",\";track_sr_cs_\",\"_clicked=1#hotelTmpl\\\"\\ntarget=\\\"_blank\\\"\\nrel=\\\"noopener\\\"\\n\\u003e\\n\",\"\\n\\u003cspan class=\\\"sr_compset_photo\\\" style=\\\"width: 110px;\\\"\\u003e\\n\\u003cimg class=\\\"hotel_image\\\" src=\\\"\",\"\\\" width=\\\"100\\\" height=\\\"100\\\" alt=\\\"\\\" /\\u003e\\n\\u003c/span\\u003e\\n\",\"\\n\\u003cspan class=\\\"sr_compset_photo\\\"\\u003e\\n\\u003cimg class=\\\"hotel_image\\\" src=\\\"\",\"\\\" width=\\\"60\\\" height=\\\"60\\\" alt=\\\"\\\" /\\u003e\\n\\u003c/span\\u003e\\n\",\"\\n\\u003cspan class=\\\"sr_compset_info clearfix\\\"\\u003e\\n\\u003ch4 class=\\\"hotel_name \",\"sr_compset_hotel_name_with_distance_info\",\"\\\"\\u003e\",\"\\u003cu\\u003e\",\"\\u003c/u\\u003e \",\"\\u003c/h4\\u003e\\n\\u003cspan class=\\\"sr_compset_review\\\"\\u003e\\n\",\" \",\"/private/review_adj_bad/name\",\"/private/review_adj_very_poor/name\",\"/private/review_adj_poor/name\",\"/private/review_adj_disappointing/name\",\"/private/review_adj_average_passable/name\",\"/private/review_adj_pleasant/name\",\"/private/review_adj_good/name\",\"/private/review_adj_very_good/name\",\"/private/review_adj_fabulous/name\",\"/private/review_adj_superb/name\",\"/privat",
+        "type": ""
+      },
+      {
+        "chars": 43314,
+        "i": 18,
+        "id": "",
+        "prefix": "\n/*\n*/\n(function avoidingXSSviaLocationHash() {\nvar location = window.location,\nhash = location.hash,\nxss = /[<>'\"]/;\nif (\nxss.test( decodeURIComponent( hash ) ) ||\nxss.test( hash )\n) {\nlocation.hash = '';\n}\n})();\ndocument.documentElement.className = document.documentElement.className.replace('noJS', '') + ' hasJS';\nvar b_experiments = {}, WIDTH, B = window.booking = {\n_onfly: [], // \"on the fly\" functions, will be executed as soon as external js files were loaded\ndevTools: {\ntrackedExperiments: []\n},\nuser: {\n},\nenv : {\nisRetina : window.devicePixelRatio > 1,\n\"b_gtt\": 'dLYAeZFVJfNTBBFPbZWFKSCAaJfOfdASOCPLFeHT',\n\"b_action\" : 'searchresults',\n\"b_secure_domain\" : 'https://secure.booking.com',\n\"b_site_type\" : 'www',\n\"b_site_type_id\": '1',\n\"b_agent_is_no_robot\": true,\n\"b_agent_is_robot\": false,\n\"b_query_params_with_lang_no_ext\": '?label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE&sid=eb6bf943086778079618ff2eaeba0c77&srpvid=51ed8783361215a4&',\n\"b_query_params_with_lang_no_ext_enforce_lang_aid_currency\": '?label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE&sid=eb6bf943086778079618ff2eaeba0c77&srpvid=51ed8783361215a4&;lang=pt-br;aid=304142;selected_currency=BRL',\n\"b_travel_comm_url_with_lang\": 'https://community.booking.com/?profile.language=pt-br',\n\"",
+        "type": ""
+      },
+      {
+        "chars": 17714,
+        "i": 57,
+        "id": "",
+        "prefix": "\n;(function (){\nvar maps = booking.maps || booking.atlas;\nif (!maps) {\nreturn;\n}\n/**/ ;(function () { 'use strict'; if (!B.atlas || !B.atlas.define) { return; } B.atlas.define('util-env', function () { var env = { /* jshint ignore:start *//*\n*/ markersOnMapURL: '/markers_on_map?label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE&sid=eb6bf943086778079618ff2eaeba0c77&srpvid=51ed8783361215a4&;aid=304142;dest_id=-661457;dest_type=;sr_id=;ref=searchresults;limit=100;stype=1;lang=pt-br;ssm=1;checkin=2026-09-13;checkout=2026-09-14;sech=1;ngp=1;room1=A,A;maps_opened=1;nsopf=1;nsobf=1;esf=1;sr_countrycode=br;sr_lat=;sr_long=;dba=1;dbc=1;spr=1;currency=BRL;srh=;shws=1 ;huks=1;somp=1;mdimb=1 ;tp=1 ;img_size=270x200 ;avl=1 ;nor=1 ;spc=1 ;rmd=1 ;slpnd=1 ;sbr=1;at=1 ;sat=1 ;ssu=1;srocc=1', markerDetailsURL: '/hotels_onmap_detail?label=gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE&amp;sid=eb6bf943086778079618ff2eaeba0c77&amp;srpvid=51ed8783361215a4&amp;;lang=pt-br;act=d-searchresults;detail=0;currency=BRL;av=1;c=1;stype=1;cc1=br;aid=304142;dest_id=-661457;dest_type=city;img_size=90;localize_format=1;gfa=1 ;rr=1 ;rp=1;checkin=2026-09-13;checkout=2026-09-14;g=1;room1=A,A;v=1;no_cc=1;tr=1;rpr=1;nn=1;pd=1;blsd=1;ig=1;deals=1;pt=1;shws=1;nbmh=1;srocc=1', googleMapsU",
+        "type": ""
+      },
+      {
+        "chars": 17441,
+        "i": 10,
+        "id": "",
+        "prefix": "\nwindow.PCM = {\nconfig: {\nisBanner: false,\ndomainUUID: '3ea94870-d4b1-483a-b1d2-faf1d982bb31',\nisPCSIntegration: true,\nshareConsentWithin: 'www.booking.com',\nisCrossDomainCookieSharingEnabled: false,\nnonce: 'v8JeTPUM8h6dUCG',\ncountryCode: 'br',\nregionCode: '',\nisUserLoggedIn: false,\n},\npcm_consent_cookie: 'analytical=true&amp;countryCode=BR&amp;consentId=5254a6dd-ae99-4568-a30c-6338ff7b9e5b&amp;consentedAt=2026-09-11T19:16:19.731Z&amp;expiresAt=2027-03-10T19:16:19.731Z&amp;implicit=true&amp;marketing=true&amp;regionCode=RJ&amp;regulation=none&amp;legacyRegulation=none'\n};\n(()=>{let e,h=e=>{let n,t,o=new FormData,i={error:e.message||\"\",message:e.message||\"\",stack:e.stack||\"\",name:\"js_errors\",colno:0,lno:0,url:window.location.hostname+window.location.pathname,pid:(null==(t=null==(n=window.B)?void 0:n.env)?void 0:t.pageview_id)||1,be_running:1,be_column:0,be_line:0,be_stack:e.stack||\"\",be_message:e.message||\"\",be_file:window.location.hostname+window.location.pathname};Object.keys(i).forEach(e=>{o.append(e,i[e])}),window.fetch(\"/js_errors\",{method:\"POST\",body:o}).catch(()=>!1)};window.cookieStore&&window.cookieStore.addEventListener(\"change\",e=>{var n;null!=(n=null==e?void 0:e.changed)&&n.length&&null!=e&&e.changed.forEach(e=>{\"OptanonAlertBoxClosed\"!==e.name||S(e.value)||h(new Error(\"OptanonAlertBoxClosed bad value detected: \"+e.value)),\"OptanonConsent\"!==e.name||M(e.value)||h(new Error(\"OptanonConsent bad value detected: \"+e.value))})});let v;(n=v=v||{}).ANALYTICAL=\"C0002\",n.MA",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 12201,
+        "i": 40,
+        "id": "",
+        "prefix": "\n(function(){\n(function(){\nvar et=function(){\"use strict\";var s,c={level:0},f={experiment:\"e\",stage:\"s\",goal:\"g\",customGoal:\"cg\",goalWithValue:\"gwv\"},r=[],o=function(){var n,r={},o=\"\";function t(){var e,t=o;o=Object.keys(r).join(\",\"),(n||(n=document.getElementById(\"req_info\")))&&(n.innerHTML!==t&&(e=n.innerHTML,r=e.split(\",\").reduce(function(e,t){return e[t]=!0,e},r),o=Object.keys(r).join(\",\")),n.innerHTML=o)}function i(e){r[e]=!0}return{populate:function(e){i(e),\"string\"==typeof e?(i(e),t()):e instanceof Array&&(e.forEach(i),t())}}}(),i=function(){var r,o=!1,i=[],n=[],e=0;function a(){c.level&&c.report(c.events.BEACON_SENT,i),o=!1,e=0,r=null,i.length&&l()}function u(){o=!1,r=null,10<=++e?n=[]:(i=i.concat(n),n=[],r=window.setTimeout(l,100*e))}function l(){c.level&&c.report(c.events.SEND_BEACON,i.slice(0)),o=!0;var e=s+\"&\"+function(e){for(var t,n=[],r=[],o=[],i=[],a=[],u=0,l=e.length;u<l;++u)switch((t=e[u]).what){case f.experiment:n.push(t.hash);break;case f.stage:a.push(t.hash+\"|\"+t.id);break;case f.goal:r.push(t.hash);break;case f.customGoal:o.push(t.hash+\"|\"+t.id);break;case f.goalWithValue:var s=b(t.hash);s&&i.push(s);break;default:c.level&&c.report(c.events.UNABLE_TO_STRINGIFY,t)}return\"ete=\"+n.join(\",\")+\"&etg=\"+r.join(\",\")+\"&etcg=\"+o.join(\",\")+\"&ets=\"+a.join(\",\")+\"&etgwv=\"+i.join(\",\")}(n=i);N.m&&(e+=\"&m=\"+encodeURIComponent(N.m)),i=[];try{!function(e){var t,n=e.url,r=e.complete||function(){},o=e.headers||{},i=XMLHttpRequest.DONE||4,a=new XMLHttpRequest;if(!n)return;if(a.",
+        "type": ""
+      },
+      {
+        "chars": 5306,
+        "i": 137,
+        "id": "",
+        "prefix": "\nbooking.ensureNamespaceExists('env');\nbooking.env.google_analytics_tracking_enabled = 1;\nbooking.env.b_aid = '304142';\nbooking.env.b_label = 'gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE';\nbooking.env.b_availability_checked = '';\nbooking.env.b_multiple_destinations_found = '';\ntry {\n(function(q,u,i,c,k){window['GoogleAnalyticsObject']=q;\nwindow[q]=window[q]||function(){(window[q].q=window[q].q||[]).push(arguments)},\nwindow[q].l=1*new Date();c=i.createElement(u),k=i.getElementsByTagName(u)[0];\nc.async=true;c.src='//www.google-analytics.com/analytics.js';\nk.parentNode.insertBefore(c,k)})('ga','script',document);\nga('create', 'UA-116109-18', {\n'cookieDomain': '.booking.com'\n});\nga('require','ec');\n(function(){\ntry {\nvar gaTracker = B.require('ga-tracker');\n} catch (e) {\nreturn false;\n}\nvar promos = Array.prototype.slice.call(document.querySelectorAll('[data-ga-promo]'));\nvar tracked = {};\nfor (var i = 0; i < promos.length; i++) {\nvar s = promos[i].getAttribute('data-ga-promo');\nif (!s) continue;\nvar r = parsePromo(s);\nvar k = r.id+r.name+r.creative+r.position;\nif (tracked.hasOwnProperty(k)) continue;\ntracked[k] = 1;\n// this event has to be set before pageview is triggered as it is sent together with pageview\ngaTracker.ecommerceAddPromo(r.id, r.name, r.creative, r.position);\n}\nfunction parsePromo(str) {\nvar trackData = str.split('|');\nreturn {\nid: trackData[0],\nn",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 5015,
+        "i": 35,
+        "id": "",
+        "prefix": "\nwindow.utag_data = {\nsite: 'bookings2',\nstypeid: '1',\naction: 'searchresults',\ncrt: '1',\nfbp: '1',\nexp1: '',\nexp2: '0',\nbem: '0',\nbip: '0',\nexp_rmkt_test: 'global_on',\nexp_google_tag_manager: '1',\nns: '1',\nnsc: '0',\nfamem: '-1',\nfamfn: '-1',\nfampn: '-1',\nfampn_e164: '-1',\ngcem: '-1',\ngcpn: '-1',\ngwcur: '-1',\ngwcuc: '-1',\nrb: '0',\ngst: '1',\nfbqs: '',\nsage: '3',\nalev: '0',\natid: '',\natnm: '',\natnm_en: '',\npt_en: '',\nbiz_s: '2',\nbiz_p: '',\nbo: '1',\nbrowser: 'chrome',\nbrowser_ver: '151',\nbstage: '',\nemksho: '1',\nis_subscribed_to_newsletter: '',\ngenis: '',\nglev: '',\nn_b: '',\nsid: 'eb6bf943086778079618ff2eaeba0c77',\nui: '',\nis_aid_mcc_level_tracked: '',\npartner_channel_id: '3',\nttv: '',\nttv_uc: '',\np1: '0',\npreferred_neighborhoods: [],\nhotel_name: '',\nchannel_id: '3',\npartner_id: '1',\nai: '304142',\ntsmp: '1789154182',\nadults: '2',\nbook_window: '2',\nchildren: '0',\ngtm_noc: '0',\ndistrict_name: '-1',\ncity_name: 'Petrópolis',\nregion_name: '-1',\ncountry_name: 'Brasil',\ncurrency: 'BRL',\ndate_in: '2026-09-13',\nrns: '0',\ncul: '0',\nmnns: '0',\ndate_out: '2026-09-14',\ndayofwk: '7',\ndepth: '1',\ndest_type: 'city',\ndest_id: '-661457',\ndest_cc: 'br',\ndest_ufi: '-661457',\ndest_name: 'Petrópolis',\nhotel_count: '0',\nhotel_id: '0',\nhotel_id_list: '',\nhr: '-1',\ni1: '',\ni2: '',\ni3: '',\nisfd: '',\nisnl: '',\nlabel: 'gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE',\nlanguage: 'pt-br',\nlogged_",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 4902,
+        "i": 59,
+        "id": "",
+        "prefix": "\nbooking.jstmpl('lists_hotel_dropdown', (function () { var T = [\"\\n\",\"\\n\\u003cdiv class=\\\"preloader-state-icon\\\"\\u003e\\n\",\"iconset/loading\",\"\\n\\u003c/div\\u003e\\n\",\"\\n\\u003cdiv class=\\\"wl-dropdown-saved-to-message\\\" aria-hidden=\\\"true\\\"\\u003e\\n\",\"/private/cdm_web_sr_compare_checkbox_saved/name\",\"\\n\\u003ca href=\\\"\",\"\\\" class=\\\"js-open-list\\\" target=\\\"_blank\\\"\\u003e\\n\",\"\\n\\u003c/a\\u003e\\n\",\"\\n\\u003cdiv class=\\\"dmw_sr_wl_dd_expand_trigger\\\"\\u003e\\n\\u003ca href=\\\"#0\\\" class=\\\"bui-link bui-link--secondary js-sr-wl-expand-trigger\\\"\\u003eChange\\u003c/a\\u003e\\n\",\"iconset/navarrow_down_bold\",\"smaller\",\"\\n\\u003c/div\\u003e\\n\\u003cdiv class=\\\"dmw_sr_wl_dd_collapsed\\\"\\u003e\\n\",\"\\n\\u003cdiv class=\\\"bui-group\\\" role=\\\"group\\\"\\u003e\\n\",\"\\n\\u003clabel\\nclass=\\\"\\nwl-dropdown-item\\njs-wl-dropdown-item\\n\",\"\\nwl-dropdown-item_shared\\n\",\"\\nbui-checkbox\\n\",\"\\nwl-dropdown-item--added\\n\",\"\\n\\\"\\naria-label=\\\"\",\"/private/a11y_hp_bookmarks_shared/name\",\"\\\"\\n\\u003e\\n\\u003cinput\\ntype=\\\"checkbox\\\"\\ndata-list-id=\\\"\",\"\\\"\\nid=\\\"wl_item_\",\"\\\"\\nclass=\\\"js-wl-dropdown-item-checkbox wl-dropdown-item__checkbox bui-checkbox__input\\\"\\n\",\"checked=\\\"checked\\\"\",\"\\n/\\u003e\\n\\u003cspan id=\\\"wl_checkbox_label_\",\"\\\" class=\\\"bui-checkbox__label\\n\",\"wl-dropdown-item__name--last-used\",\"\\\"\\u003e\\n\",\"\\n\\u003c/span\\u003e\\n\\u003cspan\\nclass=\\\"\\nwl-dropdown-link-wrapper\\n\",\"g-hidden\",\"g-hidden-2\",\"\\n\\\"\\n\\u003e\\n\",\" - \",\"\\n\\u003ca\\nclass=\\\"\",\"wl-dropdown-link js-open-list \",\"\\\"\\ntarget=\\\"_blank\\\"\\nhref=\\\"\",\"\\\"\\naria-describedby=\\\"w",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 3696,
+        "i": 58,
+        "id": "",
+        "prefix": "\nif (window.performance && performance.setResourceTimingBufferSize) {\nperformance.setResourceTimingBufferSize(500);\n}\n;(function nav_timing(w){ 'use strict'; function validMetric(value) { return !isNaN(value) && value >= 0 && value < 150000 || false; } function callback() { var performance = w.performance || w.mozPerformance || w.msPerformance || w.webkitPerformance || {}, navigation = performance.navigation, timing = performance.timing, hasGetEntries = !!performance.getEntriesByType, userTiming = []; if ( typeof timing !== 'object' || typeof navigation !== 'object' || 1 ) { return; } if ( timing.loadEventEnd == 0 ) { setTimeout(callback, 1000); return; } var domain = validMetric(timing.domainLookupEnd - timing.domainLookupStart), connect = validMetric( timing.connectEnd - timing.connectStart), response = validMetric( timing.responseEnd - timing.responseStart), dom = validMetric( timing.domComplete - timing.domLoading), load = validMetric( timing.loadEventEnd - timing.loadEventStart); if ( !domain || !connect || !response || !dom || !load || w._phantom || w.callPhantom || w.__phantomas || window.Buffer || window.emit || window.spawn ) { return false; } if (typeof RUMSpeedIndex === 'function') { var speedIndex; try { speedIndex = Math.round(RUMSpeedIndex()); } catch (e) { B.reportError && B.reportError(e, 'speedindex'); } if (speedIndex) { if (window.ga) { setTimeout(function(){ ga('send', 'timing', 'Performance', 'SpeedIndex', speedIndex, B.env['b_action']); }, 100); } userTi",
+        "type": ""
+      },
+      {
+        "chars": 3187,
+        "i": 72,
+        "id": "",
+        "prefix": "{\"publicPath\":\"https://cf.bstatic.com/psb/capla/\",\"cdnOrigin\":\"https://cf.bstatic.com\",\"bplatformEnvironment\":\"prod\",\"cspNonce\":\"v8JeTPUM8h6dUCG\",\"acceptHeader\":\"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\",\"language\":\"pt-br\",\"basePageUrl\":\"https://www.booking.com/searchresults.html?ss=Petr%C3%B3polis\\u0026checkin=2026-09-13\\u0026checkout=2026-09-14\\u0026group_adults=2\\u0026no_rooms=1\\u0026group_children=0\\u0026selected_currency=BRL\\u0026lang=pt-br\\u0026chal_t=1789154179882\\u0026force_referer=\",\"currency\":\"BRL\",\"visitorIP\":\"152.248.112.128\",\"visitorCountry\":\"br\",\"visitorCountryRegion\":\"rj\",\"visitorTimeZone\":\"America/Sao_Paulo\",\"visitorUfi\":-661457,\"affiliate\":{\"id\":304142,\"isBookingOwned\":true,\"isCobrand\":false,\"isBookingBranded\":false,\"isHybrid\":false,\"label\":\"gen173nr-10CAQoggJCEnNlYXJjaF9wZXRyw7Nwb2xpc0gtWARoIIgBAZgBM7gBGcgBDNgBA-gBAfgBAYgCAagCAbgChqeR1QbAAgHSAiRiYjk4MjBkNC0zZDQ1LTQ5NDItODI5NC02NTUxY2IxNGUwNGbYAgHgAgE\",\"isGeniusAffiliate\":true,\"partnerId\":1,\"partnerChannelId\":3,\"partnerCountry\":\"nl\"},\"isInternal\":false,\"isInternalIp\":false,\"isInternalUser\":false,\"userIdentity\":{\"type\":\"customer\",\"isGenius\":false,\"authLevel\":0},\"unpackedGuestAccessToken\":{\"buid\":\"01a091e6-3a93-76dc-b356-f7f180cb5d98\",\"deviceId\":\"03aa5044-7f2c-4c5a-9ad6-f919b8b38beb\",\"authenticatorAssuranceLevel\":1,\"oauthScopes\":[\"address\",\"booking_default\",\"booking_rewards\",\"email\",\"genius\",\"offline_access\",\"openid\",",
+        "type": "application/json"
+      },
+      {
+        "chars": 2066,
+        "i": 60,
+        "id": "",
+        "prefix": "\nbooking.jstmpl('lists_hotel_dropdown_removed', (function () { var T = [\"\\n\",\"\\n\\u003cdiv class=\\\"preloader-state-icon\\\"\\u003e\\n\",\"iconset/loading\",\"\\n\\u003c/div\\u003e\\n\",\"\\n\\u003cdiv class=\\\"wl-dropdown-removed-title bui_font_body\\\"\\u003e\\n\",\"/private/wl_removed_from/name\",\"\\n\\u003ca\\nclass=\\\"bui-link bui-link--primary bui_font_body wl-dropdown-removed-list__link js-open-list\\\"\\ntarget=\\\"_blank\\\"\\nhref=\\\"\",\"\\\"\\n\\u003e\\n\",\"\\n\\u003cspan aria-label=\\\"\",\"\\\"\\u003e\\u003c/span\\u003e\\n\\u003c/a\\u003e\\n\",\"\\n\\u003cspan class=\\\"wl-dropdown-removed-title bui_font_body\\\"\\u003e\\n\",\"\\n\\u003c/span\\u003e\\n\\u003cul class=\\\"bui-list bui-list--unordered wl-dropdown-removed-list\\\"\\u003e\\n\",\"\\n\\u003cli class=\\\"bui-list__item wl-dropdown-removed-list-item\\\"\\u003e\\n\",\"\\n\\u003c/li\\u003e\\n\",\"\\n\\u003c/ul\\u003e\\n\"], V = [\"loading_list\",\"lists\",\"url\",\"list_name\",\"name\"], WV, LV, VA; return function (VS) { var s = '', r = this.fn; function link_block1(s) { s += [ T[6], r.F['html'](r.MB(V[2])), T[7], r.F['js'](r.F['html'](r.MC(V[3]))), T[8], r.F['js'](r.F['html'](r.MB(V[3]))), T[9] ].join( '' ); return s; } s += T[0]; s += T[0]; if (r.MJ(r.MB(V[0]))) { s += [ T[1],             ( VS.unshift({'name': T[2]}), (VA = r.HELPER(\"icon\", VS[0])), VS.shift(), VA ) , T[3] ].join( '' ); } s += T[0]; if (! (r.MD(V[0]))) { s += T[0]; if ((r.MJ( r.array_length(r.MB(V[1]))  ==  1 ))) { s += [ T[4], r.ME(T[5], r.MB, r.MN, null), T[0] ].join( '' ); { var LA= ( r.MC(V[1]) || [] ); VS.unshift(null); for(var LC=1, LM= LA.lengt",
+        "type": "text/javascript"
+      },
+      {
+        "chars": 1918,
+        "i": 142,
+        "id": "",
+        "prefix": "window.criteo_q=window.criteo_q||[];var language=google_tag_manager[\"rm\"][\"9615461\"](50).split(\"-\")[0];\nwindow.criteo_q.push({event:\"setAccount\",account:{an:\"web-booking.com\",cn:google_tag_manager[\"rm\"][\"9615461\"](51),ln:google_tag_manager[\"rm\"][\"9615461\"](52).substr(0,2)}},{event:\"setHashedEmail\",email:\"\"},{event:\"setCustomerId\",id:google_tag_manager[\"rm\"][\"9615461\"](53)},{event:\"setResponseType\",type:\"gif\"},{event:\"setSiteType\",type:google_tag_manager[\"rm\"][\"9615461\"](54)},{event:\"viewList\",item:google_tag_manager[\"rm\"][\"9615461\"](73),category:google_tag_manager[\"rm\"][\"9615461\"](74),page_number:google_tag_manager[\"rm\"][\"9615461\"](75),hotel_search:\"1\"},{event:\"viewSearch\",checkin_date:google_tag_manager[\"rm\"][\"9615461\"](76),checkout_date:google_tag_manager[\"rm\"][\"9615461\"](77),\nhotel_country:google_tag_manager[\"rm\"][\"9615461\"](78),ui_a:google_tag_manager[\"rm\"][\"9615461\"](79),ui_channel:google_tag_manager[\"rm\"][\"9615461\"](80),ui_cc:google_tag_manager[\"rm\"][\"9615461\"](81),nbrn:google_tag_manager[\"rm\"][\"9615461\"](82),nbrr:google_tag_manager[\"rm\"][\"9615461\"](83),nbra:google_tag_manager[\"rm\"][\"9615461\"](84),nbrc:google_tag_manager[\"rm\"][\"9615461\"](85),ui_xe:google_tag_manager[\"rm\"][\"9615461\"](86),ui_ip:google_tag_manager[\"rm\"][\"9615461\"](87),ui_gn:google_tag_manager[\"rm\"][\"9615461\"](88),ui_glev:google_tag_manager[\"rm\"][\"9615461\"](89),ui_ct:google_tag_manager[\"rm\"][\"9615461\"](90),ui_rg:google_tag_manager[\"rm\"][\"9615461\"](91),ui_ln:google_tag_manager[\"rm\"][\"9615461\"](92),ui_cn:goog",
+        "type": ""
+      },
+      {
+        "chars": 1421,
+        "i": 108,
+        "id": "b-search-web-searchresultsYTMJGfHK__CAPLA_APP_ROOT____LOADABLE_REQUIRED_CHUNKS___ext",
+        "prefix": "{\"namedChunks\":[\"bSearchWebSearchresults-App\",\"bSearchWebSearchresults-components-GlobalAlerts-GlobalAlerts\",\"bSearchWebSearchresults-components-TripIncentives-LoyaltyBannerDesktopWithContainer\",\"bSearchWebSearchresults-components-PropertiesListMap-PropertiesListMap\",\"bSearchWebSearchresults-withAssetPreloading-SearchResultsDesktop\",\"bPartnershipsRewardsGatingComponentService-LoyaltyBannerDesktop\",\"bNativeDisplayAdsNdisplayAdComponent-GPTScriptLoader\",\"bNativeDisplayAdsNdisplayAdComponent-ID5ScriptLoader\",\"bLxWebComponents-EtTracking__SR\",\"bWebShellComponents-AccommodationFooter\",\"bWebShellComponents-AccommodationHeader\",\"bWebShellComponents-GlobalAlerts\",\"bWishlistWishlistCs-WishlistWidgetSr\",\"bMarketingRewardsUiWebComponentService-RewardsFunnelBannerAndLandSheet\",\"bSearchWebSearchresults-common-bas-BasGptScriptLoadOnView\",\"bSearchWebSearchresults-common-properties-patterns-GeniusSignInBanner-GeniusSignInBannerDesktop\",\"bSearchWebSearchresults-common-bas-BasNDisplayLazyLoadedAd\",\"bSurveyTrackerComponentService-SurveyTrackerV3\",\"bSearchWebSearchresults-BannerCustom-AttractionsCarouselBanner-AttractionsCarouselBanner\",\"bGeniusWebComponentService-GeniusOnboardingSheetSearchResults\",\"bIamFeComponents-GeniusSignInSheetSearchResults\",\"bGeniusVipWebComponentService-GeniusVipVoucherSheet\",\"bGeniusVipWebComponentService-GeniusPlusProgramModeWelcomeSheet\",\"bGeniusVipWebComponentService-GeniusPlusSheetsSR\"]}",
+        "type": "application/json"
+      },
+      {
+        "chars": 1414,
+        "i": 47,
+        "id": "",
+        "prefix": "\n/**/ (function () { 'use strict'; if (!B.define) { return; } B.define('searchresults/env', ['require'], function (require) { var events = require('searchresults/events'); var env; env = { /* jshint ignore:start */\n'b_dest_id': -661457,\n'b_dest_type': \"city\",\n'b_search_config': JSON.parse('{\"b_children_total\":0,\"b_nr_rooms_needed\":1,\"b_children_ages_total\":[],\"b_is_group_search\":0,\"b_adults_total\":2,\"traveller_segment\":\"couple\",\"b_rooms\":[{\"b_children_ages\":[],\"b_adults\":2.0,\"b_room_order\":1,\"b_children\":0}]}' || '{}'),\n'b_destination_fullname': \"Petr\\u00f3polis\",\n'b_current_page_nr': 1,\n'b_selected_nflt_url_param_decoded': false,\n'b_bh_nflt_filters': false,\n'b_total_selected_filters': false,\n'b_nr_hotels_available': 0,\n'b_sr_filter_by_price_enabled': false,\n'b_user_is_business_booker': false,\n'b_sr_is_address_search': 0,\n'b_did_bigger_search': 0,\n'b_did_auto_extend_radius': \"\",\n'b_primary_search_nr_hotels_available': false\n/* jshint ignore:end */ }; function get(item) { return item ? env[item] : undefined; } function keys() { return Object.keys(env); } events.on(events.DATA_ENVIRONMENT_CHANGED, function (data) { events.trigger(events.DATA_ENVIRONMENT_BEFORE_UPDATE, data); if (data) { var keys = Object.keys(data); for (var i = keys.length; --i >= 0;) { env[keys[i]] = data[keys[i]]; } events.trigger(events.DATA_ENVIRONMENT_UPDATED, data); } }); return { get: get, keys: keys }; }); }()); /**/\n",
+        "type": ""
+      }
+    ],
+    "property_cards": 25,
+    "url": "https://www.booking.com/searchresults.html?ss=Petr%C3%B3polis&checkin=2026-09-13&checkout=2026-09-14&group_adults=2&no_rooms=1&group_children=0&selected_currency=BRL&lang=pt-br&chal_t=1789154179882&force_referer="
+  },
+  "graphql_requests": [
+    {
+      "url": "https://www.booking.com/dml/graphql",
+      "method": "POST",
+      "graphql": [
+        {
+          "operationName": "GetXMSurveyCampaignByRegionId",
+          "query_prefix": "query GetXMSurveyCampaignByRegionId($regionId: String!, $uniquePageId: String) { getXMSurveyCampaignByRegionId(regionId: $regionId, uniquePageId: $uniquePageId) { ... on XMSurveyCampaign { campaignName campaignId testLane dismissibleRegionIds survey { surveyId surveyName dismissedDurationInSeconds dismissibleSurveyNames surveyQuestions { questionText questionType isRequired ... on RatingScaleQuestion { questionId items { label value __typename } style __typename } ... on SingleAnswerMultipleChoi",
+          "variable_keys": [
+            "regionId",
+            "uniquePageId"
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://www.booking.com/dml/graphql",
+      "method": "POST",
+      "graphql": [
+        {
+          "operationName": "DismissGeniusSignInSheet",
+          "query_prefix": "mutation DismissGeniusSignInSheet($input: DismissGeniusSignInBottomSheetInput!) { geniusGuestMutation { dismissSignInBottomSheet(input: $input) { isSuccess errorMessage __typename } __typename } } ",
+          "variable_keys": [
+            "input"
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://www.booking.com/dml/graphql",
+      "method": "POST",
+      "graphql": [
+        {
+          "operationName": "staticGoogleMapUrlBff",
+          "query_prefix": null,
+          "variable_keys": [
+            "channel",
+            "googleApiKey",
+            "height",
+            "latitude",
+            "longitude",
+            "mapId",
+            "scale",
+            "signatureKeyName",
+            "width",
+            "zoomLevel"
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://www.booking.com/dml/graphql",
+      "method": "POST",
+      "graphql": [
+        {
+          "operationName": "wishlistsDetailForWishlistWidget",
+          "query_prefix": null,
+          "variable_keys": []
+        }
+      ]
+    },
+    {
+      "url": "https://www.booking.com/dml/graphql",
+      "method": "POST",
+      "graphql": [
+        {
+          "operationName": "CrossProductRecommendedSearches",
+          "query_prefix": "query CrossProductRecommendedSearches($input: CrossProductRecommendedSearchesInput!) { recommendationPlatform { crossProductRecommendedSearches(input: $input) { recommendations { id product source rank anchorProduct anchorReserveOrderId searchUrl imageUrl displayTitle displaySubtitle uxLabels { name value __typename } priceInfo { displayPrice priceNote priceLabel minPrice { value currencyCode __typename } avgPrice { value currencyCode __typename } discountedPrice { value currencyCode __typename ",
+          "variable_keys": [
+            "input"
+          ]
+        }
+      ]
+    }
+  ],
+  "structured_responses": [
+    {
+      "request_id": "1695837.395",
+      "url": "https://secure.booking.com/xps/dist",
+      "mime_type": "application/json",
+      "chars": 20021,
+      "signals": [
+        "price",
+        "currency"
+      ],
+      "top_keys": [
+        "client_name",
+        "distribution_id",
+        "placements"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.378",
+      "url": "https://www.booking.com/dml/graphql",
+      "mime_type": "application/json",
+      "chars": 6345,
+      "signals": [
+        "price",
+        "currency"
+      ],
+      "top_keys": [
+        "data",
+        "extensions"
+      ],
+      "graphql_request": {
+        "url": "https://www.booking.com/dml/graphql",
+        "method": "POST",
+        "graphql": [
+          {
+            "operationName": "CrossProductRecommendedSearches",
+            "query_prefix": "query CrossProductRecommendedSearches($input: CrossProductRecommendedSearchesInput!) { recommendationPlatform { crossProductRecommendedSearches(input: $input) { recommendations { id product source rank anchorProduct anchorReserveOrderId searchUrl imageUrl displayTitle displaySubtitle uxLabels { name value __typename } priceInfo { displayPrice priceNote priceLabel minPrice { value currencyCode __typename } avgPrice { value currencyCode __typename } discountedPrice { value currencyCode __typename ",
+            "variable_keys": [
+              "input"
+            ]
+          }
+        ]
+      },
+      "json": null
+    },
+    {
+      "request_id": "1695837.209",
+      "url": "https://www.booking.com/c360-api/v1/purposes",
+      "mime_type": "application/json",
+      "chars": 43637,
+      "signals": [],
+      "top_keys": [
+        "bundleId",
+        "policy",
+        "purposes",
+        "last_updated",
+        "purpose_definitions"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.236",
+      "url": "https://accommodations.booking.com/orca/chunk-metadata",
+      "mime_type": "application/json",
+      "chars": 1207,
+      "signals": [],
+      "top_keys": [
+        "chunks",
+        "experimentTags",
+        "etClientsidePayload",
+        "featureNames",
+        "seoExperimentTags",
+        "copyTags",
+        "onViewTrackingReferenceByCopyTag"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.256",
+      "url": "https://accommodations.booking.com/orca/chunk-metadata",
+      "mime_type": "application/json",
+      "chars": 1003,
+      "signals": [],
+      "top_keys": [
+        "chunks",
+        "experimentTags",
+        "etClientsidePayload",
+        "featureNames",
+        "seoExperimentTags",
+        "copyTags",
+        "onViewTrackingReferenceByCopyTag"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.371",
+      "url": "https://www.booking.com/dml/graphql",
+      "mime_type": "application/json",
+      "chars": 444,
+      "signals": [],
+      "top_keys": [
+        "extensions",
+        "data"
+      ],
+      "graphql_request": {
+        "url": "https://www.booking.com/dml/graphql",
+        "method": "POST",
+        "graphql": [
+          {
+            "operationName": "staticGoogleMapUrlBff",
+            "query_prefix": null,
+            "variable_keys": [
+              "channel",
+              "googleApiKey",
+              "height",
+              "latitude",
+              "longitude",
+              "mapId",
+              "scale",
+              "signatureKeyName",
+              "width",
+              "zoomLevel"
+            ]
+          }
+        ]
+      },
+      "json": null
+    },
+    {
+      "request_id": "1695837.337",
+      "url": "https://www.booking.com/dml/graphql",
+      "mime_type": "application/json",
+      "chars": 306,
+      "signals": [],
+      "top_keys": [
+        "extensions",
+        "data"
+      ],
+      "graphql_request": {
+        "url": "https://www.booking.com/dml/graphql",
+        "method": "POST",
+        "graphql": [
+          {
+            "operationName": "DismissGeniusSignInSheet",
+            "query_prefix": "mutation DismissGeniusSignInSheet($input: DismissGeniusSignInBottomSheetInput!) { geniusGuestMutation { dismissSignInBottomSheet(input: $input) { isSuccess errorMessage __typename } __typename } } ",
+            "variable_keys": [
+              "input"
+            ]
+          }
+        ]
+      },
+      "json": null
+    },
+    {
+      "request_id": "1695837.372",
+      "url": "https://www.booking.com/dml/graphql",
+      "mime_type": "application/json",
+      "chars": 287,
+      "signals": [],
+      "top_keys": [
+        "extensions",
+        "data"
+      ],
+      "graphql_request": {
+        "url": "https://www.booking.com/dml/graphql",
+        "method": "POST",
+        "graphql": [
+          {
+            "operationName": "wishlistsDetailForWishlistWidget",
+            "query_prefix": null,
+            "variable_keys": []
+          }
+        ]
+      },
+      "json": null
+    },
+    {
+      "request_id": "1695837.336",
+      "url": "https://www.booking.com/dml/graphql",
+      "mime_type": "application/json",
+      "chars": 186,
+      "signals": [],
+      "top_keys": [
+        "data",
+        "extensions"
+      ],
+      "graphql_request": {
+        "url": "https://www.booking.com/dml/graphql",
+        "method": "POST",
+        "graphql": [
+          {
+            "operationName": "GetXMSurveyCampaignByRegionId",
+            "query_prefix": "query GetXMSurveyCampaignByRegionId($regionId: String!, $uniquePageId: String) { getXMSurveyCampaignByRegionId(regionId: $regionId, uniquePageId: $uniquePageId) { ... on XMSurveyCampaign { campaignName campaignId testLane dismissibleRegionIds survey { surveyId surveyName dismissedDurationInSeconds dismissibleSurveyNames surveyQuestions { questionText questionType isRequired ... on RatingScaleQuestion { questionId items { label value __typename } style __typename } ... on SingleAnswerMultipleChoi",
+            "variable_keys": [
+              "regionId",
+              "uniquePageId"
+            ]
+          }
+        ]
+      },
+      "json": null
+    },
+    {
+      "request_id": "1695837.239",
+      "url": "https://www.booking.com/c360-api/v1/c360/multitrack",
+      "mime_type": "application/json",
+      "chars": 89,
+      "signals": [],
+      "top_keys": [
+        "responses"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.385",
+      "url": "https://c360.booking.com/v1/c360/multitrack/",
+      "mime_type": "application/json",
+      "chars": 89,
+      "signals": [],
+      "top_keys": [
+        "responses"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.382",
+      "url": "https://c360.booking.com/v1/c360/multitrack/",
+      "mime_type": "application/json",
+      "chars": 89,
+      "signals": [],
+      "top_keys": [
+        "responses"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.388",
+      "url": "https://c360.booking.com/v1/c360/multitrack/",
+      "mime_type": "application/json",
+      "chars": 89,
+      "signals": [],
+      "top_keys": [
+        "responses"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.235",
+      "url": "https://account.booking.com/privacy-consents/implicit",
+      "mime_type": "application/json",
+      "chars": 64,
+      "signals": [],
+      "top_keys": [
+        "consent_id",
+        "errors"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.456",
+      "url": "https://www.booking.com/c360/v1/track",
+      "mime_type": "application/json",
+      "chars": 21,
+      "signals": [],
+      "top_keys": [
+        "code",
+        "status"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.259",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "mime_type": "application/json",
+      "chars": 18,
+      "signals": [],
+      "top_keys": [
+        "status"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.379",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "mime_type": "application/json",
+      "chars": 18,
+      "signals": [],
+      "top_keys": [
+        "status"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.386",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "mime_type": "application/json",
+      "chars": 18,
+      "signals": [],
+      "top_keys": [
+        "status"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.392",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "mime_type": "application/json",
+      "chars": 18,
+      "signals": [],
+      "top_keys": [
+        "status"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.415",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "mime_type": "application/json",
+      "chars": 18,
+      "signals": [],
+      "top_keys": [
+        "status"
+      ],
+      "graphql_request": null,
+      "json": null
+    },
+    {
+      "request_id": "1695837.476",
+      "url": "https://sink.gw.booking.com/v1/sink",
+      "mime_type": "application/json",
+      "chars": 18,
+      "signals": [],
+      "top_keys": [
+        "status"
+      ],
+      "graphql_request": null,
+      "json": null
+    }
+  ],
+  "note": "Sem headers/cookies/tokens. GraphQL guarda apenas operationName/query prefix e nomes das variáveis."
+}

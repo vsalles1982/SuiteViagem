@@ -1,0 +1,472 @@
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 47, in _browser_json_request
+    result = driver.execute_async_script(
+        r"""
+    ...<43 lines>...
+        int(timeout * 1000),
+    )
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 633, in execute_async_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=152.0.7977.82); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x555f6040659f <unknown>
+#1 0x555f5fd59108 <unknown>
+#2 0x555f5fd3f3fc <unknown>
+#3 0x555f5fd68df3 <unknown>
+#4 0x555f5fde1724 <unknown>
+#5 0x555f5fdfb890 <unknown>
+#6 0x555f5fda23f7 <unknown>
+#7 0x555f5fda3162 <unknown>
+#8 0x555f603cc4f3 <unknown>
+#9 0x555f603cad8d <unknown>
+#10 0x555f603ca6fc <unknown>
+#11 0x555f603b9608 <unknown>
+#12 0x555f603cb600 <unknown>
+#13 0x555f603a3f98 <unknown>
+#14 0x555f603f0ad7 <unknown>
+#15 0x555f603f0d04 <unknown>
+#16 0x555f60404fcc <unknown>
+#17 0x7f1846c980a2 <unknown>
+#18 0x7f1846d2080c <unknown>
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20g.py", line 122, in coletar_ofertas_direct
+    url, consulta, local_selecionado = self.engine.criar_busca_direta(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        destino.strip(), retirada, devolucao, log
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=152.0.7977.82); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidses
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 46, in _browser_json_request
+    driver.set_script_timeout(timeout + 3)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 829, in set_script_timeout
+    self.execute(Command.SET_TIMEOUTS, {"script": int(float(time_to_wait) * 1000)})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x555f6040659f <unknown>
+#1 0x555f5fd58f67 <unknown>
+#2 0x555f5fda1ce8 <unknown>
+#3 0x555f5fdd789a <unknown>
+#4 0x555f5fdd1abe <unknown>
+#5 0x555f5fdd116d <unknown>
+#6 0x555f5fd1f019 <unknown>
+#7 0x555f5fd1f88c <unknown>
+#8 0x555f5fd1fe82 <unknown>
+#9 0x555f603cc4f3 <unknown>
+#10 0x555f603cad8d <unknown>
+#11 0x555f603ca6fc <unknown>
+#12 0x555f603b9608 <unknown>
+#13 0x555f603cb600 <unknown>
+#14 0x555f603a3f98 <unknown>
+#15 0x555f5fd1d875 <unknown>
+#16 0x555f5fd1ce4a <unknown>
+#17 0x7f1846c27781 <unknown>
+#18 0x7f1846c278b9 __libc_start_main
+#19 0x555f5fc39b65 _start
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20e.py", line 312, in coletar_ofertas_api
+    url, consulta, local_selecionado = self.engine.criar_busca_direta(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        destino.strip(), retirada, devolucao, log
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: InvalidSessionIdException: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x555f6040659f <unknown>
+#1 0x555f5fd58f67 <unknown>
+#2 0x555f5fda1ce8 <unknown>
+#3 0x555f5fdd789a <unknown>
+#4
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 844, in set_page_load_timeout
+    self.execute(Command.SET_TIMEOUTS, {"pageLoad": int(float(time_to_wait) * 1000)})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x555f6040659f <unknown>
+#1 0x555f5fd58f67 <unknown>
+#2 0x555f5fda1ce8 <unknown>
+#3 0x555f5fdd789a <unknown>
+#4 0x555f5fdd1abe <unknown>
+#5 0x555f5fdd116d <unknown>
+#6 0x555f5fd1f019 <unknown>
+#7 0x555f5fd1f88c <unknown>
+#8 0x555f5fd1fe82 <unknown>
+#9 0x555f603cc4f3 <unknown>
+#10 0x555f603cad8d <unknown>
+#11 0x555f603ca6fc <unknown>
+#12 0x555f603b9608 <unknown>
+#13 0x555f603cb600 <unknown>
+#14 0x555f603a3f98 <unknown>
+#15 0x555f5fd1d875 <unknown>
+#16 0x555f5fd1ce4a <unknown>
+#17 0x7f1846c27781 <unknown>
+#18 0x7f1846c278b9 __libc_start_main
+#19 0x555f5fc39b65 _start
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/Downloads/suiteviagem-web-v3_8-premium-responsive/module_worker_v3.py", line 174, in cars_worker
+    r = _do_cars_search()
+  File "/home/vsalles/Downloads/suiteviagem-web-v3_8-premium-responsive/module_worker_v3.py", line 159, in _do_cars_search
+    return engine.coletar_ofertas_direct(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        cmd["location"], cmd["start"], cmd["end"], int(cmd["limit"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        log=lambda m: logs.append(str(m)),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20g.py", line 213, in coletar_ofertas_direct
+    report = self._v20e_collector(
+        destino, data_retirada, data_devolucao, limite_resultados, log
+    )
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20e.py", line 408, in coletar_ofertas_api
+    report = self._dom_collector(
+        destino, data_retirada, data_devolucao, limite_resultados, log
+    )
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 714, in coletar_ofertas
+    driver.set_page_load_timeout(60)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 846, in set_page_load_timeout
+    self.execute(
+    ~~~~~~~~~~~~^
+        Command.SET_TIMEOUTS,
+        ^^^^^^^^^^^^^^^^^^^^^
+        {"ms": float(time_to_wait) * 1000, "type": "page load"},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+Stacktrace:
+#0 0x555f6040659f <unknown>
+#1 0x555f5fd58f67 <unknown>
+#2 0x555f5fda1ce8 <unknown>
+#3 0x555f5fdd789a <unknown>
+#4 0x555f5fdd1abe <unknown>
+#5 0x555f5fdd116d <unknown>
+#6 0x555f5fd1f019 <unknown>
+#7 0x555f5fd1f88c <unknown>
+#8 0x555f5fd1fe82 <unknown>
+#9 0x555f603cc4f3 <unknown>
+#10 0x555f603cad8d <unknown>
+#11 0x555f603ca6fc <unknown>
+#12 0x555f603b9608 <unknown>
+#13 0x555f603cb600 <unknown>
+#14 0x555f603a3f98 <unknown>
+#15 0x555f5fd1d875 <unknown>
+#16 0x555f5fd1ce4a <unknown>
+#17 0x7f1846c27781 <unknown>
+#18 0x7f1846c278b9 __libc_start_main
+#19 0x555f5fc39b65 _start
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 47, in _browser_json_request
+    result = driver.execute_async_script(
+        r"""
+    ...<43 lines>...
+        int(timeout * 1000),
+    )
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 633, in execute_async_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=152.0.7977.82)
+Stacktrace:
+#0 0x55b71dcec59f <unknown>
+#1 0x55b71d63f108 <unknown>
+#2 0x55b71d6135ab <unknown>
+#3 0x55b71d6c7588 <unknown>
+#4 0x55b71d6e1890 <unknown>
+#5 0x55b71d6883f7 <unknown>
+#6 0x55b71d689162 <unknown>
+#7 0x55b71dcb24f3 <unknown>
+#8 0x55b71dcb0d8d <unknown>
+#9 0x55b71dcb06fc <unknown>
+#10 0x55b71dc9f608 <unknown>
+#11 0x55b71dcb1600 <unknown>
+#12 0x55b71dc89f98 <unknown>
+#13 0x55b71dcd6ad7 <unknown>
+#14 0x55b71dcd6d04 <unknown>
+#15 0x55b71dceafcc <unknown>
+#16 0x7f94f90980a2 <unknown>
+#17 0x7f94f912080c <unknown>
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20g.py", line 122, in coletar_ofertas_direct
+    url, consulta, local_selecionado = self.engine.criar_busca_direta(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        destino.strip(), retirada, devolucao, log
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=152.0.7977.82)
+Stacktrace:
+#0 0x55b71dcec59f <unknown>
+#1 0x55b71d63f108 <unknown>
+#2 0x55b71d6135ab <unknown>
+#3 0x55b71d6c7588 <unknown>
+#4 0x55b71d6e1890 <unknown>
+#5 0x55b71d6883f
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 47, in _browser_json_request
+    result = driver.execute_async_script(
+        r"""
+    ...<43 lines>...
+        int(timeout * 1000),
+    )
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 633, in execute_async_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=152.0.7977.82)
+Stacktrace:
+#0 0x55b71dcec59f <unknown>
+#1 0x55b71d63f108 <unknown>
+#2 0x55b71d6135ab <unknown>
+#3 0x55b71d6c7588 <unknown>
+#4 0x55b71d6e1890 <unknown>
+#5 0x55b71d6883f7 <unknown>
+#6 0x55b71d689162 <unknown>
+#7 0x55b71dcb24f3 <unknown>
+#8 0x55b71dcb0d8d <unknown>
+#9 0x55b71dcb06fc <unknown>
+#10 0x55b71dc9f608 <unknown>
+#11 0x55b71dcb1600 <unknown>
+#12 0x55b71dc89f98 <unknown>
+#13 0x55b71dcd6ad7 <unknown>
+#14 0x55b71dcd6d04 <unknown>
+#15 0x55b71dceafcc <unknown>
+#16 0x7f94f90980a2 <unknown>
+#17 0x7f94f912080c <unknown>
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20e.py", line 312, in coletar_ofertas_api
+    url, consulta, local_selecionado = self.engine.criar_busca_direta(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        destino.strip(), retirada, devolucao, log
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=152.0.7977.82)
+Stacktrace:
+#0 0x55b71dcec59f <unknown>
+#1 0x55b71d63f108 <unknown>
+#2 0x55b71d6135ab <unknown>
+#3 0x55b71d6c7588 <unknown>
+#4 0x55b71d6e1890 <unknown>
+#5 0x55b71d6883f
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 47, in _browser_json_request
+    result = driver.execute_async_script(
+        r"""
+    ...<43 lines>...
+        int(timeout * 1000),
+    )
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 633, in execute_async_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=152.0.7977.82)
+Stacktrace:
+#0 0x55b71dcec59f <unknown>
+#1 0x55b71d63f108 <unknown>
+#2 0x55b71d6135ab <unknown>
+#3 0x55b71d6c7588 <unknown>
+#4 0x55b71d6e1890 <unknown>
+#5 0x55b71d6883f7 <unknown>
+#6 0x55b71d689162 <unknown>
+#7 0x55b71dcb24f3 <unknown>
+#8 0x55b71dcb0d8d <unknown>
+#9 0x55b71dcb06fc <unknown>
+#10 0x55b71dc9f608 <unknown>
+#11 0x55b71dcb1600 <unknown>
+#12 0x55b71dc89f98 <unknown>
+#13 0x55b71dcd6ad7 <unknown>
+#14 0x55b71dcd6d04 <unknown>
+#15 0x55b71dceafcc <unknown>
+#16 0x7f94f90980a2 <unknown>
+#17 0x7f94f912080c <unknown>
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 723, in coletar_ofertas
+    url, consulta, local_selecionado = criar_busca_direta(destino.strip(), retirada, devolucao, log)
+                                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 379, in criar_busca_direta
+    local = resolver_local_api(destino)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 348, in resolver_local_api
+    data = _json_request(AUTOCOMPLETE_URL + '?' + query, timeout=timeout)
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/suiteviagem/cars_worker_v20f.py", line 95, in _browser_json_request
+    raise ValueError(
+        f"Browser API fetch falhou: {type(exc).__name__}: {str(exc)[:300]}"
+    ) from exc
+ValueError: Browser API fetch falhou: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=152.0.7977.82)
+Stacktrace:
+#0 0x55b71dcec59f <unknown>
+#1 0x55b71d63f108 <unknown>
+#2 0x55b71d6135ab <unknown>
+#3 0x55b71d6c7588 <unknown>
+#4 0x55b71d6e1890 <unknown>
+#5 0x55b71d6883f
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 730, in coletar_ofertas
+    url, consulta, local_selecionado = abrir_busca_por_local(
+                                       ~~~~~~~~~~~~~~~~~~~~~^
+        driver, destino.strip(), retirada, devolucao, log, tempos)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/scraper_carro/discovercars.py", line 522, in abrir_busca_por_local
+    driver.get('https://www.discovercars.com/')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 524, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/webdriver.py", line 504, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/.venv/lib/python3.14/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=152.0.7977.82)
+Stacktrace:
+#0 0x55b71dcec59f <unknown>
+#1 0x55b71d63f108 <unknown>
+#2 0x55b71d6135ab <unknown>
+#3 0x55b71d6c7588 <unknown>
+#4 0x55b71d6e1890 <unknown>
+#5 0x55b71d6883f7 <unknown>
+#6 0x55b71d689162 <unknown>
+#7 0x55b71dcb24f3 <unknown>
+#8 0x55b71dcb0d8d <unknown>
+#9 0x55b71dcb06fc <unknown>
+#10 0x55b71dc9f608 <unknown>
+#11 0x55b71dcb1600 <unknown>
+#12 0x55b71dc89f98 <unknown>
+#13 0x55b71dcd6ad7 <unknown>
+#14 0x55b71dcd6d04 <unknown>
+#15 0x55b71dceafcc <unknown>
+#16 0x7f94f90980a2 <unknown>
+#17 0x7f94f912080c <unknown>
+

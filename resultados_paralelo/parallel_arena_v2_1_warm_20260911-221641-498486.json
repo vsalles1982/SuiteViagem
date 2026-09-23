@@ -1,0 +1,56 @@
+{
+  "variant": "suiteviagem-parallel-arena-v2_1-warm-resilient",
+  "requested": {
+    "flight_origin": "RIO",
+    "flight_dest": "SAO",
+    "hotel_city": "Petrópolis",
+    "car_location": "Sao Paulo Guarulhos Airport (GRU), Sao Paulo, Brazil",
+    "event_city": "São Paulo",
+    "start": "2026-09-20",
+    "end": "2026-09-21",
+    "limit": 5
+  },
+  "warmup_seconds": {
+    "flights": {
+      "ok": true,
+      "seconds": 10.04
+    },
+    "hotels": {
+      "ok": false,
+      "seconds": 51.893,
+      "error": "RuntimeError: Busca pelo formulário não retornou cartões com destino, datas e ocupação correspondentes. Nenhum preço foi aceito."
+    },
+    "cars": {
+      "ok": true,
+      "seconds": 23.024
+    }
+  },
+  "user_query_wall_seconds": 52.89,
+  "results": {
+    "flights": {
+      "kind": "flights",
+      "ok": false,
+      "elapsed": 0.021,
+      "error": "RuntimeError: : no running event loop"
+    },
+    "events": {
+      "kind": "events",
+      "ok": true,
+      "elapsed": 6.162,
+      "count": 0,
+      "results": []
+    },
+    "cars": {
+      "kind": "cars",
+      "ok": false,
+      "elapsed": 50.922,
+      "error": "TimeoutException: Message: \n"
+    },
+    "hotels": {
+      "kind": "hotels",
+      "ok": false,
+      "elapsed": 52.868,
+      "error": "RuntimeError: Busca pelo formulário não retornou cartões com destino, datas e ocupação correspondentes. Nenhum preço foi aceito."
+    }
+  }
+}

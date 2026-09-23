@@ -1,0 +1,1185 @@
+{
+  "variant": "shotgun-fastpath-v2",
+  "city": "São Paulo",
+  "slug": "sao-paulo",
+  "city_url": "https://shotgun.live/en/cities/sao-paulo",
+  "workers": 8,
+  "city_seconds": 0.825,
+  "event_link_count": 15,
+  "details_seconds": 1.56,
+  "total_seconds": 2.468,
+  "valid_event_count": 15,
+  "failure_count": 0,
+  "failures": [],
+  "events": [
+    {
+      "url": "https://shotgun.live/en/events/unladies-no-cr-1-a",
+      "seconds": 0.905,
+      "name": "Unladies No Cr1a",
+      "startDate": "2026-09-11T21:00:00.000Z",
+      "endDate": "2026-09-12T02:30:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Cria // cr1a_011",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua São Domingos, 251 - Bela Vista, São Paulo - SP, 01326-000, Brasil",
+          "addressLocality": "Bela Vista",
+          "postalCode": "01326-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5528974,
+          "longitude": -46.6446298
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Cria",
+        "url": "https://shotgun.live/en/venues/cria"
+      },
+      "performer": [],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Ingressos antecipados",
+          "price": 15,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-01T16:48:25.000Z",
+          "url": "https://shotgun.live/en/events/unladies-no-cr-1-a"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/pista-0800-set",
+      "seconds": 0.658,
+      "name": "Pista Quente 0800 Club Na Porta",
+      "startDate": "2026-09-11T22:00:00.000Z",
+      "endDate": "2026-09-12T05:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Rua Horácio Lane, 95 - Pinheiros, São Paulo - SP, 05432-030, Brasil",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Horácio Lane, 95 - Pinheiros, São Paulo - SP, 05432-030, Brasil",
+          "addressLocality": "São Paulo",
+          "postalCode": "05432-030",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5596346,
+          "longitude": -46.6867118
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Pista Quente",
+        "url": "https://shotgun.live/en/venues/pista-quente"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "Akin Deckard",
+          "url": "https://shotgun.live/en/artists/akindeckard"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Sallum",
+          "url": "https://shotgun.live/en/artists/sallums"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "FURA-FILA",
+          "price": 25,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-06T15:58:56.000Z",
+          "url": "https://shotgun.live/en/events/pista-0800-set"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "INGRESSO 0800",
+          "price": 0,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-06T15:58:56.000Z",
+          "url": "https://shotgun.live/en/events/pista-0800-set"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/rec-no-valentina-bar",
+      "seconds": 0.392,
+      "name": "Rec 🔴 No Valentina Bar - Pj Sessions Reisse L.II.T. A.I.R.",
+      "startDate": "2026-09-11T22:00:00.000Z",
+      "endDate": "2026-09-12T05:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Valentina Bar",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Padre João Gonçalves, 160 - Pinheiros, São Paulo - SP, 05432-040, Brasil",
+          "addressLocality": "Pinheiros",
+          "postalCode": "05432-040",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5594534,
+          "longitude": -46.6877243
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "PJ Sessions",
+        "url": "https://shotgun.live/en/venues/pj-sessions"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "PJ Sessions",
+          "url": "https://shotgun.live/en/artists/user-24803526"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "DJ Victor Vieira",
+          "url": "https://shotgun.live/en/artists/djvictorvieira"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "REISSE",
+          "url": "https://shotgun.live/en/artists/reisseprod"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Ingresso",
+          "price": 40,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-15T02:53:46.000Z",
+          "url": "https://shotgun.live/en/events/rec-no-valentina-bar"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/classic-nights-com-a-banda-k-7-os-valvulados",
+      "seconds": 0.588,
+      "name": "Classic Nights Com A Banda K7 & Os Valvulados",
+      "startDate": "2026-09-11T23:00:00.000Z",
+      "endDate": "2026-09-12T07:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Amnesia rock bar",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua do Oratório, 1318 - Mooca, São Paulo - SP, 03116-000, Brasil",
+          "addressLocality": "Mooca",
+          "postalCode": "03116-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5635922,
+          "longitude": -46.5910215
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Amnesia Rock Bar",
+        "url": "https://shotgun.live/en/venues/amnesia-rock-bar"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "K7 & OS VALVULADOS",
+          "url": "https://shotgun.live/en/artists/k7osvalvulados"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "TranZe",
+          "url": "https://shotgun.live/en/artists/tranzecomz"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "DjMansonDuh",
+          "url": "https://shotgun.live/en/artists/mansonduh"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "VIP",
+          "price": 0,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-02T17:00:15.000Z",
+          "url": "https://shotgun.live/en/events/classic-nights-com-a-banda-k-7-os-valvulados"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "🔥 PROMOCIONAL",
+          "price": 10,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-02T17:00:15.000Z",
+          "url": "https://shotgun.live/en/events/classic-nights-com-a-banda-k-7-os-valvulados"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "LOTE 1",
+          "price": 15,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-02T17:00:15.000Z",
+          "url": "https://shotgun.live/en/events/classic-nights-com-a-banda-k-7-os-valvulados"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "LOTE 2",
+          "price": 20,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-02T17:00:15.000Z",
+          "url": "https://shotgun.live/en/events/classic-nights-com-a-banda-k-7-os-valvulados"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "LOTE FINAL",
+          "price": 30,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-02T17:00:15.000Z",
+          "url": "https://shotgun.live/en/events/classic-nights-com-a-banda-k-7-os-valvulados"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/inferninho-real-gg-matias-bamboloki-2026-09-11",
+      "seconds": 0.69,
+      "name": "Inferninho - Real No Ficcion + Gg + Matias + Bamboloki",
+      "startDate": "2026-09-11T23:00:00.000Z",
+      "endDate": "2026-09-12T07:30:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Picles",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Cardeal Arcoverde, 1838 - Pinheiros, São Paulo - SP, 05408-002, Brasil",
+          "addressLocality": "Pinheiros",
+          "postalCode": "05408-002",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.561959,
+          "longitude": -46.6890057
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Picles",
+        "url": "https://shotgun.live/en/venues/picles"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "trabalhosujo",
+          "url": "https://shotgun.live/en/artists/trabalhosujo"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Real No Ficcíon",
+          "url": "https://shotgun.live/en/artists/realnoficcion"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "GG. Di Martino No Wall Noise Band",
+          "url": "https://shotgun.live/en/artists/gg-di-martino-no-wall-noise-band"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Grátis até 21:30 · SEGUIDORES",
+          "price": 0,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-26T21:41:15.000Z",
+          "url": "https://shotgun.live/en/events/inferninho-real-gg-matias-bamboloki-2026-09-11"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Primeiro Lote",
+          "price": 20,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-26T21:41:15.000Z",
+          "url": "https://shotgun.live/en/events/inferninho-real-gg-matias-bamboloki-2026-09-11"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Segundo Lote",
+          "price": 30,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-26T21:41:15.000Z",
+          "url": "https://shotgun.live/en/events/inferninho-real-gg-matias-bamboloki-2026-09-11"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "APOIADOR PICLES",
+          "price": 100,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-26T21:41:15.000Z",
+          "url": "https://shotgun.live/en/events/inferninho-real-gg-matias-bamboloki-2026-09-11"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/latinobregarave-na-casinha-2",
+      "seconds": 0.636,
+      "name": "Latinobregarave Na Casinha",
+      "startDate": "2026-09-11T23:00:00.000Z",
+      "endDate": "2026-09-12T06:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Rua Jorge Rizzo, 63 - Pinheiros, São Paulo - SP, 05424-060, Brazil",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Jorge Rizzo, 63 - Pinheiros, São Paulo - SP, 05424-060, Brazil",
+          "addressLocality": "São Paulo",
+          "postalCode": "05424-060",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5705233,
+          "longitude": -46.6975358
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "casinha.cc",
+        "url": "https://shotgun.live/en/venues/casinha-cc"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "Jambruna",
+          "url": "https://shotgun.live/en/artists/jambruna"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "amaranta",
+          "url": "https://shotgun.live/en/artists/amarrrata"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "early birds ( entrada gratuita até as 22h )",
+          "price": 0,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-03T21:05:28.000Z",
+          "url": "https://shotgun.live/en/events/latinobregarave-na-casinha-2"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "ingresso antecipado",
+          "price": 30,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-03T21:05:28.000Z",
+          "url": "https://shotgun.live/en/events/latinobregarave-na-casinha-2"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "depois fica mais caro",
+          "price": 40,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-03T21:05:28.000Z",
+          "url": "https://shotgun.live/en/events/latinobregarave-na-casinha-2"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/baile-da-disk-cybernight",
+      "seconds": 0.645,
+      "name": "Baile Da Disk Cybernight",
+      "startDate": "2026-09-12T01:00:00.000Z",
+      "endDate": "2026-09-12T08:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Viela Ema Angelo Murari, 8 - Lapa, São Paulo - SP, 05050-093, Brasil",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Viela Ema Angelo Murari, 8 - Lapa, São Paulo - SP, 05050-093, Brasil",
+          "addressLocality": "Lapa",
+          "postalCode": "05050-093",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5208749,
+          "longitude": -46.701242
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Baile da Disk Female Sound",
+        "url": "https://shotgun.live/en/venues/baile-da-disk-female-sound"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "piscianja",
+          "url": "https://shotgun.live/en/artists/alline-dos-santos-ii"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "DJ FANTASTIC",
+          "url": "https://shotgun.live/en/artists/gta-d-p"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Sarah Bozzolo",
+          "url": "https://shotgun.live/en/artists/sarah-bozzolo"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "AKAYA",
+          "url": "https://shotgun.live/en/artists/eliana-estrela-de-souza"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "Pré-venda",
+          "price": 15,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "Combo 3 Ingressos (Pré-venda)",
+          "price": 38,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "Combo 5 Ingressos (Pré-venda)",
+          "price": 56,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "1° Lote",
+          "price": 20,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "Combo 3 Ingressos (1° Lote)",
+          "price": 52,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "Combo 5 Ingressos (1° Lote)",
+          "price": 75,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "2°lote",
+          "price": 27,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Combo 2 Ingressos (2° Lote)",
+          "price": 48.6,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Combo 3 Ingressos (2° Lote)",
+          "price": 68.9,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Combo 5 Ingressos (2° Lote)",
+          "price": 108,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-08T21:25:03.000Z",
+          "url": "https://shotgun.live/en/events/baile-da-disk-cybernight"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/heartbreak-party-open-bar-11-09",
+      "seconds": 0.886,
+      "name": "Heartbreak Party | Open Bar | 11/09",
+      "startDate": "2026-09-12T01:00:00.000Z",
+      "endDate": "2026-09-12T08:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Clube Outs",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Augusta, 486 - Cerqueira César, São Paulo - SP, 01304-000, Brasil",
+          "addressLocality": "Cerqueira César",
+          "postalCode": "01304-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5513727,
+          "longitude": -46.6508417
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Clube Outs",
+        "url": "https://shotgun.live/en/venues/clubeouts"
+      },
+      "performer": [],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "OPEN BAR individual",
+          "price": 70,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-01T11:56:56.000Z",
+          "url": "https://shotgun.live/en/events/heartbreak-party-open-bar-11-09"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "OPEN BAR CASAL (duas pessoas)",
+          "price": 120,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-01T11:56:56.000Z",
+          "url": "https://shotgun.live/en/events/heartbreak-party-open-bar-11-09"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "OPEN BAR TRISAL (três pessoas)",
+          "price": 165,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-01T11:56:56.000Z",
+          "url": "https://shotgun.live/en/events/heartbreak-party-open-bar-11-09"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "COMBO OPEN BAR 23 ANOS (cinco pessoas)",
+          "price": 250,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-01T11:56:56.000Z",
+          "url": "https://shotgun.live/en/events/heartbreak-party-open-bar-11-09"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/met-rala-3-anos",
+      "seconds": 0.671,
+      "name": "Met&Rala 3 Anos",
+      "startDate": "2026-09-12T01:00:00.000Z",
+      "endDate": "2026-09-12T08:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Espaço Nobre",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Formosa, 65 - Centro Histórico de São Paulo, São Paulo - SP, 01049-000, Brasil",
+          "addressLocality": "Centro Histórico De São Paulo",
+          "postalCode": "01049-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5475725,
+          "longitude": -46.6390161
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Met&Rala",
+        "url": "https://shotgun.live/en/venues/met-rala"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "DJ RAY",
+          "url": "https://shotgun.live/en/artists/rayanne-duarte-272021525"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "dj Kue da Mada",
+          "url": "https://shotgun.live/en/artists/kueaguiar"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Irmãos Metralha",
+          "url": "https://shotgun.live/en/artists/irmaosmetralha011"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "LARA SANCHES",
+          "url": "https://shotgun.live/en/artists/larasanches"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "DJ Rafinha Duarte",
+          "url": "https://shotgun.live/en/artists/dj-rafinha-duarte"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "DJ RD DA DZ7",
+          "url": "https://shotgun.live/en/artists/dj-rd-da-dz7"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "LOTE ESPECIAL",
+          "price": 10,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T14:32:19.000Z",
+          "url": "https://shotgun.live/en/events/met-rala-3-anos"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "PRIMEIRO LOTE",
+          "price": 15,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T14:32:19.000Z",
+          "url": "https://shotgun.live/en/events/met-rala-3-anos"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "SEGUNDO LOTE",
+          "price": 20,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T14:32:19.000Z",
+          "url": "https://shotgun.live/en/events/met-rala-3-anos"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "LOTE EXTRA",
+          "price": 25,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T14:32:19.000Z",
+          "url": "https://shotgun.live/en/events/met-rala-3-anos"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/11-de-setembro",
+      "seconds": 0.792,
+      "name": "11 De Setembro",
+      "startDate": "2026-09-12T02:00:00.000Z",
+      "endDate": "2026-09-12T07:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Estúdio Lâmina",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Avenida São João, 108 - 41 - Centro Histórico de São Paulo, São Paulo - SP, 01036-000, Brasil",
+          "addressLocality": "Centro Histórico De São Paulo",
+          "postalCode": "01036-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5448091,
+          "longitude": -46.6356572
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "festa concreta",
+        "url": "https://shotgun.live/en/venues/festa-concreta"
+      },
+      "performer": [],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "PRÉ-VENDA",
+          "price": 10,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-20T15:54:19.000Z",
+          "url": "https://shotgun.live/en/events/11-de-setembro"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "primeiro lote",
+          "price": 20,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-20T15:54:19.000Z",
+          "url": "https://shotgun.live/en/events/11-de-setembro"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "segundo lote",
+          "price": 30,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-20T15:54:19.000Z",
+          "url": "https://shotgun.live/en/events/11-de-setembro"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "lista trans",
+          "price": 0,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-20T15:54:19.000Z",
+          "url": "https://shotgun.live/en/events/11-de-setembro"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/garupa-dr-banana-all-night-long",
+      "seconds": 0.833,
+      "name": "Garupa @Dr. Banana Club All Night Long",
+      "startDate": "2026-09-12T02:00:00.000Z",
+      "endDate": "2026-09-12T09:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Dr Banana Club",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Vergueiro, 6712 - Vila Brasilio Machado, São Paulo - SP, 04272-200, Brasil",
+          "addressLocality": "Vila Brasilio Machado",
+          "postalCode": "04272-200",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.6047137,
+          "longitude": -46.6146795
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Garupa",
+        "url": "https://shotgun.live/en/venues/garupa"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "Garupa",
+          "url": "https://shotgun.live/en/artists/garupa-coletiva"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "early bird (entrada até meia noite)",
+          "price": 20,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-01T15:08:58.000Z",
+          "url": "https://shotgun.live/en/events/garupa-dr-banana-all-night-long"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "trust pass",
+          "price": 30,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-01T15:08:58.000Z",
+          "url": "https://shotgun.live/en/events/garupa-dr-banana-all-night-long"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/rush-das-primas",
+      "seconds": 0.93,
+      "name": "Rush! Das Primas",
+      "startDate": "2026-09-12T02:00:00.000Z",
+      "endDate": "2026-09-12T09:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Casa da Luz - Espaço Cultural",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Mauá, 512 - Centro Histórico de São Paulo, São Paulo - SP, 01028-000, Brasil",
+          "addressLocality": "Centro Histórico De São Paulo",
+          "postalCode": "01028-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5356065,
+          "longitude": -46.6349966
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Casa da Luz",
+        "url": "https://shotgun.live/en/venues/casadaluz"
+      },
+      "performer": [],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "ÚLTIMO LOTE",
+          "price": 30,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-30T21:33:16.000Z",
+          "url": "https://shotgun.live/en/events/rush-das-primas"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/minhoqueens-theeraofpop-1109-sexta",
+      "seconds": 0.61,
+      "name": "Minhoqueens The Era Of Pop - 11/09 (Sexta)",
+      "startDate": "2026-09-12T02:30:00.000Z",
+      "endDate": "2026-09-12T09:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Fabrique Club - Espaço de Shows e Eventos em SP",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Barra Funda, 1071 - Barra Funda, São Paulo - SP, 01152-000, Brasil",
+          "addressLocality": "Barra Funda",
+          "postalCode": "01152-000",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5267611,
+          "longitude": -46.6602332
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "Minhoqueens",
+        "url": "https://shotgun.live/en/venues/minhoqueens"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "Paola Cadillac",
+          "url": "https://shotgun.live/en/artists/paola-cadillac"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "DJ LUIS GIUSTI",
+          "url": "https://shotgun.live/en/artists/djluigi_oficial"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Naty Posner",
+          "url": "https://shotgun.live/en/artists/natyposner"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "SEGUIDORES SHOTGUN - VIP ATÉ 0h30",
+          "price": 0,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T23:00:01.000Z",
+          "url": "https://shotgun.live/en/events/minhoqueens-theeraofpop-1109-sexta"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "ENTRADA LOTE PROMO - ATÉ 0H30",
+          "price": 15,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T23:00:01.000Z",
+          "url": "https://shotgun.live/en/events/minhoqueens-theeraofpop-1109-sexta"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/LimitedAvailability",
+          "name": "ENTRADA 1º LOTE",
+          "price": 20,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T23:00:01.000Z",
+          "url": "https://shotgun.live/en/events/minhoqueens-theeraofpop-1109-sexta"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "ENTRADA GRUPO 3 PESSOAS - LOTE ÚNICO",
+          "price": 45,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-08-31T23:00:01.000Z",
+          "url": "https://shotgun.live/en/events/minhoqueens-theeraofpop-1109-sexta"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/uma-noite-de-charli-xcx-madonna-sexta-11-9",
+      "seconds": 0.809,
+      "name": "Uma Noite De Charli Xcx & Madonna Sexta 11/9",
+      "startDate": "2026-09-12T02:30:00.000Z",
+      "endDate": "2026-09-12T09:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "ZIG Duplex",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Araújo, 155 - República, São Paulo - SP, 01220-020, Brasil",
+          "addressLocality": "República",
+          "postalCode": "01220-020",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5452994,
+          "longitude": -46.6445762
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "ZIG",
+        "url": "https://shotgun.live/en/venues/zig"
+      },
+      "performer": [],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "Lote 1",
+          "price": 20,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-08T19:54:51.000Z",
+          "url": "https://shotgun.live/en/events/uma-noite-de-charli-xcx-madonna-sexta-11-9"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "Lote 2",
+          "price": 30,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-08T19:54:51.000Z",
+          "url": "https://shotgun.live/en/events/uma-noite-de-charli-xcx-madonna-sexta-11-9"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Lote 3",
+          "price": 40,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-08T19:54:51.000Z",
+          "url": "https://shotgun.live/en/events/uma-noite-de-charli-xcx-madonna-sexta-11-9"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "Lote 4",
+          "price": 50,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-09-08T19:54:51.000Z",
+          "url": "https://shotgun.live/en/events/uma-noite-de-charli-xcx-madonna-sexta-11-9"
+        }
+      ]
+    },
+    {
+      "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar",
+      "seconds": 0.871,
+      "name": "Bailão Otaku - 14 Edição No Submundo - Halloween - Open Bar",
+      "startDate": "2026-10-25T01:00:00.000Z",
+      "endDate": "2026-10-25T09:00:00.000Z",
+      "has_offers": true,
+      "location": {
+        "@type": "Place",
+        "name": "Audio",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Avenida Francisco Matarazzo, 694 - Água Branca, São Paulo - SP, 05001-100, Brasil",
+          "addressLocality": "Água Branca",
+          "postalCode": "05001-100",
+          "addressCountry": "BR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -23.5283521,
+          "longitude": -46.6696465
+        }
+      },
+      "organizer": {
+        "@type": "LocalBusiness",
+        "name": "bailão otaku",
+        "url": "https://shotgun.live/en/venues/bailao-otaku"
+      },
+      "performer": [
+        {
+          "@type": "MusicGroup",
+          "name": "Mc Maha",
+          "url": "https://shotgun.live/en/artists/dominic-maha"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "MC HK DA 7",
+          "url": "https://shotgun.live/en/artists/mchkda7-403567601"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Dj Henrique de ferraz",
+          "url": "https://shotgun.live/en/artists/henriquedeejhay"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "DJ GP da ZL",
+          "url": "https://shotgun.live/en/artists/dj-gp-da-zl"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "KALIXTO",
+          "url": "https://shotgun.live/en/artists/kalixto"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "DJ Léo da 17",
+          "url": "https://shotgun.live/en/artists/djleoda17"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "MikeFly",
+          "url": "https://shotgun.live/en/artists/mikeflymusic"
+        },
+        {
+          "@type": "MusicGroup",
+          "name": "Dj Alexia",
+          "url": "https://shotgun.live/en/artists/djalexiaoficial"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "CAMAROTE | ULTIMO LOTE",
+          "price": 239.99,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-08T15:00:06.000Z",
+          "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "PISTA | ANIVERSARIANTE",
+          "price": 80,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-08T15:00:06.000Z",
+          "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "PISTA | TERCEIRO LOTE",
+          "price": 119.99,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-08T15:00:06.000Z",
+          "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "CAMAROTE | PRIMEIRO LOTE",
+          "price": 199.99,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-08T15:00:06.000Z",
+          "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "name": "PISTA | ULTIMO LOTE",
+          "price": 129.99,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-08T15:00:06.000Z",
+          "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "PISTA | SEGUNDO LOTE",
+          "price": 109.99,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-08T15:00:06.000Z",
+          "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar"
+        },
+        {
+          "@type": "Offer",
+          "availability": "https://schema.org/SoldOut",
+          "name": "PISTA | LOTE PROMOCIONAL",
+          "price": 80,
+          "priceCurrency": "BRL",
+          "validFrom": "2026-07-08T15:00:06.000Z",
+          "url": "https://shotgun.live/en/events/bailao-otaku-14-edicao-no-submundo-halloween-open-bar"
+        }
+      ]
+    }
+  ]
+}

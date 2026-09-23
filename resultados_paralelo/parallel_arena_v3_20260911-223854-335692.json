@@ -1,0 +1,50 @@
+{
+  "variant": "suiteviagem-parallel-arena-v3-dedicated-workers",
+  "requested": {
+    "flight_origin": "RIO",
+    "flight_dest": "SAO",
+    "hotel_city": "Petrópolis",
+    "car_location": "Sao Paulo Guarulhos Airport (GRU), Sao Paulo, Brazil",
+    "event_city": "São Paulo",
+    "start": "2026-09-20",
+    "end": "2026-09-21",
+    "limit": 5
+  },
+  "user_query_wall_seconds": 49.056,
+  "results": {
+    "events": {
+      "module": "events",
+      "ok": true,
+      "seconds": 3.76,
+      "count": 0,
+      "results": []
+    },
+    "flights": {
+      "module": "flights",
+      "ok": true,
+      "seconds": 11.436,
+      "price": 879.0,
+      "price_count": 154,
+      "session_reused": true
+    },
+    "cars": {
+      "module": "cars",
+      "ok": false,
+      "seconds": 41.313,
+      "error": "TimeoutException: Message: \n",
+      "logs_tail": [
+        "Preenchendo o local. Se houver aviso de cookies, feche-o na janela.",
+        "Abrindo seletor de local no layout compacto...",
+        "FALHA: TimeoutException: Message: \n",
+        "Diagnóstico salvo em /home/vsalles/raspador_voo_hotel_carro_evento/suite-viagem/resultados_carros",
+        "Tempos por etapa (segundos): {'validation_seconds': 0.0054, 'driver_seconds': 0.0027, 'fast_path_used': 0, 'navigation_seconds': 0.2621, 'location_seconds': 37.4492, 'diagnostic_seconds': 1.878, 'cleanup_seconds': 0.0, 'total_seconds': 39.5975}"
+      ]
+    },
+    "hotels": {
+      "module": "hotels",
+      "ok": false,
+      "seconds": 49.052,
+      "error": "RuntimeError: Busca pelo formulário não retornou cartões com destino, datas e ocupação correspondentes. Nenhum preço foi aceito."
+    }
+  }
+}

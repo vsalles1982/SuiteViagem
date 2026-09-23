@@ -1,0 +1,43 @@
+{
+  "variant": "suiteviagem-parallel-arena-v1",
+  "requested": {
+    "flight_origin": "RIO",
+    "flight_dest": "SAO",
+    "hotel_city": "São Paulo",
+    "car_location": "Sao Paulo Guarulhos Airport (GRU), Sao Paulo, Brazil",
+    "event_city": "São Paulo",
+    "start": "2026-09-20",
+    "end": "2026-09-21",
+    "limit": 5
+  },
+  "total_wall_seconds": 127.458,
+  "results": {
+    "events": {
+      "kind": "events",
+      "ok": true,
+      "elapsed": 3.1,
+      "count": 0,
+      "results": [],
+      "failures": [],
+      "source": "shotgun_jsonld_parallel"
+    },
+    "flights": {
+      "kind": "flights",
+      "ok": false,
+      "elapsed": 49.332,
+      "error": "RuntimeError: GetShoppingResults válido não apareceu em até 15 s."
+    },
+    "hotels": {
+      "kind": "hotels",
+      "ok": false,
+      "elapsed": 67.269,
+      "error": "RuntimeError: Consulta manteve os parâmetros, mas não apresentou cartões em 20 segundos."
+    },
+    "cars": {
+      "kind": "cars",
+      "ok": false,
+      "elapsed": 127.445,
+      "error": "TimeoutException: Message: \n"
+    }
+  }
+}

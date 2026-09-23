@@ -1,0 +1,71 @@
+{
+  "variant": "suiteviagem-parallel-arena-v3.3-priority-lane",
+  "requested": {
+    "flight_origin": "RIO",
+    "flight_dest": "SAO",
+    "hotel_city": "Petrópolis",
+    "car_location": "Sao Paulo Guarulhos Airport (GRU), Sao Paulo, Brazil",
+    "event_city": "São Paulo",
+    "start": "2026-09-20",
+    "end": "2026-09-21",
+    "limit": 5
+  },
+  "user_query_wall_seconds": 37.367,
+  "heavy_gate_reason": "gate_timeout_9s",
+  "results": {
+    "events": {
+      "module": "events",
+      "ok": true,
+      "seconds": 9.418,
+      "count": 0,
+      "results": []
+    },
+    "flights": {
+      "module": "flights",
+      "ok": false,
+      "seconds": 15.991,
+      "error": "RuntimeError: GetShoppingResults válido não apareceu em até 15 s."
+    },
+    "cars": {
+      "module": "cars",
+      "ok": true,
+      "seconds": 7.666,
+      "count": 5,
+      "timings": {
+        "driver_seconds": 0.0,
+        "fast_path_seconds": 2.7673,
+        "fast_path_used": 1,
+        "navigation_seconds": 2.7673,
+        "results_wait_seconds": 4.0465,
+        "sorting_seconds": 0.1294,
+        "first_batch_seconds": 7.5296,
+        "collection_seconds": 0.0,
+        "export_seconds": 0.0859,
+        "cleanup_seconds": 0.0,
+        "total_seconds": 7.6188
+      },
+      "logs_tail": [
+        "Fiat Mobi | Foco | R$ 183,03",
+        "Peugeot 208 | Foco | R$ 187,86",
+        "Volkswagen Polo | Foco | R$ 187,91",
+        "Hyundai HB20S | Foco | R$ 193,95",
+        "Exportadas: 5 | Limite solicitado: 5 | Cobertura: Não incluída"
+      ]
+    },
+    "hotels": {
+      "module": "hotels",
+      "ok": true,
+      "seconds": 27.371,
+      "count": 25,
+      "timings": {
+        "driver_seconds": 0.557,
+        "driver_reused": true,
+        "navigation_seconds": 25.586,
+        "cards_seconds": 1.226,
+        "finalize_seconds": 0.0,
+        "export_seconds": 0.0,
+        "total_seconds": 27.37
+      }
+    }
+  }
+}
