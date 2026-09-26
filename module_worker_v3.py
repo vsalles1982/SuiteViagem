@@ -18,6 +18,33 @@ def emit(prefix, payload):
     print(prefix + json.dumps(payload, ensure_ascii=False, default=str), flush=True)
 
 
+def car_details(rows):
+    import math
+
+    def value(row, *keys):
+        return next((row[k] for k in keys if row.get(k) not in (None, "")), None)
+
+    results = []
+    for row in (rows or [])[:30]:
+        if not isinstance(row, dict):
+            continue
+        raw_price = row.get("TotalBRL")
+        try:
+            price = float(raw_price) if raw_price is not None else None
+        except (TypeError, ValueError, OverflowError):
+            price = None
+        if price is not None and (not math.isfinite(price) or price < 0):
+            price = None
+        results.append({
+            "name": value(row, "Carro", "CarName", "Car", "Name", "name", "Modelo", "model"),
+            "supplier": value(row, "Fornecedor", "Supplier", "supplier", "Locadora", "RentalCompany"),
+            "price": price,
+            "currency": "BRL",
+            "url": value(row, "URL", "Url", "url", "Link", "link", "OfferURL", "BookingURL"),
+        })
+    return results
+
+
 def flights_worker():
     from google_flights_fastpath import run_fast_search, close_fast_session
     emit("READY:", {"module": "flights"})
@@ -43,9 +70,10 @@ def flights_worker():
                     r = run_fast_search(cmd["origin"], cmd["dest"], cmd["start"], headless=True)
                     emit("DONE:", {"module": "flights", "ok": True,
                                    "seconds": round(time.monotonic()-t, 3),
-                                   "price": r.get("price"),
-                                   "price_count": r.get("price_count"),
-                                   "session_reused": r.get("session_reused")})
+"price": r.get("price"),
+                                    "price_count": r.get("price_count"),
+                                    "top_prices": r.get("top5_prices") or [],
+                                    "session_reused": r.get("session_reused")})
                 except Exception as exc:
                     emit("DONE:", {"module": "flights", "ok": False,
                                    "seconds": round(time.monotonic()-t, 3),
@@ -90,8 +118,16 @@ def hotels_worker():
                                   "seconds": round(time.monotonic()-t, 3),
                                   "count": len(records),
                                   "best_price": min(confirmed) if confirmed else None,
-                                  "top": top,
-                                  "timings": r.get("timings")})
+"top": top,
+                                    "results": [{
+                                        "name": row.get("Hotel Name"),
+                                        "price": row.get("Price"),
+                                        "total": row.get("Total Displayed (BRL)") or row.get("Price"),
+                                        "currency": row.get("Currency", "BRL"),
+                                        "url": row.get("Hotel URL"),
+                                        "stars": row.get("Stars", row.get("Star Rating")),
+                                    } for row in records[:30]] if cmd["op"] == "search" else [],
+                                    "timings": r.get("timings")})
                 except Exception as exc:
                     emit(prefix, {"module": "hotels", "ok": False,
                                   "seconds": round(time.monotonic()-t, 3),
@@ -193,6 +229,7 @@ def cars_worker():
                                    "count": len(r.get("resultados", [])),
                                    "best_price": top[0]["price"] if top else None,
                                    "top": top,
+                                   "results": car_details(r.get("resultados")),
                                    "timings": r.get("timings"),
                                    "logs_tail": logs[-5:]})
                 except Exception as exc:

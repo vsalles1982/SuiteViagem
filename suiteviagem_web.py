@@ -147,6 +147,22 @@ button{cursor:pointer}
 .metric-value{font-size:30px;font-weight:900;letter-spacing:-.035em;margin-top:2px}
 .detail-box{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.82);font-size:13px}
 .detail-box b{color:white}
+.see-all{position:relative;z-index:1;margin-top:16px;padding:9px 13px;border:1px solid rgba(255,255,255,.35);border-radius:10px;background:rgba(0,0,0,.18);color:var(--text)}
+.see-all:disabled{opacity:.45;cursor:not-allowed}
+.see-all:focus-visible,.details-close:focus-visible,.details-list a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.details-modal{width:min(720px,calc(100% - 24px));max-height:85vh;max-height:85dvh;padding:0;border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--text);box-shadow:var(--shadow);overflow:auto}
+.details-modal::backdrop{background:rgba(0,0,0,.72)}
+body:has(.details-modal[open]){overflow:hidden}
+.details-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+.details-head h2{margin:0;font-size:20px}
+.details-close{flex-shrink:0;width:44px;height:44px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font-size:26px}
+.details-note{margin:16px 20px;color:var(--muted);font-size:13px}
+.details-list{list-style:none;margin:0;padding:0 20px 20px}
+.details-list li{padding:16px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}
+.details-list h3{margin:0;font-size:16px}
+.details-meta{margin:5px 0;color:var(--muted);font-size:13px}
+.details-price{margin:8px 0;font-weight:800}
+.details-list a{display:inline-block;padding:6px 0;color:var(--accent);text-underline-offset:3px}
 .event .card-body{margin-top:12px}
 .event-list{margin-top:10px;max-height:172px;overflow-y:auto;overscroll-behavior:contain;padding-right:6px}
 .event-list::-webkit-scrollbar{width:5px}
@@ -305,6 +321,7 @@ button{cursor:pointer}
           <div class="metric-label">Menor preço</div><div class="metric-value">—</div>
           <div class="detail-box">Aguardando pesquisa</div>
         </div>
+        <button type="button" class="see-all" data-module="flight" aria-haspopup="dialog" aria-controls="detailsModal" aria-label="Ver todos os voos" disabled>Ver todos →</button>
       </article>
 
       <article class="card hotel" id="hotelCard">
@@ -316,6 +333,7 @@ button{cursor:pointer}
           <div class="metric-label">Melhor opção</div><div class="metric-value">—</div>
           <div class="detail-box">Aguardando pesquisa</div>
         </div>
+        <button type="button" class="see-all" data-module="hotel" aria-haspopup="dialog" aria-controls="detailsModal" aria-label="Ver todos os hotéis" disabled>Ver todos →</button>
       </article>
 
       <article class="card car" id="carCard">
@@ -327,6 +345,7 @@ button{cursor:pointer}
           <div class="metric-label">Melhor opção</div><div class="metric-value">—</div>
           <div class="detail-box">Aguardando pesquisa</div>
         </div>
+        <button type="button" class="see-all" data-module="car" aria-haspopup="dialog" aria-controls="detailsModal" aria-label="Ver todos os carros" disabled>Ver todos →</button>
       </article>
 
       <article class="card event" id="eventCard">
@@ -338,6 +357,7 @@ button{cursor:pointer}
           <div class="metric-label">Agenda no período</div><div class="metric-value">—</div>
           <div class="detail-box">Aguardando pesquisa</div>
         </div>
+        <button type="button" class="see-all" data-module="event" aria-haspopup="dialog" aria-controls="detailsModal" aria-label="Ver todos os eventos" disabled>Ver todos →</button>
       </article>
     </section>
 
@@ -363,11 +383,86 @@ button{cursor:pointer}
   <button type="button" disabled title="Em breve">⚙<br>Ajustes</button>
 </nav>
 
+<dialog id="detailsModal" class="details-modal" aria-labelledby="detailsTitle" aria-describedby="detailsNote">
+  <div class="details-head">
+    <h2 id="detailsTitle">Detalhes</h2>
+    <button type="button" class="details-close" id="detailsClose" aria-label="Fechar detalhes" autofocus>×</button>
+  </div>
+  <p id="detailsNote" class="details-note"></p>
+  <ul id="detailsList" class="details-list"></ul>
+</dialog>
+
 <script>
 const $=id=>document.getElementById(id);
 let ready=false, prices={flight:null,hotel:null,car:null,event:null};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const brl=v=>v==null?'—':new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v);
+let detailPayloads=Object.create(null), detailQuery={};
+const detailTitles={flight:'Voos',hotel:'Hospedagens',car:'Carros',event:'Eventos'};
+const detailSites={hotel:'https://www.booking.com/',car:'https://www.discovercars.com/',event:'https://shotgun.live/'};
+function detailMoney(value,currency){
+  if(value==null||String(value).trim()==='')return 'Preço não informado';
+  const amount=Number(value);
+  if(!Number.isFinite(amount)||amount<0)return 'Preço não informado';
+  const code=String(currency||'BRL').toUpperCase();
+  try{return new Intl.NumberFormat('pt-BR',{style:'currency',currency:code}).format(amount)}
+  catch{return `${amount.toLocaleString('pt-BR')} ${code}`}
+}
+function detailUrl(value){
+  if(typeof value!=='string'||!value.trim())return '';
+  try{
+    const url=new URL(value);
+    return ['https:','http:'].includes(url.protocol)?url.href:'';
+  }catch{return ''}
+}
+function detailRows(k,r){
+  if(k==='flight'){
+    const rows=Array.isArray(r.top_prices)?r.top_prices:[];
+    return rows.map((value,i)=>{
+      const row=value&&typeof value==='object'?value:{price:value};
+      return {...row,name:row.name||`Opção de voo ${i+1}`};
+    });
+  }
+  return Array.isArray(r.results)?r.results:[];
+}
+function openDetails(k){
+  const r=detailPayloads[k];
+  if(!r||!r.ok)return;
+  const rows=detailRows(k,r);
+  const flightQuery=`Voos de ${detailQuery.origin||''} para ${detailQuery.dest||''} em ${detailQuery.start||''}`;
+  const fallback=k==='flight'?`https://www.google.com/travel/flights?hl=pt-BR&curr=BRL&q=${encodeURIComponent(flightQuery)}`:detailSites[k];
+  $('detailsTitle').textContent=`${detailTitles[k]} · ${rows.length} opção(ões)`;
+  $('detailsNote').textContent=(k==='flight'?'Até 5 preços retornados pelo motor. ':k==='hotel'||k==='car'?'Até 30 opções retornadas pelo motor. ':'')+'Apenas resultados desta busca, sem nova consulta. O site externo pode atualizar preços.';
+  $('detailsList').innerHTML=rows.length?rows.map((value,i)=>{
+    const row=value&&typeof value==='object'?value:{};
+    const name=row.name||row.title||`${detailTitles[k]} ${i+1}`;
+    let meta=[];
+    if(k==='flight')meta=[detailQuery.origin,detailQuery.dest,detailQuery.start];
+    if(k==='hotel')meta=[row.stars!=null?`${row.stars} estrela(s)`:'',row.total!=null?'Total da estadia':'Preço coletado'];
+    if(k==='car')meta=[row.supplier,'Total da locação'];
+    if(k==='event')meta=[row.date||row.datetime||row.startDate||row.start,row.venue||row.place||row.location];
+    const price=detailMoney(k==='hotel'?(row.total??row.price):row.price,row.currency);
+    const direct=detailUrl(row.url)||detailUrl(row.link)||detailUrl(row.event_url);
+    const href=direct||fallback;
+    const label=direct?'Abrir oferta':k==='flight'?'Consultar no Google Flights':'Abrir site do fornecedor';
+    return `<li><h3>${esc(name)}</h3><p class="details-meta">${meta.filter(v=>v!=null&&v!=='').map(esc).join(' · ')}</p><p class="details-price">${esc(price)}</p><a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${label} ↗<span class="details-meta"> (nova aba)</span></a></li>`;
+  }).join(''):'<li>Nenhum resultado disponível para esta busca.</li>';
+  if(!$('detailsModal').open)$('detailsModal').showModal();
+}
+$('detailsClose').addEventListener('click',()=>$('detailsModal').close());
+$('detailsModal').addEventListener('cancel',e=>{
+  e.preventDefault();
+  $('detailsModal').close();
+});
+$('detailsModal').addEventListener('click',e=>{
+  if(e.target!==e.currentTarget)return;
+  const rect=e.currentTarget.getBoundingClientRect();
+  if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)e.currentTarget.close();
+});
+document.addEventListener('click',e=>{
+  const button=e.target instanceof Element?e.target.closest('.see-all'):null;
+  if(button&&!button.disabled)openDetails(button.dataset.module);
+});
 
 function setLoading(k){
   $(k+'Time').textContent='…';
@@ -375,6 +470,11 @@ function setLoading(k){
   $(k+'Body').innerHTML='<div class="skeleton" style="width:52%"></div><div class="skeleton" style="width:78%"></div><div class="skeleton" style="width:64%"></div>';
 }
 function reset(){
+  if($('detailsModal').open)$('detailsModal').close();
+  $('detailsList').replaceChildren();
+  detailPayloads=Object.create(null);
+  detailQuery={origin:$('fo').value.trim(),dest:$('fd').value.trim(),start:$('start').value};
+  document.querySelectorAll('.see-all').forEach(button=>{button.disabled=true});
   prices={flight:null,hotel:null,car:null,event:null};
   ['flight','hotel','car','event'].forEach(setLoading);
   $('total').textContent='R$ —';
@@ -396,7 +496,12 @@ function renderModule(r){
   const map={flights:'flight',hotels:'hotel',cars:'car',events:'event'}, k=map[r.module]; if(!k)return;
   $(k+'Card').classList.remove('loading');
   $(k+'Time').textContent=(r.seconds??0).toFixed(2)+'s';
+  const detailButton=document.querySelector(`.see-all[data-module="${k}"]`);
+  delete detailPayloads[k];
+  detailButton.disabled=true;
   if(!r.ok){failCard(k,r);return}
+  detailPayloads[k]=r;
+  detailButton.disabled=false;
   if(k==='flight'){
     prices.flight=Number(r.price)||null;
     $(k+'Body').innerHTML=`<div class="metric-label">Menor preço</div><div class="metric-value">${brl(prices.flight)}</div><div class="detail-box"><b>${r.price_count||0}</b> preços analisados</div>`;
