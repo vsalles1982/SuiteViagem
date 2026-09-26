@@ -105,9 +105,13 @@ button{cursor:pointer}
 }
 .input-wrap input:focus{border-color:rgba(156,255,87,.58);box-shadow:0 0 0 3px rgba(156,255,87,.08)}
 .input-wrap input[type="date"]{color-scheme:dark}
-.search-action{display:flex;align-items:flex-end}
+.search-action{display:flex;align-items:flex-end;flex-wrap:wrap;gap:10px;grid-column:1/-1}
+.search-action button{flex:1 1 220px;min-width:0}
+#tripLink{min-height:48px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);color:var(--text);font-weight:750}
+#tripLink:disabled{opacity:.65;cursor:wait}
+#tripLink:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 #go{
-  width:100%;height:48px;border:0;border-radius:14px;font-weight:850;font-size:16px;color:#07140b;
+  height:48px;border:0;border-radius:14px;font-weight:850;font-size:16px;color:#07140b;
   background:linear-gradient(90deg,#6cf686,#b3ff62);
   box-shadow:0 12px 30px rgba(108,246,134,.16);transition:.18s transform,.18s opacity;
 }
@@ -248,6 +252,7 @@ body:has(.details-modal[open]){overflow:hidden}
       <div class="brand-copy">
         <h1>Suíte de <span>Viagens</span></h1>
         <p>Passagens, hotéis, carros e eventos em uma única busca.</p>
+        <p>Sem cadastro, sem email… gere seu link e voe!</p>
       </div>
     </div>
     <div class="engine-badge" id="readyBadge">
@@ -298,7 +303,10 @@ body:has(.details-modal[open]){overflow:hidden}
           <label for="end">Volta / check-out</label>
           <div class="input-wrap"><span class="ico">▣</span><input id="end" type="date" value="2026-09-21"></div>
         </div>
-        <div class="search-action"><button id="go" disabled>⌕ &nbsp; Pesquisar ao vivo &nbsp; →</button></div>
+        <div class="search-action">
+          <button id="go" disabled>⌕ &nbsp; Pesquisar ao vivo &nbsp; →</button>
+          <button id="tripLink" type="button" aria-live="polite">🔗 Link da viagem</button>
+        </div>
       </div>
 
       <div class="search-status">
@@ -397,6 +405,77 @@ const $=id=>document.getElementById(id);
 let ready=false, prices={flight:null,hotel:null,car:null,event:null};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const brl=v=>v==null?'—':new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v);
+const tripFields=['fo','fd','hc','cl','ec','start','end'];
+let autoRunPending=false, searchRunning=false, linkFeedbackTimer;
+function restoreTripLink(){
+  const params=new Map();
+  let malformed=false;
+  for(const part of location.search.slice(1).split('&')){
+    if(!part)continue;
+    const separator=part.indexOf('=');
+    const key=separator<0?part:part.slice(0,separator);
+    const value=separator<0?'':part.slice(separator+1);
+    try{
+      params.set(decodeURIComponent(key.replace(/\+/g,' ')),decodeURIComponent(value.replace(/\+/g,' ')));
+    }catch{malformed=true}
+  }
+  for(const id of tripFields){
+    if(params.has(id))$(id).value=params.get(id);
+  }
+  const complete=tripFields.every(id=>params.has(id)&&$(id).value.trim());
+  const validDates=['start','end'].every(id=>{
+    const value=$(id).value;
+    const date=new Date(value+'T00:00:00Z');
+    return /^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(date.getTime())&&date.toISOString().slice(0,10)===value;
+  });
+  autoRunPending=!malformed&&params.get('run')==='1'&&complete&&validDates&&$('end').value>$('start').value;
+}
+function maybeRunTrip(){
+  if(!autoRunPending||!ready||searchRunning||$('go').disabled)return;
+  autoRunPending=false;
+  $('go').click();
+}
+function copyTripFallback(text){
+  const field=document.createElement('textarea');
+  const focused=document.activeElement;
+  field.value=text;
+  field.readOnly=true;
+  field.style.cssText='position:fixed;top:0;left:-9999px;font-size:16px';
+  document.body.appendChild(field);
+  try{
+    field.focus({preventScroll:true});
+    field.select();
+    field.setSelectionRange(0,field.value.length);
+    return document.execCommand('copy');
+  }finally{
+    field.remove();
+    if(focused instanceof HTMLElement)focused.focus({preventScroll:true});
+  }
+}
+$('tripLink').addEventListener('click',async()=>{
+  const button=$('tripLink');
+  if(button.disabled)return;
+  clearTimeout(linkFeedbackTimer);
+  button.disabled=true;
+  button.textContent='Copiando…';
+  try{
+    const query=tripFields.map(id=>`${encodeURIComponent(id)}=${encodeURIComponent($(id).value)}`).join('&');
+    const url=`${location.origin}${location.pathname}?${query}&run=1`;
+    let copied=false;
+    if(navigator.clipboard&&window.isSecureContext){
+      try{await navigator.clipboard.writeText(url);copied=true}catch{}
+    }
+    if(!copied)copied=copyTripFallback(url);
+    if(!copied)throw new Error('Clipboard indisponível');
+    button.textContent='Link copiado ✓';
+  }catch{
+    button.textContent='Cópia bloqueada. Tente novamente.';
+  }finally{
+    button.disabled=false;
+    linkFeedbackTimer=setTimeout(()=>{button.textContent='🔗 Link da viagem'},4000);
+  }
+});
+
 let detailPayloads=Object.create(null), detailQuery={};
 const detailTitles={flight:'Voos',hotel:'Hospedagens',car:'Carros',event:'Eventos'};
 const detailSites={hotel:'https://www.booking.com/',car:'https://www.discovercars.com/',event:'https://shotgun.live/'};
@@ -533,7 +612,8 @@ async function pollReady(){
   try{
     const r=await fetch('/api/status'); const j=await r.json();
     ready=j.ready;
-    $('go').disabled=!ready;
+    $('go').disabled=!ready||searchRunning;
+    if(searchRunning)return;
     if(ready&&j.warm_failures&&j.warm_failures.length){
       $('readyBadge').innerHTML='<span style="color:#ffcc00">●</span><span><b>Motores prontos, warmup parcial</b><small>'+j.warm_failures.join('; ')+'</small></span>';
       $('status').textContent='Pronto — busca seguirá mesmo com warmup pendente.';
@@ -548,9 +628,9 @@ async function pollReady(){
       $('status').textContent=j.stage||'Inicializando…';
     }
   }catch(e){$('status').textContent='Servidor iniciando…'}
+  maybeRunTrip();
   if(!ready)setTimeout(pollReady,1000)
 }
-pollReady();
 
 // v3.8.2 — Re-sincroniza o frontend após cache,
 // hard refresh e retorno de aba.
@@ -560,6 +640,9 @@ document.addEventListener('visibilitychange', () => {
 });
 
 $('go').addEventListener('click',async()=>{
+  if(!ready||searchRunning)return;
+  autoRunPending=false;
+  searchRunning=true;
   reset(); $('go').disabled=true; $('status').textContent='Pesquisa ao vivo iniciada…';
   const payload={flight_origin:$('fo').value.trim(),flight_dest:$('fd').value.trim(),hotel_city:$('hc').value.trim(),car_location:$('cl').value.trim(),event_city:$('ec').value.trim(),start:$('start').value,end:$('end').value,limit:5};
   try{
@@ -580,9 +663,12 @@ $('go').addEventListener('click',async()=>{
   }catch(err){
     $('status').textContent=`Erro: ${err.message}`;
   }finally{
+    searchRunning=false;
     $('go').disabled=!ready;
   }
 });
+restoreTripLink();
+pollReady();
 </script>
 </body>
 </html>'''
