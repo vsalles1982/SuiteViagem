@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import time
+from pathlib import Path
 from urllib.parse import quote
 
 from playwright.sync_api import sync_playwright
@@ -47,32 +48,37 @@ def _extract_prices(body: str) -> list[float]:
 
 
 def _safe_sync_playwright_start():
-    """v3.8.5 — Playwright sync falha se houver asyncio loop no thread atual.
-    Roda numa thread limpa para garantir ausência de loop."""
-    try:
-        import asyncio
-        asyncio.get_running_loop()
-        in_loop = True
-    except RuntimeError:
-        in_loop = False
-
-    if not in_loop:
-        return sync_playwright().start()
-
-    import concurrent.futures
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
-        return ex.submit(sync_playwright().start).result()
+    """v3.8.10 — sync_playwright().start() direto.
+    O worker do Flights roda em subprocesso (module_worker_v3.py), sem loop asyncio.
+    O ThreadPoolExecutor da v3.8.5 causava deadlock no greenlet do Playwright
+    no Python 3.14 (in_loop detectado incorretamente)."""
+    return sync_playwright().start()
 
 
 class GoogleFlightsFastSession:
+    # v3.10.1 — Google passou a entregar "Nenhum resultado" para headless/IP de
+    # datacenter. Modo visível (Xvfb) + UA coerente com o Chromium real + supressão
+    # do navigator.webdriver restaurou 93 resultados num teste controlado.
+    REAL_UA = (
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/155.0.0.0 Safari/537.36"
+    )
+
     def __init__(self, headless: bool = True):
-        self.headless = headless
         self.pw = _safe_sync_playwright_start()
-        self.browser = self.pw.chromium.launch(headless=headless)
+        self.browser = self.pw.chromium.launch(
+            headless=False,
+            args=["--disable-blink-features=AutomationControlled",
+                  "--disable-dev-shm-usage"],
+        )
         self.context = self.browser.new_context(
-            viewport={"width": 1000, "height": 700},
+            viewport={"width": 1440, "height": 900},
             locale="pt-BR",
-            service_workers="block",
+            user_agent=self.REAL_UA,
+            service_workers="allow",  # v3.8.11 — SW faz o RPC do GetShoppingResults
+        )
+        self.context.add_init_script(
+            "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})"
         )
 
         def route_handler(route):
@@ -89,8 +95,12 @@ class GoogleFlightsFastSession:
         self.consent_checked = False
 
     def alive(self) -> bool:
+        # v3.10.1 — browser pode seguir "connected" com a página/contexto já
+        # fechados (TargetClosedError no wait_for_timeout). Validar os 3.
         try:
-            return self.browser.is_connected()
+            return (self.browser.is_connected()
+                    and len(self.context.pages) > 0
+                    and not self.page.is_closed())
         except Exception:
             return False
 
@@ -108,19 +118,40 @@ class GoogleFlightsFastSession:
 
         def on_response(response):
             diag["rpc_seen"] += 1
-            if TARGET not in response.url or captured:
+            u = response.url
+            # v3.8.11 — Google passou a renderizar preços no HTML (SSR)
+            # e/ou via batchexecute. Tenta extrair de qualquer response
+            # HTML/JSON grande que contenha indício de preço.
+            ctype = ""
+            try:
+                ctype = (response.headers or {}).get("content-type", "")
+            except Exception:
+                pass
+            is_candidate = (
+                TARGET in u
+                or "batchexecute" in u
+                or "GetShopping" in u
+                or ("text/html" in ctype and "/travel/flights" in u)
+            )
+            if not is_candidate or captured:
                 return
             try:
                 body = response.text()
             except Exception:
                 diag["no_price_bodies"] += 1
                 return
-
+            # DEBUG TEMP — salva corpo da 1ª candidata p/ inspeção
+            if not diag.get("_dumped"):
+                try:
+                    Path("/tmp/flights_body.txt").write_text(body[:500000], encoding="utf-8", errors="replace")
+                    print(f"[DUMP] body salvo ({len(body)} chars) url={u[:120]}", flush=True)
+                except Exception as e:
+                    print(f"[DUMP] erro: {e}", flush=True)
+                diag["_dumped"] = True
             prices = _extract_prices(body)
             if not prices:
                 diag["no_price_bodies"] += 1
                 return
-
             captured.update(
                 status=response.status,
                 response_chars=len(body),
@@ -129,6 +160,7 @@ class GoogleFlightsFastSession:
             )
 
         self.page.on("response", on_response)
+
         try:
             # v3.8.8 — sob carga (booking+events em paralelo) o RPC chega atrasado.
             # Rounds com 20/25/25/30s; 4ª tentativa é o desempate sob contenção.
@@ -216,6 +248,20 @@ def close_fast_session():
 
 def run_fast_search(origem: str, destino: str, data: str, *, headless: bool = True) -> dict:
     session, reused = _get_session(headless=headless)
-    result = session.search(origem, destino, data)
+    try:
+        result = session.search(origem, destino, data)
+    except Exception as first_exc:
+        # v3.10.1 — page/context pode fechar sob Xvfb entre buscas; recria a
+        # sessão e tenta uma vez (espelha o retry de driver morto dos carros).
+        if not any(s in type(first_exc).__name__ or s in str(first_exc)
+                   for s in ("TargetClosed", "Browser", "Execution context")):
+            raise
+        try:
+            session.close()
+        except Exception:
+            pass
+        _FAST_SESSION = None
+        session, reused = _get_session(headless=headless)
+        result = session.search(origem, destino, data)
     result["session_reused"] = reused
     return result

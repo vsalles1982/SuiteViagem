@@ -5,6 +5,7 @@ import json
 import sys
 import threading
 import time
+from datetime import date, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FutureTimeout
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -21,14 +22,18 @@ from parallel_arena_v3 import ProcessWorker, run_events
 HOST = "127.0.0.1"
 PORT = 8787
 
+# Datas padrão sempre no futuro (a cada boot do servidor).
+_START_DEFAULT = (date.today() + timedelta(days=15)).isoformat()
+_END_DEFAULT = (date.today() + timedelta(days=16)).isoformat()
+
 DEFAULTS = {
     "flight_origin": "RIO",
     "flight_dest": "SAO",
-    "hotel_city": "Petrópolis",
+    "hotel_city": "São Paulo",
     "car_location": "Sao Paulo Guarulhos Airport (GRU), Sao Paulo, Brazil",
     "event_city": "São Paulo",
-    "start": "2026-11-07",
-    "end": "2026-11-08",
+    "start": _START_DEFAULT,
+    "end": _END_DEFAULT,
     "limit": 5,
 }
 
@@ -285,7 +290,7 @@ body:has(.details-modal[open]){overflow:hidden}
         </div>
         <div class="field">
           <label for="hc">Cidade do hotel</label>
-          <div class="input-wrap"><span class="ico">🛏</span><input id="hc" value="Petrópolis" autocomplete="off"></div>
+          <div class="input-wrap"><span class="ico">🛏</span><input id="hc" value="São Paulo" autocomplete="off"></div>
         </div>
         <div class="field">
           <label for="cl">Local do carro</label>
@@ -297,11 +302,11 @@ body:has(.details-modal[open]){overflow:hidden}
         </div>
         <div class="field">
           <label for="start">Ida / check-in</label>
-          <div class="input-wrap"><span class="ico">▣</span><input id="start" type="date" value="2026-09-20"></div>
+          <div class="input-wrap"><span class="ico">▣</span><input id="start" type="date" value="__DEFAULT_START__"></div>
         </div>
         <div class="field">
           <label for="end">Volta / check-out</label>
-          <div class="input-wrap"><span class="ico">▣</span><input id="end" type="date" value="2026-09-21"></div>
+          <div class="input-wrap"><span class="ico">▣</span><input id="end" type="date" value="__DEFAULT_END__"></div>
         </div>
         <div class="search-action">
           <button id="go" disabled>⌕ &nbsp; Pesquisar ao vivo &nbsp; →</button>
@@ -672,6 +677,7 @@ pollReady();
 </script>
 </body>
 </html>'''
+HTML = HTML.replace("__DEFAULT_START__", _START_DEFAULT).replace("__DEFAULT_END__", _END_DEFAULT)
 
 class EngineState:
     def __init__(self):
@@ -758,9 +764,14 @@ class EngineState:
             except FutureTimeout:
                 gate = "gate_timeout_9s"
 
-            # v3.8.8 — Events espera 20s p/ não disputar CPU/rede com o Flight.
+            # v3.8.9 (P0-1) — Events adaptativo: em vez de sleep(20) fixo,
+            # espera o Flights terminar (ou no máx 9s) antes de competir por CPU.
             def _events_later(event_city, start, end, limit):
-                time.sleep(20)
+                deadline = time.monotonic() + 9.0
+                while time.monotonic() < deadline:
+                    if ff.done():
+                        break
+                    time.sleep(0.2)
                 return run_events(event_city, start, end, limit)
             ef = executor.submit(_events_later, p["event_city"], p["start"], p["end"], int(p.get("limit",5)))
 

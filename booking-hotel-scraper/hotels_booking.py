@@ -693,18 +693,49 @@ def run_fast_search(destination, checkin, checkout, *, headless=False, on_progre
     driver, created = _get_fast_booking_driver(headless=headless)
     driver_seconds = time.monotonic() - driver_started
 
-    navigation_started = time.monotonic()
-    open_confirmed_search(driver, url, params)
-    navigation_seconds = time.monotonic() - navigation_started
+    navigation_seconds = 0.0
+    cards_seconds = 0.0
+    for attempt in range(2):
+        try:
+            navigation_started = time.monotonic()
+            open_confirmed_search(driver, url, params)
+            navigation_seconds = time.monotonic() - navigation_started
 
-    cards_started = time.monotonic()
-    hotels = extract_hotels(
-        driver,
-        fast=True,
-        on_progress=on_progress,
-        confirm=lambda current_url: query_matches(current_url, params),
-    )
-    cards_seconds = time.monotonic() - cards_started
+            cards_started = time.monotonic()
+            hotels = extract_hotels(
+                driver,
+                fast=True,
+                on_progress=on_progress,
+                confirm=lambda current_url: query_matches(current_url, params),
+            )
+            cards_seconds = time.monotonic() - cards_started
+            break
+        except Exception as exc:
+            name = type(exc).__name__
+            msg = str(exc).lower()
+            dead = (
+                'NoSuchWindow' in name
+                or 'InvalidSessionId' in name
+                or 'WebDriverException' in name
+                or 'StaleElementReference' in name
+                or 'no such window' in msg
+                or 'invalid session id' in msg
+                or 'web view not found' in msg
+                or 'target frame detached' in msg
+                or 'target closed' in msg
+            )
+            if not dead or attempt == 1:
+                raise
+            # Driver morreu no meio da busca (comum sob Xvfb + 4 módulos em
+            # paralelo). Descarta o pool, recria e repete uma vez.
+            try:
+                driver.quit()
+            except Exception:
+                pass
+            _FAST_BOOKING_DRIVERS.pop(bool(headless), None)
+            print('NoSuchWindow no Hotels: recriando driver e repetindo busca',
+                  flush=True)
+            driver, created = _get_fast_booking_driver(headless=headless)
 
     # BOOKING_FASTPATH_V5_2
     # extract_fast_batch já confirma a URL durante a coleta e imediatamente
