@@ -48,10 +48,21 @@ def _extract_prices(body: str) -> list[float]:
 
 
 def _safe_sync_playwright_start():
-    """v3.8.10 — sync_playwright().start() direto.
-    O worker do Flights roda em subprocesso (module_worker_v3.py), sem loop asyncio.
-    O ThreadPoolExecutor da v3.8.5 causava deadlock no greenlet do Playwright
-    no Python 3.14 (in_loop detectado incorretamente)."""
+    """v3.11.1 — sync_playwright().start() com limpeza de loop residual.
+
+    O worker do Flights roda em subprocesso (module_worker_v3.py), sem loop
+    asyncio proprio. O Playwright 1.65 no Python 3.14 marca o loop como
+    'running' entre chamadas sync; ao recriar a sessao (pagina fechada pelo
+    usuario) isso dispara 'Sync API inside the asyncio loop'. Limpar a
+    referencia da thread antes de start() restaura a recriacao.
+    """
+    import asyncio
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        pass
+    else:
+        asyncio._set_running_loop(None)
     return sync_playwright().start()
 
 
